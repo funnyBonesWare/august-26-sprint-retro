@@ -1,0 +1,3097 @@
+{
+  "issues": [
+    {
+      "key": "HIEV-7607",
+      "timespent": 3600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7606",
+      "timespent": 18000,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 18000
+    },
+    {
+      "key": "HIEV-7600",
+      "timespent": 28800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 28800
+    },
+    {
+      "key": "HIEV-7599",
+      "timespent": 7200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 7200
+    },
+    {
+      "key": "HIEV-7598",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7597",
+      "timespent": 14400,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 14400
+    },
+    {
+      "key": "HIEV-7596",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7595",
+      "timespent": 1200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1200
+    },
+    {
+      "key": "HIEV-7594",
+      "timespent": 1200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1200
+    },
+    {
+      "key": "HIEV-7593",
+      "timespent": 7200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 7200
+    },
+    {
+      "key": "HIEV-7592",
+      "timespent": 3600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7591",
+      "timespent": 54000,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 54000
+    },
+    {
+      "key": "HIEV-7590",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7589",
+      "timespent": 14400,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 14400
+    },
+    {
+      "key": "HIEV-7588",
+      "timespent": 54000,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 54000
+    },
+    {
+      "key": "HIEV-7587",
+      "timespent": 18000,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 18000
+    },
+    {
+      "key": "HIEV-7586",
+      "timespent": 3600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7585",
+      "timespent": 2700,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7584",
+      "timespent": 12600,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 12600
+    },
+    {
+      "key": "HIEV-7583",
+      "timespent": 2700,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7582",
+      "timespent": 10800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 10800
+    },
+    {
+      "key": "HIEV-7581",
+      "timespent": 21600,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 21600
+    },
+    {
+      "key": "HIEV-7578",
+      "timespent": 2700,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7577",
+      "timespent": 3600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7576",
+      "timespent": 600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 600
+    },
+    {
+      "key": "HIEV-7575",
+      "timespent": 21600,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 21600
+    },
+    {
+      "key": "HIEV-7574",
+      "timespent": 79200,
+      "payload_n": 6,
+      "jira_total": 6,
+      "merged_n": 6,
+      "reconstructed": 79200
+    },
+    {
+      "key": "HIEV-7573",
+      "timespent": 14400,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 14400
+    },
+    {
+      "key": "HIEV-7572",
+      "timespent": 2700,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7571",
+      "timespent": 3600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7570",
+      "timespent": 2700,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7569",
+      "timespent": 3600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7568",
+      "timespent": 2400,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2400
+    },
+    {
+      "key": "HIEV-7567",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7566",
+      "timespent": 46800,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 46800
+    },
+    {
+      "key": "HIEV-7565",
+      "timespent": 5700,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 5700
+    },
+    {
+      "key": "HIEV-7564",
+      "timespent": 14100,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 14100
+    },
+    {
+      "key": "HIEV-7563",
+      "timespent": 11700,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 11700
+    },
+    {
+      "key": "HIEV-7562",
+      "timespent": 4800,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 4800
+    },
+    {
+      "key": "HIEV-7561",
+      "timespent": 4200,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 4200
+    },
+    {
+      "key": "HIEV-7560",
+      "timespent": 10800,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 10800
+    },
+    {
+      "key": "HIEV-7559",
+      "timespent": 3900,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 3900
+    },
+    {
+      "key": "HIEV-7558",
+      "timespent": 6600,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 6600
+    },
+    {
+      "key": "HIEV-7557",
+      "timespent": 111600,
+      "payload_n": 7,
+      "jira_total": 7,
+      "merged_n": 7,
+      "reconstructed": 111600
+    },
+    {
+      "key": "HIEV-7555",
+      "timespent": 7200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 7200
+    },
+    {
+      "key": "HIEV-7554",
+      "timespent": 12600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 12600
+    },
+    {
+      "key": "HIEV-7553",
+      "timespent": 14400,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 14400
+    },
+    {
+      "key": "HIEV-7552",
+      "timespent": 4200,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 4200
+    },
+    {
+      "key": "HIEV-7551",
+      "timespent": 3600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7550",
+      "timespent": 2100,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 2100
+    },
+    {
+      "key": "HIEV-7549",
+      "timespent": 6600,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 6600
+    },
+    {
+      "key": "HIEV-7547",
+      "timespent": 3600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7546",
+      "timespent": 12300,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 12300
+    },
+    {
+      "key": "HIEV-7545",
+      "timespent": 41400,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 41400
+    },
+    {
+      "key": "HIEV-7544",
+      "timespent": 900,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 900
+    },
+    {
+      "key": "HIEV-7543",
+      "timespent": 2700,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7542",
+      "timespent": 41400,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 41400
+    },
+    {
+      "key": "HIEV-7541",
+      "timespent": 12600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 12600
+    },
+    {
+      "key": "HIEV-7540",
+      "timespent": 6900,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 6900
+    },
+    {
+      "key": "HIEV-7539",
+      "timespent": 9000,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 9000
+    },
+    {
+      "key": "HIEV-7538",
+      "timespent": 5700,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 5700
+    },
+    {
+      "key": "HIEV-7537",
+      "timespent": 28800,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 28800
+    },
+    {
+      "key": "HIEV-7536",
+      "timespent": 79200,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 79200
+    },
+    {
+      "key": "HIEV-7535",
+      "timespent": 900,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 900
+    },
+    {
+      "key": "HIEV-7534",
+      "timespent": 6000,
+      "payload_n": 6,
+      "jira_total": 6,
+      "merged_n": 6,
+      "reconstructed": 6000
+    },
+    {
+      "key": "HIEV-7533",
+      "timespent": 7200,
+      "payload_n": 6,
+      "jira_total": 6,
+      "merged_n": 6,
+      "reconstructed": 7200
+    },
+    {
+      "key": "HIEV-7531",
+      "timespent": 900,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 900
+    },
+    {
+      "key": "HIEV-7530",
+      "timespent": 7800,
+      "payload_n": 6,
+      "jira_total": 6,
+      "merged_n": 6,
+      "reconstructed": 7800
+    },
+    {
+      "key": "HIEV-7529",
+      "timespent": 6000,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 6000
+    },
+    {
+      "key": "HIEV-7528",
+      "timespent": 5400,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 5400
+    },
+    {
+      "key": "HIEV-7527",
+      "timespent": 3900,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 3900
+    },
+    {
+      "key": "HIEV-7526",
+      "timespent": 23400,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 23400
+    },
+    {
+      "key": "HIEV-7525",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7524",
+      "timespent": 2700,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7523",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7522",
+      "timespent": 10800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 10800
+    },
+    {
+      "key": "HIEV-7521",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7520",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7519",
+      "timespent": 3600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7518",
+      "timespent": 2400,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 2400
+    },
+    {
+      "key": "HIEV-7517",
+      "timespent": 3600,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7516",
+      "timespent": 3300,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 3300
+    },
+    {
+      "key": "HIEV-7515",
+      "timespent": 1500,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 1500
+    },
+    {
+      "key": "HIEV-7514",
+      "timespent": 1500,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 1500
+    },
+    {
+      "key": "HIEV-7513",
+      "timespent": 3600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7512",
+      "timespent": 1800,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7511",
+      "timespent": 900,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 900
+    },
+    {
+      "key": "HIEV-7510",
+      "timespent": 3300,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 3300
+    },
+    {
+      "key": "HIEV-7509",
+      "timespent": 1800,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7508",
+      "timespent": 72000,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 72000
+    },
+    {
+      "key": "HIEV-7507",
+      "timespent": 50400,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 50400
+    },
+    {
+      "key": "HIEV-7506",
+      "timespent": 115200,
+      "payload_n": 6,
+      "jira_total": 6,
+      "merged_n": 6,
+      "reconstructed": 115200
+    },
+    {
+      "key": "HIEV-7505",
+      "timespent": 4200,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 4200
+    },
+    {
+      "key": "HIEV-7504",
+      "timespent": 6000,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 6000
+    },
+    {
+      "key": "HIEV-7503",
+      "timespent": 35700,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 35700
+    },
+    {
+      "key": "HIEV-7502",
+      "timespent": 4500,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 4500
+    },
+    {
+      "key": "HIEV-7501",
+      "timespent": 6000,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 6000
+    },
+    {
+      "key": "HIEV-7500",
+      "timespent": 900,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 900
+    },
+    {
+      "key": "HIEV-7499",
+      "timespent": 2700,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7498",
+      "timespent": 10800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 10800
+    },
+    {
+      "key": "HIEV-7497",
+      "timespent": 100800,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 100800
+    },
+    {
+      "key": "HIEV-7496",
+      "timespent": 28800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 28800
+    },
+    {
+      "key": "HIEV-7495",
+      "timespent": 9000,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 9000
+    },
+    {
+      "key": "HIEV-7494",
+      "timespent": 5400,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 5400
+    },
+    {
+      "key": "HIEV-7493",
+      "timespent": 3900,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 3900
+    },
+    {
+      "key": "HIEV-7492",
+      "timespent": 9000,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 9000
+    },
+    {
+      "key": "HIEV-7491",
+      "timespent": 15300,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 15300
+    },
+    {
+      "key": "HIEV-7490",
+      "timespent": 22500,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 22500
+    },
+    {
+      "key": "HIEV-7489",
+      "timespent": 3600,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7488",
+      "timespent": 6300,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 6300
+    },
+    {
+      "key": "HIEV-7487",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7486",
+      "timespent": 10800,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 10800
+    },
+    {
+      "key": "HIEV-7485",
+      "timespent": 18000,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 18000
+    },
+    {
+      "key": "HIEV-7484",
+      "timespent": 10800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 10800
+    },
+    {
+      "key": "HIEV-7483",
+      "timespent": 5400,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 5400
+    },
+    {
+      "key": "HIEV-7482",
+      "timespent": 16200,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 16200
+    },
+    {
+      "key": "HIEV-7481",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7480",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7479",
+      "timespent": 6000,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 6000
+    },
+    {
+      "key": "HIEV-7478",
+      "timespent": 2700,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7477",
+      "timespent": 18000,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 18000
+    },
+    {
+      "key": "HIEV-7476",
+      "timespent": 6300,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 6300
+    },
+    {
+      "key": "HIEV-7475",
+      "timespent": 11700,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 11700
+    },
+    {
+      "key": "HIEV-7474",
+      "timespent": 4500,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 4500
+    },
+    {
+      "key": "HIEV-7473",
+      "timespent": 3600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7472",
+      "timespent": 12600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 12600
+    },
+    {
+      "key": "HIEV-7471",
+      "timespent": 21600,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 21600
+    },
+    {
+      "key": "HIEV-7470",
+      "timespent": 19800,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 19800
+    },
+    {
+      "key": "HIEV-7469",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7468",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7467",
+      "timespent": 1200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1200
+    },
+    {
+      "key": "HIEV-7466",
+      "timespent": 4200,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 4200
+    },
+    {
+      "key": "HIEV-7465",
+      "timespent": 2400,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2400
+    },
+    {
+      "key": "HIEV-7464",
+      "timespent": 1200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1200
+    },
+    {
+      "key": "HIEV-7463",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7462",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7461",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7460",
+      "timespent": 1200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1200
+    },
+    {
+      "key": "HIEV-7459",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7458",
+      "timespent": 30600,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 30600
+    },
+    {
+      "key": "HIEV-7457",
+      "timespent": 10800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 10800
+    },
+    {
+      "key": "HIEV-7456",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7455",
+      "timespent": 7200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 7200
+    },
+    {
+      "key": "HIEV-7454",
+      "timespent": 2700,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7453",
+      "timespent": 1200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1200
+    },
+    {
+      "key": "HIEV-7452",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7451",
+      "timespent": 1200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1200
+    },
+    {
+      "key": "HIEV-7450",
+      "timespent": 900,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 900
+    },
+    {
+      "key": "HIEV-7449",
+      "timespent": 29700,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 29700
+    },
+    {
+      "key": "HIEV-7448",
+      "timespent": 1200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1200
+    },
+    {
+      "key": "HIEV-7447",
+      "timespent": 1500,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1500
+    },
+    {
+      "key": "HIEV-7446",
+      "timespent": 41400,
+      "payload_n": 7,
+      "jira_total": 7,
+      "merged_n": 7,
+      "reconstructed": 41400
+    },
+    {
+      "key": "HIEV-7445",
+      "timespent": 82800,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 82800
+    },
+    {
+      "key": "HIEV-7444",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7443",
+      "timespent": 2400,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2400
+    },
+    {
+      "key": "HIEV-7442",
+      "timespent": 28800,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 28800
+    },
+    {
+      "key": "HIEV-7441",
+      "timespent": 14400,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 14400
+    },
+    {
+      "key": "HIEV-7440",
+      "timespent": 45000,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 45000
+    },
+    {
+      "key": "HIEV-7439",
+      "timespent": 35100,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 35100
+    },
+    {
+      "key": "HIEV-7438",
+      "timespent": 2400,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2400
+    },
+    {
+      "key": "HIEV-7437",
+      "timespent": 2700,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7436",
+      "timespent": 10800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 10800
+    },
+    {
+      "key": "HIEV-7435",
+      "timespent": 2700,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7434",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7433",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7432",
+      "timespent": 3600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7431",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7430",
+      "timespent": 7200,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 7200
+    },
+    {
+      "key": "HIEV-7429",
+      "timespent": 14400,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 14400
+    },
+    {
+      "key": "HIEV-7427",
+      "timespent": 7200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 7200
+    },
+    {
+      "key": "HIEV-7426",
+      "timespent": 36000,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 36000
+    },
+    {
+      "key": "HIEV-7425",
+      "timespent": 120600,
+      "payload_n": 17,
+      "jira_total": 17,
+      "merged_n": 17,
+      "reconstructed": 120600
+    },
+    {
+      "key": "HIEV-7424",
+      "timespent": 54000,
+      "payload_n": 9,
+      "jira_total": 9,
+      "merged_n": 9,
+      "reconstructed": 54000
+    },
+    {
+      "key": "HIEV-7423",
+      "timespent": 2700,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7422",
+      "timespent": 28800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 28800
+    },
+    {
+      "key": "HIEV-7421",
+      "timespent": 1200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1200
+    },
+    {
+      "key": "HIEV-7420",
+      "timespent": 3300,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 3300
+    },
+    {
+      "key": "HIEV-7419",
+      "timespent": 2700,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7418",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7417",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7416",
+      "timespent": 15600,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 15600
+    },
+    {
+      "key": "HIEV-7415",
+      "timespent": 2400,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2400
+    },
+    {
+      "key": "HIEV-7414",
+      "timespent": 16200,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 16200
+    },
+    {
+      "key": "HIEV-7413",
+      "timespent": 2700,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7412",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7411",
+      "timespent": 1200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1200
+    },
+    {
+      "key": "HIEV-7410",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7409",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7408",
+      "timespent": 2400,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2400
+    },
+    {
+      "key": "HIEV-7407",
+      "timespent": 5400,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 5400
+    },
+    {
+      "key": "HIEV-7406",
+      "timespent": 100800,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 100800
+    },
+    {
+      "key": "HIEV-7405",
+      "timespent": 2700,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7404",
+      "timespent": 7500,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 7500
+    },
+    {
+      "key": "HIEV-7403",
+      "timespent": 25200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 25200
+    },
+    {
+      "key": "HIEV-7402",
+      "timespent": 2400,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 2400
+    },
+    {
+      "key": "HIEV-7401",
+      "timespent": 8100,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 8100
+    },
+    {
+      "key": "HIEV-7400",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7399",
+      "timespent": 9000,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 9000
+    },
+    {
+      "key": "HIEV-7398",
+      "timespent": 2700,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7397",
+      "timespent": 2700,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7396",
+      "timespent": 11400,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 11400
+    },
+    {
+      "key": "HIEV-7395",
+      "timespent": 28800,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 28800
+    },
+    {
+      "key": "HIEV-7394",
+      "timespent": 28800,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 28800
+    },
+    {
+      "key": "HIEV-7393",
+      "timespent": 54000,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 54000
+    },
+    {
+      "key": "HIEV-7392",
+      "timespent": 57600,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 57600
+    },
+    {
+      "key": "HIEV-7391",
+      "timespent": 9000,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 9000
+    },
+    {
+      "key": "HIEV-7390",
+      "timespent": 9900,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 9900
+    },
+    {
+      "key": "HIEV-7389",
+      "timespent": 7200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 7200
+    },
+    {
+      "key": "HIEV-7388",
+      "timespent": 21300,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 21300
+    },
+    {
+      "key": "HIEV-7387",
+      "timespent": 3600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7386",
+      "timespent": 2700,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7385",
+      "timespent": 10800,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 10800
+    },
+    {
+      "key": "HIEV-7384",
+      "timespent": 3600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7383",
+      "timespent": 2700,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7382",
+      "timespent": 2400,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 2400
+    },
+    {
+      "key": "HIEV-7381",
+      "timespent": 6300,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 6300
+    },
+    {
+      "key": "HIEV-7379",
+      "timespent": 8100,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 8100
+    },
+    {
+      "key": "HIEV-7378",
+      "timespent": 39600,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 39600
+    },
+    {
+      "key": "HIEV-7377",
+      "timespent": 5100,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 5100
+    },
+    {
+      "key": "HIEV-7376",
+      "timespent": 4500,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 4500
+    },
+    {
+      "key": "HIEV-7373",
+      "timespent": 245400,
+      "payload_n": 12,
+      "jira_total": 12,
+      "merged_n": 12,
+      "reconstructed": 245400
+    },
+    {
+      "key": "HIEV-7372",
+      "timespent": 30600,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 30600
+    },
+    {
+      "key": "HIEV-7371",
+      "timespent": 79200,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 79200
+    },
+    {
+      "key": "HIEV-7370",
+      "timespent": 25200,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 25200
+    },
+    {
+      "key": "HIEV-7368",
+      "timespent": 7200,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 7200
+    },
+    {
+      "key": "HIEV-7364",
+      "timespent": 88200,
+      "payload_n": 8,
+      "jira_total": 8,
+      "merged_n": 8,
+      "reconstructed": 88200
+    },
+    {
+      "key": "HIEV-7363",
+      "timespent": 72000,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 72000
+    },
+    {
+      "key": "HIEV-7362",
+      "timespent": 75600,
+      "payload_n": 7,
+      "jira_total": 7,
+      "merged_n": 7,
+      "reconstructed": 75600
+    },
+    {
+      "key": "HIEV-7359",
+      "timespent": 14400,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 14400
+    },
+    {
+      "key": "HIEV-7358",
+      "timespent": 32400,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 32400
+    },
+    {
+      "key": "HIEV-7356",
+      "timespent": 11700,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 11700
+    },
+    {
+      "key": "HIEV-7354",
+      "timespent": 3600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7352",
+      "timespent": 26100,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 26100
+    },
+    {
+      "key": "HIEV-7351",
+      "timespent": 12600,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 12600
+    },
+    {
+      "key": "HIEV-7350",
+      "timespent": 57600,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 57600
+    },
+    {
+      "key": "HIEV-7348",
+      "timespent": 25200,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 25200
+    },
+    {
+      "key": "HIEV-7347",
+      "timespent": 126000,
+      "payload_n": 7,
+      "jira_total": 7,
+      "merged_n": 7,
+      "reconstructed": 126000
+    },
+    {
+      "key": "HIEV-7345",
+      "timespent": 21600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 21600
+    },
+    {
+      "key": "HIEV-7344",
+      "timespent": 108000,
+      "payload_n": 6,
+      "jira_total": 6,
+      "merged_n": 6,
+      "reconstructed": 108000
+    },
+    {
+      "key": "HIEV-7342",
+      "timespent": 6660,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 6660
+    },
+    {
+      "key": "HIEV-7341",
+      "timespent": 14400,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 14400
+    },
+    {
+      "key": "HIEV-7340",
+      "timespent": 39600,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 39600
+    },
+    {
+      "key": "HIEV-7339",
+      "timespent": 4500,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 4500
+    },
+    {
+      "key": "HIEV-7337",
+      "timespent": 4860,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 4860
+    },
+    {
+      "key": "HIEV-7336",
+      "timespent": 4860,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 4860
+    },
+    {
+      "key": "HIEV-7335",
+      "timespent": 4860,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 4860
+    },
+    {
+      "key": "HIEV-7333",
+      "timespent": 3060,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 3060
+    },
+    {
+      "key": "HIEV-7331",
+      "timespent": 6300,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 6300
+    },
+    {
+      "key": "HIEV-7329",
+      "timespent": 144000,
+      "payload_n": 9,
+      "jira_total": 9,
+      "merged_n": 9,
+      "reconstructed": 144000
+    },
+    {
+      "key": "HIEV-7328",
+      "timespent": 4200,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 4200
+    },
+    {
+      "key": "HIEV-7327",
+      "timespent": 124200,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 124200
+    },
+    {
+      "key": "HIEV-7326",
+      "timespent": 16800,
+      "payload_n": 7,
+      "jira_total": 7,
+      "merged_n": 7,
+      "reconstructed": 16800
+    },
+    {
+      "key": "HIEV-7324",
+      "timespent": 9000,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 9000
+    },
+    {
+      "key": "HIEV-7323",
+      "timespent": 9600,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 9600
+    },
+    {
+      "key": "HIEV-7321",
+      "timespent": 1800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7320",
+      "timespent": 7200,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 7200
+    },
+    {
+      "key": "HIEV-7319",
+      "timespent": 4200,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 4200
+    },
+    {
+      "key": "HIEV-7317",
+      "timespent": 4800,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 4800
+    },
+    {
+      "key": "HIEV-7316",
+      "timespent": 3300,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 3300
+    },
+    {
+      "key": "HIEV-7315",
+      "timespent": 5400,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 5400
+    },
+    {
+      "key": "HIEV-7314",
+      "timespent": 2400,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 2400
+    },
+    {
+      "key": "HIEV-7313",
+      "timespent": 8100,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 8100
+    },
+    {
+      "key": "HIEV-7312",
+      "timespent": 6300,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 6300
+    },
+    {
+      "key": "HIEV-7311",
+      "timespent": 8100,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 8100
+    },
+    {
+      "key": "HIEV-7310",
+      "timespent": 3600,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7309",
+      "timespent": 5400,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 5400
+    },
+    {
+      "key": "HIEV-7306",
+      "timespent": 90000,
+      "payload_n": 7,
+      "jira_total": 7,
+      "merged_n": 7,
+      "reconstructed": 90000
+    },
+    {
+      "key": "HIEV-7304",
+      "timespent": 27600,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 27600
+    },
+    {
+      "key": "HIEV-7303",
+      "timespent": 3600,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7302",
+      "timespent": 8700,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 8700
+    },
+    {
+      "key": "HIEV-7301",
+      "timespent": 7800,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 7800
+    },
+    {
+      "key": "HIEV-7299",
+      "timespent": 6060,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 6060
+    },
+    {
+      "key": "HIEV-7297",
+      "timespent": 4860,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 4860
+    },
+    {
+      "key": "HIEV-7296",
+      "timespent": 6300,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 6300
+    },
+    {
+      "key": "HIEV-7295",
+      "timespent": 8100,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 8100
+    },
+    {
+      "key": "HIEV-7291",
+      "timespent": 13260,
+      "payload_n": 7,
+      "jira_total": 7,
+      "merged_n": 7,
+      "reconstructed": 13260
+    },
+    {
+      "key": "HIEV-7288",
+      "timespent": 4200,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 4200
+    },
+    {
+      "key": "HIEV-7282",
+      "timespent": 3900,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 3900
+    },
+    {
+      "key": "HIEV-7279",
+      "timespent": 5400,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 5400
+    },
+    {
+      "key": "HIEV-7275",
+      "timespent": 15300,
+      "payload_n": 6,
+      "jira_total": 6,
+      "merged_n": 6,
+      "reconstructed": 15300
+    },
+    {
+      "key": "HIEV-7269",
+      "timespent": 2700,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7264",
+      "timespent": 1200,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 1200
+    },
+    {
+      "key": "HIEV-7254",
+      "timespent": 372600,
+      "payload_n": 20,
+      "jira_total": 20,
+      "merged_n": 20,
+      "reconstructed": 372600
+    },
+    {
+      "key": "HIEV-7250",
+      "timespent": 223200,
+      "payload_n": 11,
+      "jira_total": 11,
+      "merged_n": 11,
+      "reconstructed": 223200
+    },
+    {
+      "key": "HIEV-7244",
+      "timespent": 16800,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 16800
+    },
+    {
+      "key": "HIEV-7243",
+      "timespent": 14700,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 14700
+    },
+    {
+      "key": "HIEV-7242",
+      "timespent": 27600,
+      "payload_n": 7,
+      "jira_total": 7,
+      "merged_n": 7,
+      "reconstructed": 27600
+    },
+    {
+      "key": "HIEV-7240",
+      "timespent": 7200,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 7200
+    },
+    {
+      "key": "HIEV-7238",
+      "timespent": 313200,
+      "payload_n": 16,
+      "jira_total": 16,
+      "merged_n": 16,
+      "reconstructed": 313200
+    },
+    {
+      "key": "HIEV-7237",
+      "timespent": 14100,
+      "payload_n": 6,
+      "jira_total": 6,
+      "merged_n": 6,
+      "reconstructed": 14100
+    },
+    {
+      "key": "HIEV-7236",
+      "timespent": 2100,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 2100
+    },
+    {
+      "key": "HIEV-7235",
+      "timespent": 6300,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 6300
+    },
+    {
+      "key": "HIEV-7234",
+      "timespent": 4500,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 4500
+    },
+    {
+      "key": "HIEV-7232",
+      "timespent": 1800,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7226",
+      "timespent": 6300,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 6300
+    },
+    {
+      "key": "HIEV-7221",
+      "timespent": 367200,
+      "payload_n": 13,
+      "jira_total": 13,
+      "merged_n": 13,
+      "reconstructed": 367200
+    },
+    {
+      "key": "HIEV-7220",
+      "timespent": 118800,
+      "payload_n": 6,
+      "jira_total": 6,
+      "merged_n": 6,
+      "reconstructed": 118800
+    },
+    {
+      "key": "HIEV-7218",
+      "timespent": 5400,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 5400
+    },
+    {
+      "key": "HIEV-7216",
+      "timespent": 27300,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 27300
+    },
+    {
+      "key": "HIEV-7215",
+      "timespent": 9000,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 9000
+    },
+    {
+      "key": "HIEV-7214",
+      "timespent": 11700,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 11700
+    },
+    {
+      "key": "HIEV-7209",
+      "timespent": 5100,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 5100
+    },
+    {
+      "key": "HIEV-7207",
+      "timespent": 2700,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 2700
+    },
+    {
+      "key": "HIEV-7205",
+      "timespent": 18000,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 18000
+    },
+    {
+      "key": "HIEV-7204",
+      "timespent": 12000,
+      "payload_n": 7,
+      "jira_total": 7,
+      "merged_n": 7,
+      "reconstructed": 12000
+    },
+    {
+      "key": "HIEV-7202",
+      "timespent": 3600,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7199",
+      "timespent": 24600,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 24600
+    },
+    {
+      "key": "HIEV-7193",
+      "timespent": 237660,
+      "payload_n": 20,
+      "jira_total": 44,
+      "merged_n": 44,
+      "reconstructed": 237660
+    },
+    {
+      "key": "HIEV-7191",
+      "timespent": 75600,
+      "payload_n": 6,
+      "jira_total": 6,
+      "merged_n": 6,
+      "reconstructed": 75600
+    },
+    {
+      "key": "HIEV-7183",
+      "timespent": 154800,
+      "payload_n": 7,
+      "jira_total": 7,
+      "merged_n": 7,
+      "reconstructed": 154800
+    },
+    {
+      "key": "HIEV-7172",
+      "timespent": 83400,
+      "payload_n": 9,
+      "jira_total": 9,
+      "merged_n": 9,
+      "reconstructed": 83400
+    },
+    {
+      "key": "HIEV-7166",
+      "timespent": 7800,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 7800
+    },
+    {
+      "key": "HIEV-7165",
+      "timespent": 1800,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 1800
+    },
+    {
+      "key": "HIEV-7163",
+      "timespent": 3900,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 3900
+    },
+    {
+      "key": "HIEV-7159",
+      "timespent": 107100,
+      "payload_n": 6,
+      "jira_total": 6,
+      "merged_n": 6,
+      "reconstructed": 107100
+    },
+    {
+      "key": "HIEV-7156",
+      "timespent": 24000,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 24000
+    },
+    {
+      "key": "HIEV-7152",
+      "timespent": 71400,
+      "payload_n": 9,
+      "jira_total": 9,
+      "merged_n": 9,
+      "reconstructed": 71400
+    },
+    {
+      "key": "HIEV-7151",
+      "timespent": 93600,
+      "payload_n": 9,
+      "jira_total": 9,
+      "merged_n": 9,
+      "reconstructed": 93600
+    },
+    {
+      "key": "HIEV-7150",
+      "timespent": 79200,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 79200
+    },
+    {
+      "key": "HIEV-7148",
+      "timespent": 169200,
+      "payload_n": 9,
+      "jira_total": 9,
+      "merged_n": 9,
+      "reconstructed": 169200
+    },
+    {
+      "key": "HIEV-7147",
+      "timespent": 399600,
+      "payload_n": 17,
+      "jira_total": 17,
+      "merged_n": 17,
+      "reconstructed": 399600
+    },
+    {
+      "key": "HIEV-7146",
+      "timespent": 50400,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 50400
+    },
+    {
+      "key": "HIEV-7145",
+      "timespent": 266400,
+      "payload_n": 15,
+      "jira_total": 15,
+      "merged_n": 15,
+      "reconstructed": 266400
+    },
+    {
+      "key": "HIEV-7143",
+      "timespent": 9000,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 9000
+    },
+    {
+      "key": "HIEV-7133",
+      "timespent": 5100,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 5100
+    },
+    {
+      "key": "HIEV-7121",
+      "timespent": 24300,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 24300
+    },
+    {
+      "key": "HIEV-7095",
+      "timespent": 15600,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 15600
+    },
+    {
+      "key": "HIEV-7094",
+      "timespent": 2400,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 2400
+    },
+    {
+      "key": "HIEV-7090",
+      "timespent": 13200,
+      "payload_n": 6,
+      "jira_total": 6,
+      "merged_n": 6,
+      "reconstructed": 13200
+    },
+    {
+      "key": "HIEV-7077",
+      "timespent": 3900,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 3900
+    },
+    {
+      "key": "HIEV-7073",
+      "timespent": 261000,
+      "payload_n": 20,
+      "jira_total": 21,
+      "merged_n": 21,
+      "reconstructed": 261000
+    },
+    {
+      "key": "HIEV-7062",
+      "timespent": 3600,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 3600
+    },
+    {
+      "key": "HIEV-7032",
+      "timespent": 91200,
+      "payload_n": 10,
+      "jira_total": 10,
+      "merged_n": 10,
+      "reconstructed": 91200
+    },
+    {
+      "key": "HIEV-7031",
+      "timespent": 50400,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 50400
+    },
+    {
+      "key": "HIEV-7018",
+      "timespent": 34200,
+      "payload_n": 8,
+      "jira_total": 8,
+      "merged_n": 8,
+      "reconstructed": 34200
+    },
+    {
+      "key": "HIEV-6989",
+      "timespent": 302400,
+      "payload_n": 14,
+      "jira_total": 14,
+      "merged_n": 14,
+      "reconstructed": 302400
+    },
+    {
+      "key": "HIEV-6988",
+      "timespent": 135000,
+      "payload_n": 8,
+      "jira_total": 8,
+      "merged_n": 8,
+      "reconstructed": 135000
+    },
+    {
+      "key": "HIEV-6981",
+      "timespent": 78000,
+      "payload_n": 9,
+      "jira_total": 9,
+      "merged_n": 9,
+      "reconstructed": 78000
+    },
+    {
+      "key": "HIEV-6944",
+      "timespent": 46800,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 46800
+    },
+    {
+      "key": "HIEV-6942",
+      "timespent": 147600,
+      "payload_n": 8,
+      "jira_total": 8,
+      "merged_n": 8,
+      "reconstructed": 147600
+    },
+    {
+      "key": "HIEV-6941",
+      "timespent": 547200,
+      "payload_n": 20,
+      "jira_total": 32,
+      "merged_n": 32,
+      "reconstructed": 547200
+    },
+    {
+      "key": "HIEV-6940",
+      "timespent": 523200,
+      "payload_n": 20,
+      "jira_total": 25,
+      "merged_n": 25,
+      "reconstructed": 523200
+    },
+    {
+      "key": "HIEV-6939",
+      "timespent": 257400,
+      "payload_n": 15,
+      "jira_total": 15,
+      "merged_n": 15,
+      "reconstructed": 257400
+    },
+    {
+      "key": "HIEV-6938",
+      "timespent": 536400,
+      "payload_n": 20,
+      "jira_total": 26,
+      "merged_n": 26,
+      "reconstructed": 536400
+    },
+    {
+      "key": "HIEV-6925",
+      "timespent": 57600,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 57600
+    },
+    {
+      "key": "HIEV-6914",
+      "timespent": 417600,
+      "payload_n": 20,
+      "jira_total": 30,
+      "merged_n": 30,
+      "reconstructed": 417600
+    },
+    {
+      "key": "HIEV-6894",
+      "timespent": 80100,
+      "payload_n": 7,
+      "jira_total": 7,
+      "merged_n": 7,
+      "reconstructed": 80100
+    },
+    {
+      "key": "HIEV-6885",
+      "timespent": 187200,
+      "payload_n": 13,
+      "jira_total": 13,
+      "merged_n": 13,
+      "reconstructed": 187200
+    },
+    {
+      "key": "HIEV-6875",
+      "timespent": 900,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 900
+    },
+    {
+      "key": "HIEV-6785",
+      "timespent": 347640,
+      "payload_n": 20,
+      "jira_total": 64,
+      "merged_n": 64,
+      "reconstructed": 347640
+    },
+    {
+      "key": "HIEV-6752",
+      "timespent": 126000,
+      "payload_n": 7,
+      "jira_total": 7,
+      "merged_n": 7,
+      "reconstructed": 126000
+    },
+    {
+      "key": "HIEV-6748",
+      "timespent": 1137600,
+      "payload_n": 20,
+      "jira_total": 52,
+      "merged_n": 52,
+      "reconstructed": 1137600
+    },
+    {
+      "key": "HIEV-6722",
+      "timespent": 72000,
+      "payload_n": 5,
+      "jira_total": 5,
+      "merged_n": 5,
+      "reconstructed": 72000
+    },
+    {
+      "key": "HIEV-6684",
+      "timespent": 30600,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 30600
+    },
+    {
+      "key": "HIEV-6649",
+      "timespent": 289800,
+      "payload_n": 15,
+      "jira_total": 15,
+      "merged_n": 15,
+      "reconstructed": 289800
+    },
+    {
+      "key": "HIEV-6636",
+      "timespent": 32400,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 32400
+    },
+    {
+      "key": "HIEV-6607",
+      "timespent": 26400,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 26400
+    },
+    {
+      "key": "HIEV-6446",
+      "timespent": 15900,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 15900
+    },
+    {
+      "key": "HIEV-6441",
+      "timespent": 12600,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 12600
+    },
+    {
+      "key": "HIEV-6393",
+      "timespent": 142200,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 142200
+    },
+    {
+      "key": "HIEV-6384",
+      "timespent": 137700,
+      "payload_n": 10,
+      "jira_total": 10,
+      "merged_n": 10,
+      "reconstructed": 137700
+    },
+    {
+      "key": "HIEV-6383",
+      "timespent": 115200,
+      "payload_n": 11,
+      "jira_total": 11,
+      "merged_n": 11,
+      "reconstructed": 115200
+    },
+    {
+      "key": "HIEV-6380",
+      "timespent": 47700,
+      "payload_n": 6,
+      "jira_total": 6,
+      "merged_n": 6,
+      "reconstructed": 47700
+    },
+    {
+      "key": "HIEV-6373",
+      "timespent": 567000,
+      "payload_n": 20,
+      "jira_total": 70,
+      "merged_n": 70,
+      "reconstructed": 567000
+    },
+    {
+      "key": "HIEV-6315",
+      "timespent": 900,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 900
+    },
+    {
+      "key": "HIEV-5836",
+      "timespent": 46800,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 46800
+    },
+    {
+      "key": "HIEV-7369",
+      "timespent": 0,
+      "payload_n": 0,
+      "jira_total": 0,
+      "merged_n": 0,
+      "reconstructed": 0
+    },
+    {
+      "key": "HIEV-7367",
+      "timespent": 0,
+      "payload_n": 0,
+      "jira_total": 0,
+      "merged_n": 0,
+      "reconstructed": 0
+    },
+    {
+      "key": "HIEV-7366",
+      "timespent": 0,
+      "payload_n": 0,
+      "jira_total": 0,
+      "merged_n": 0,
+      "reconstructed": 0
+    },
+    {
+      "key": "HIEV-7365",
+      "timespent": 0,
+      "payload_n": 0,
+      "jira_total": 0,
+      "merged_n": 0,
+      "reconstructed": 0
+    },
+    {
+      "key": "HIEV-7360",
+      "timespent": 0,
+      "payload_n": 0,
+      "jira_total": 0,
+      "merged_n": 0,
+      "reconstructed": 0
+    },
+    {
+      "key": "HIEV-7357",
+      "timespent": 0,
+      "payload_n": 0,
+      "jira_total": 0,
+      "merged_n": 0,
+      "reconstructed": 0
+    },
+    {
+      "key": "HIEV-7355",
+      "timespent": 0,
+      "payload_n": 0,
+      "jira_total": 0,
+      "merged_n": 0,
+      "reconstructed": 0
+    },
+    {
+      "key": "HIEV-7353",
+      "timespent": 0,
+      "payload_n": 0,
+      "jira_total": 0,
+      "merged_n": 0,
+      "reconstructed": 0
+    },
+    {
+      "key": "HIEV-7349",
+      "timespent": 0,
+      "payload_n": 0,
+      "jira_total": 0,
+      "merged_n": 0,
+      "reconstructed": 0
+    },
+    {
+      "key": "HIEV-7346",
+      "timespent": 0,
+      "payload_n": 0,
+      "jira_total": 0,
+      "merged_n": 0,
+      "reconstructed": 0
+    },
+    {
+      "key": "HIEV-7343",
+      "timespent": 0,
+      "payload_n": 0,
+      "jira_total": 0,
+      "merged_n": 0,
+      "reconstructed": 0
+    },
+    {
+      "key": "HIEV-6945",
+      "timespent": 48600,
+      "payload_n": 4,
+      "jira_total": 4,
+      "merged_n": 4,
+      "reconstructed": 48600
+    },
+    {
+      "key": "HIEV-6932",
+      "timespent": 25200,
+      "payload_n": 2,
+      "jira_total": 2,
+      "merged_n": 2,
+      "reconstructed": 25200
+    },
+    {
+      "key": "HIEV-6929",
+      "timespent": 28800,
+      "payload_n": 1,
+      "jira_total": 1,
+      "merged_n": 1,
+      "reconstructed": 28800
+    },
+    {
+      "key": "HIEV-6917",
+      "timespent": 0,
+      "payload_n": 0,
+      "jira_total": 0,
+      "merged_n": 0,
+      "reconstructed": 0
+    },
+    {
+      "key": "HIEV-6824",
+      "timespent": 72000,
+      "payload_n": 3,
+      "jira_total": 3,
+      "merged_n": 3,
+      "reconstructed": 72000
+    },
+    {
+      "key": "HIEV-6372",
+      "timespent": 0,
+      "payload_n": 0,
+      "jira_total": 0,
+      "merged_n": 0,
+      "reconstructed": 0
+    },
+    {
+      "key": "HIEV-7580",
+      "timespent": 0,
+      "payload_n": 0,
+      "jira_total": 0,
+      "merged_n": 0,
+      "reconstructed": 0
+    },
+    {
+      "key": "HIEV-7579",
+      "timespent": 0,
+      "payload_n": 0,
+      "jira_total": 0,
+      "merged_n": 0,
+      "reconstructed": 0
+    },
+    {
+      "key": "HIEV-7532",
+      "timespent": 0,
+      "payload_n": 0,
+      "jira_total": 0,
+      "merged_n": 0,
+      "reconstructed": 0
+    }
+  ],
+  "duplicate_ids_dropped": 0,
+  "payload_entries": 845,
+  "changelog_fill_entries": 68,
+  "august_seconds": 7336440,
+  "august_unique_worklogs": 913
+}

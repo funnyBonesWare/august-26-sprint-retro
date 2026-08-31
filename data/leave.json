@@ -1,0 +1,25 @@
+{
+  "source": "Team planned / sick leave list for August 2026",
+  "hours_per_day": 8,
+  "entries": [
+    {"date": "2026-08-03", "people": ["Sahil Siddiqui", "Dharshini", "Rashmi"], "fraction": 1},
+    {"date": "2026-08-04", "people": ["Rashmi"], "fraction": 1},
+    {"date": "2026-08-05", "people": ["Rashmi"], "fraction": 1},
+    {"date": "2026-08-07", "people": ["Manjunath"], "fraction": 1},
+    {"date": "2026-08-10", "people": ["Manjunath"], "fraction": 1},
+    {"date": "2026-08-11", "people": ["Rashmi"], "fraction": 1},
+    {"date": "2026-08-12", "people": ["Rashmi"], "fraction": 1},
+    {"date": "2026-08-12", "people": ["Deepak"], "fraction": 0.5, "note": "First half"},
+    {"date": "2026-08-13", "people": ["Srikant"], "fraction": 1},
+    {"date": "2026-08-14", "people": ["Srikant"], "fraction": 1},
+    {"date": "2026-08-18", "people": ["Twisha"], "fraction": 1},
+    {"date": "2026-08-19", "people": ["Dhanush", "Marish", "Sahil Siddiqui", "Twisha"], "fraction": 1},
+    {"date": "2026-08-20", "people": ["Sahil Siddiqui"], "fraction": 1},
+    {"date": "2026-08-21", "people": ["Dharshini", "Dhanush", "Vinay"], "fraction": 1},
+    {"date": "2026-08-24", "people": ["Sudeep", "Shambu"], "fraction": 1},
+    {"date": "2026-08-25", "people": ["Manjunath"], "fraction": 1},
+    {"date": "2026-08-26", "people": ["Sahil Siddiqui"], "fraction": 1},
+    {"date": "2026-08-27", "people": ["Srikant"], "fraction": 1},
+    {"date": "2026-08-31", "people": ["Nagaraju", "Manjunath"], "fraction": 1}
+  ]
+}

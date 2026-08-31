@@ -18,9 +18,10 @@ Markdown copy: `report/retrospective.md`
 
 1. **Planned vs actual days** — sheet PD vs Jira worklogs started in August
 2. **Estimation accuracy** — actual days ÷ estimated PD (tickets with numeric estimates)
-3. **Bugs created** — HIEV `Bug` issues created in August, by assignee
-4. **Fix hours** — August worklogs on Bug tickets vs Task/Sub-task tickets
-5. **Daily log** — hours per person per day, plus worklog notes and ticket comments
+3. **Off-sheet work** — tasks/bugs not on the sheet that still had August time or comments
+4. **Bugs worked** — distinct HIEV `Bug` keys with August worklogs or comments, credited to who logged or commented (unique keys, not assignee)
+5. **Fix hours** — August worklogs on Bug tickets vs Task/Sub-task tickets
+6. **Daily log** — hours per person per day, plus worklog notes and ticket comments (sheet + other)
 
 ## Rebuild
 
@@ -37,5 +38,5 @@ Writes `data/extracted.json`, `report/index.html`, `report/retrospective.md`.
 - Actuals are **August worklogs**, not lifetime `timespent`.
 - Jira returns at most 20 worklogs per issue in these dumps. **HIEV-6938, HIEV-6940, HIEV-6941** are truncated.
 - QA sheet rows have no Jira keys.
-- Bugs are attributed to the **bug assignee**. Most August bugs are children of `HIEV-7334`.
-- Person accuracy uses all August time for that user (including tickets not on the sheet), so it is often > 1.
+- Bugs **worked** in August are credited to people who logged time or commented on that bug, not the assignee at create time. Lavanya is excluded from person lists.
+- Person estimation accuracy uses only time on that person’s **planned sheet tickets**, not all August logs.
