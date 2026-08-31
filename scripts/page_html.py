@@ -1,5 +1,404 @@
 """HTML shell for the August retrospective."""
 
+# Plain JS (not an f-string) so `{` / `}` stay valid.
+EXPORT_JS = r"""
+    function currentPerson() {
+      return (document.getElementById("reportPerson") || {}).value || personFromUrl() || "";
+    }
+    function personSlug(name) {
+      return String(name || "team")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "") || "team";
+    }
+    function filePrefix(name) {
+      return name ? personSlug(name) : "team";
+    }
+    function csvCell(value) {
+      const s = value == null ? "" : String(value);
+      if (/[",\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+      return s;
+    }
+    function toCsv(headers, rows) {
+      const lines = [headers.map(csvCell).join(",")];
+      for (const row of rows) lines.push(row.map(csvCell).join(","));
+      return "\uFEFF" + lines.join("\r\n") + "\r\n";
+    }
+    function cellText(el) {
+      return (el && (el.innerText || el.textContent) || "").replace(/\s+/g, " ").trim();
+    }
+    function parseHd(text) {
+      const t = String(text || "").trim();
+      const both = t.match(/([\d.]+)\s*d\s*\(\s*([\d.]+)\s*h\s*\)/i);
+      if (both) return { days: both[1], hours: both[2] };
+      const daysOnly = t.match(/([\d.]+)\s*d/i);
+      const hoursOnly = t.match(/([\d.]+)\s*h/i);
+      return {
+        days: daysOnly ? daysOnly[1] : "",
+        hours: hoursOnly ? hoursOnly[1] : ""
+      };
+    }
+    function parseTimepair(el) {
+      const pair = el && el.querySelector ? el.querySelector(".timepair") : null;
+      if (!pair) return { loggedDays: "", availDays: "", loggedHours: "", availHours: "", ...parseHd(cellText(el)) };
+      const bold = pair.querySelectorAll("b");
+      const small = pair.querySelector("small");
+      const loggedDays = bold[0] ? String(bold[0].textContent).replace(/[^\d.]/g, "") : "";
+      const availDays = bold[1] ? String(bold[1].textContent).replace(/[^\d.]/g, "") : "";
+      let loggedHours = "", availHours = "";
+      if (small) {
+        const m = String(small.textContent).match(/([\d.]+)\s*h\s*of\s*([\d.]+)\s*h/i);
+        if (m) {
+          loggedHours = m[1];
+          availHours = m[2];
+        }
+      }
+      return { loggedDays, availDays, loggedHours, availHours, days: loggedDays, hours: loggedHours };
+    }
+    function personRows(selector, name) {
+      return [...document.querySelectorAll(selector)].filter((el) => matchesPerson(el, name));
+    }
+    function mixPercents(td) {
+      const mix = td && td.querySelector ? td.querySelector(".mix") : null;
+      const title = (mix && mix.getAttribute("title")) || "";
+      const on = title.match(/On sheet\s+([\d.]+)%/i);
+      const off = title.match(/Off sheet\s+([\d.]+)%/i);
+      return { on: on ? on[1] : "", off: off ? off[1] : "" };
+    }
+    function worklogHours(label) {
+      const m = String(label || "").match(/([\d.]+)\s*h/i);
+      return m ? m[1] : "";
+    }
+
+    const CRC_TABLE = (function () {
+      const t = new Uint32Array(256);
+      for (let n = 0; n < 256; n++) {
+        let c = n;
+        for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+        t[n] = c >>> 0;
+      }
+      return t;
+    })();
+    function crc32(bytes) {
+      let c = 0xFFFFFFFF;
+      for (let i = 0; i < bytes.length; i++) c = CRC_TABLE[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+      return (c ^ 0xFFFFFFFF) >>> 0;
+    }
+    function u16(n) {
+      const b = new Uint8Array(2);
+      b[0] = n & 255;
+      b[1] = (n >>> 8) & 255;
+      return b;
+    }
+    function u32(n) {
+      const b = new Uint8Array(4);
+      b[0] = n & 255;
+      b[1] = (n >>> 8) & 255;
+      b[2] = (n >>> 16) & 255;
+      b[3] = (n >>> 24) & 255;
+      return b;
+    }
+    function concatBytes(parts) {
+      let len = 0;
+      for (const p of parts) len += p.length;
+      const out = new Uint8Array(len);
+      let o = 0;
+      for (const p of parts) {
+        out.set(p, o);
+        o += p.length;
+      }
+      return out;
+    }
+    function zipStore(files) {
+      const encoder = new TextEncoder();
+      const locals = [];
+      const centrals = [];
+      let offset = 0;
+      for (const file of files) {
+        const nameBytes = encoder.encode(file.name);
+        const data = encoder.encode(file.content);
+        const crc = crc32(data);
+        const local = concatBytes([
+          u32(0x04034b50),
+          u16(20),
+          u16(0x0800),
+          u16(0),
+          u16(0),
+          u16(0),
+          u32(crc),
+          u32(data.length),
+          u32(data.length),
+          u16(nameBytes.length),
+          u16(0),
+          nameBytes,
+          data
+        ]);
+        const central = concatBytes([
+          u32(0x02014b50),
+          u16(20),
+          u16(20),
+          u16(0x0800),
+          u16(0),
+          u16(0),
+          u16(0),
+          u32(crc),
+          u32(data.length),
+          u32(data.length),
+          u16(nameBytes.length),
+          u16(0),
+          u16(0),
+          u16(0),
+          u16(0),
+          u32(0),
+          u32(offset),
+          nameBytes
+        ]);
+        locals.push(local);
+        centrals.push(central);
+        offset += local.length;
+      }
+      const centralDir = concatBytes(centrals);
+      const end = concatBytes([
+        u32(0x06054b50),
+        u16(0),
+        u16(0),
+        u16(files.length),
+        u16(files.length),
+        u32(centralDir.length),
+        u32(offset),
+        u16(0)
+      ]);
+      return concatBytes([...locals, centralDir, end]);
+    }
+    function downloadBlob(filename, blob) {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+    }
+
+    function exportPeopleCsv(name) {
+      const headers = [
+        "person",
+        "plan_pd",
+        "leave_days",
+        "expected_days",
+        "expected_hours",
+        "logged_days",
+        "logged_hours",
+        "util",
+        "on_sheet_pct",
+        "off_sheet_pct",
+        "on_sheet_days",
+        "on_sheet_hours",
+        "off_sheet_days",
+        "off_sheet_hours",
+        "accuracy",
+        "worklogs",
+        "comments"
+      ];
+      const rows = personRows("#peopleBody tr", name).map((tr) => {
+        const td = tr.children;
+        const logged = parseTimepair(td[3]);
+        const on = parseTimepair(td[6]);
+        const off = parseTimepair(td[7]);
+        const mix = mixPercents(td[5]);
+        return [
+          cellText(td[0]),
+          cellText(td[1]),
+          cellText(td[2]).replace(/d$/i, ""),
+          logged.availDays,
+          logged.availHours,
+          logged.loggedDays,
+          logged.loggedHours,
+          cellText(td[4]),
+          mix.on,
+          mix.off,
+          on.loggedDays,
+          on.loggedHours,
+          off.loggedDays,
+          off.loggedHours,
+          cellText(td[8]),
+          cellText(td[9]),
+          cellText(td[10])
+        ];
+      });
+      return toCsv(headers, rows);
+    }
+    function exportSheetCsv(name) {
+      const headers = [
+        "jira",
+        "section",
+        "feature",
+        "assignee",
+        "plan_pd",
+        "logged_days",
+        "logged_hours",
+        "assignee_available_days",
+        "assignee_available_hours",
+        "accuracy",
+        "status"
+      ];
+      const rows = personRows("#sheetBody tr", name).map((tr) => {
+        const td = tr.children;
+        const logged = parseTimepair(td[5]);
+        return [
+          cellText(td[0]),
+          cellText(td[1]),
+          cellText(td[2]),
+          cellText(td[3]),
+          cellText(td[4]),
+          logged.loggedDays,
+          logged.loggedHours,
+          logged.availDays,
+          logged.availHours,
+          cellText(td[6]),
+          cellText(td[7])
+        ];
+      });
+      return toCsv(headers, rows);
+    }
+    function exportOffsheetCsv(name) {
+      const headers = [
+        "jira",
+        "type",
+        "summary",
+        "logged_by",
+        "logged_days",
+        "logged_hours",
+        "available_days",
+        "available_hours",
+        "comments",
+        "status"
+      ];
+      const rows = personRows("#offsheetBody tr", name).map((tr) => {
+        const td = tr.children;
+        const logged = parseTimepair(td[4]);
+        return [
+          cellText(td[0]),
+          cellText(td[1]),
+          cellText(td[2]),
+          cellText(td[3]),
+          logged.loggedDays,
+          logged.loggedHours,
+          logged.availDays,
+          logged.availHours,
+          cellText(td[5]),
+          cellText(td[6])
+        ];
+      });
+      return toCsv(headers, rows);
+    }
+    function exportBugsCsv(name) {
+      const headers = [
+        "key",
+        "summary",
+        "status",
+        "worked_by",
+        "august_days",
+        "august_hours"
+      ];
+      const rows = personRows("#bugBody tr", name).map((tr) => {
+        const td = tr.children;
+        const hd = parseHd(cellText(td[4]));
+        return [
+          cellText(td[0]),
+          cellText(td[1]),
+          cellText(td[2]),
+          cellText(td[3]),
+          hd.days,
+          hd.hours
+        ];
+      });
+      return toCsv(headers, rows);
+    }
+    function exportHeatmapCsv(name) {
+      const headCells = [...document.querySelectorAll("#daily thead th")];
+      const dateCols = [];
+      headCells.forEach((th, i) => {
+        if (!th.classList.contains("dayh")) return;
+        const day = parseInt(String(th.childNodes[0] && th.childNodes[0].textContent).trim(), 10);
+        if (!day) return;
+        dateCols.push({ index: i, iso: "2026-08-" + String(day).padStart(2, "0") });
+      });
+      const headers = ["person", ...dateCols.map((c) => c.iso), "logged_days", "logged_hours", "expected_days", "expected_hours"];
+      const rows = personRows("#heatBody tr", name).map((tr) => {
+        const cells = [...tr.children];
+        const logged = parseTimepair(cells[cells.length - 1]);
+        const values = dateCols.map((c) => cellText(cells[c.index]));
+        return [cellText(cells[0]), ...values, logged.loggedDays, logged.loggedHours, logged.availDays, logged.availHours];
+      });
+      return toCsv(headers, rows);
+    }
+    function exportJournalCsv(name) {
+      const headers = ["person", "date", "kind", "key", "hours", "on_sheet", "comment"];
+      const rows = [];
+      personRows("#journal .person-day", name).forEach((section) => {
+        const person = (section.getAttribute("data-person") || cellText(section.querySelector("h3"))).replace(/\s+\d.*/, "").trim();
+        section.querySelectorAll("details").forEach((block) => {
+          const summary = cellText(block.querySelector("summary"));
+          const dateMatch = summary.match(/(\d{4}-\d{2}-\d{2})/);
+          const date = dateMatch ? dateMatch[1] : "";
+          block.querySelectorAll("li").forEach((li) => {
+            const meta = cellText(li.querySelector(".meta"));
+            const key = cellText(li.querySelector("a"));
+            const typeEl = li.querySelector(".type");
+            const typeText = cellText(typeEl);
+            const onSheet = /sheet/i.test(typeText) && !/other/i.test(typeText)
+              ? "sheet"
+              : (/other/i.test(meta + " " + typeText) ? "other" : (/sheet/i.test(typeText) ? "sheet" : ""));
+            let comment = "";
+            const html = li.innerHTML;
+            const dash = html.split(" — ");
+            if (dash.length > 1) {
+              const tmp = document.createElement("div");
+              tmp.innerHTML = dash.slice(1).join(" — ");
+              comment = cellText(tmp);
+            }
+            const kind = /^worklog/i.test(meta) ? "worklog" : "comment";
+            rows.push([
+              person,
+              date,
+              kind,
+              key,
+              kind === "worklog" ? worklogHours(meta) : "",
+              onSheet,
+              comment
+            ]);
+          });
+        });
+      });
+      return toCsv(headers, rows);
+    }
+
+    async function exportCsvZip() {
+      const btn = document.getElementById("exportCsvZip");
+      const name = currentPerson();
+      const prefix = filePrefix(name);
+      if (btn) btn.disabled = true;
+      try {
+        const files = [
+          { name: prefix + "-people.csv", content: exportPeopleCsv(name) },
+          { name: prefix + "-sheet.csv", content: exportSheetCsv(name) },
+          { name: prefix + "-offsheet.csv", content: exportOffsheetCsv(name) },
+          { name: prefix + "-bugs.csv", content: exportBugsCsv(name) },
+          { name: prefix + "-heatmap.csv", content: exportHeatmapCsv(name) },
+          { name: prefix + "-journal.csv", content: exportJournalCsv(name) }
+        ];
+        const zipName = prefix + "-august-2026-csvs.zip";
+        const bytes = zipStore(files);
+        downloadBlob(zipName, new Blob([bytes], { type: "application/zip" }));
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+    const exportBtn = document.getElementById("exportCsvZip");
+    if (exportBtn) exportBtn.addEventListener("click", () => { exportCsvZip(); });
+"""
+
 
 def render_page(
     *,
@@ -79,6 +478,10 @@ def render_page(
           <span class="chip sheet person-only" id="personOnChip" hidden></span>
           <span class="chip other person-only" id="personOffChip" hidden></span>
           <span class="chip">Jira project HIEV</span>
+        </div>
+        <div class="export-bar">
+          <button type="button" class="export-btn" id="exportCsvZip">Export CSV</button>
+          <span class="export-hint" id="exportHint">Downloads a zip of UTF-8 CSVs for the full team. Person view exports that person only.</span>
         </div>
       </header>
 
@@ -392,6 +795,12 @@ def render_page(
       if (document.getElementById("sheetSearch")) filterRows("sheetSearch", "sheetBody");
       if (document.getElementById("offSearch")) filterRows("offSearch", "offsheetBody");
       updateEmptyStates(name);
+      const exportHint = document.getElementById("exportHint");
+      if (exportHint) {{
+        exportHint.textContent = name
+          ? "Downloads a zip of UTF-8 CSVs for " + name + " only."
+          : "Downloads a zip of UTF-8 CSVs for the full team. Person view exports that person only.";
+      }}
       if (name) window.scrollTo(0, 0);
     }}
     function filterRows(inputId, bodyId) {{
@@ -427,6 +836,7 @@ def render_page(
     }});
     window.addEventListener("popstate", () => applyPersonView(personFromUrl()));
     applyPersonView(personFromUrl());
+""" + EXPORT_JS + """
   </script>
 </body>
 </html>
