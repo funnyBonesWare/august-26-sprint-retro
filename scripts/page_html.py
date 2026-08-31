@@ -333,6 +333,47 @@ EXPORT_JS = r"""
       });
       return toCsv(headers, rows);
     }
+    function exportScrumCsv(name) {
+      const headers = [
+        "person",
+        "expected",
+        "attended",
+        "missed",
+        "attended_on_leave",
+        "attendance_pct",
+        "avg_duration"
+      ];
+      const rows = personRows("#scrumBody tr", name).map((tr) => {
+        const td = tr.children;
+        return [
+          cellText(td[0]),
+          cellText(td[1]),
+          cellText(td[2]),
+          cellText(td[3]),
+          cellText(td[4]),
+          cellText(td[5]),
+          cellText(td[6])
+        ];
+      });
+      return toCsv(headers, rows);
+    }
+    function exportScrumDaysCsv(name) {
+      const headCells = [...document.querySelectorAll("#scrumTicks thead th")];
+      const dateCols = [];
+      headCells.forEach((th, i) => {
+        if (!th.classList.contains("dayh")) return;
+        const day = parseInt(String(th.childNodes[0] && th.childNodes[0].textContent).trim(), 10);
+        if (!day) return;
+        dateCols.push({ index: i, iso: "2026-08-" + String(day).padStart(2, "0") });
+      });
+      const headers = ["person", ...dateCols.map((c) => c.iso)];
+      const rows = personRows("#scrumTickBody tr", name).map((tr) => {
+        const cells = [...tr.children];
+        const values = dateCols.map((c) => cellText(cells[c.index]));
+        return [cellText(cells[0]), ...values];
+      });
+      return toCsv(headers, rows);
+    }
     function exportJournalCsv(name) {
       const headers = ["person", "date", "kind", "key", "hours", "on_sheet", "comment"];
       const rows = [];
@@ -386,6 +427,8 @@ EXPORT_JS = r"""
           { name: prefix + "-offsheet.csv", content: exportOffsheetCsv(name) },
           { name: prefix + "-bugs.csv", content: exportBugsCsv(name) },
           { name: prefix + "-heatmap.csv", content: exportHeatmapCsv(name) },
+          { name: prefix + "-scrum.csv", content: exportScrumCsv(name) },
+          { name: prefix + "-scrum-days.csv", content: exportScrumDaysCsv(name) },
           { name: prefix + "-journal.csv", content: exportJournalCsv(name) }
         ];
         const zipName = prefix + "-august-2026-csvs.zip";
@@ -431,6 +474,11 @@ def render_page(
     fix_trs,
     daily_head,
     daily_body,
+    kpi_scrum,
+    scrum_note,
+    scrum_trs,
+    scrum_tick_head,
+    scrum_tick_body,
     person_opts,
     person_stats_json,
     journal,
@@ -464,6 +512,7 @@ def render_page(
       <a href="#accuracy">Estimation</a>
       <a href="#quality">Bugs &amp; fix hours</a>
       <a href="#daily">Daily time</a>
+      <a href="#scrum">Scrum attendance</a>
       <a href="#journal">Work log</a>
     </nav>
     <div class="content">
@@ -491,6 +540,7 @@ def render_page(
         <div class="kpi"><strong>{team_util if team_util is not None else "n/a"}</strong><span>Team util (logged ÷ available)</span></div>
         <div class="kpi"><strong>{avg_acc if avg_acc is not None else "n/a"}</strong><span>Mean ticket accuracy (worked keys)</span></div>
         <div class="kpi"><strong>{off_count}</strong><span>Off-sheet keys · {off_hours_label}</span></div>
+        <div class="kpi"><strong>{kpi_scrum}</strong><span>Scrum attendance (leave-adjusted)</span></div>
       </div>
       <div class="kpis person-only" id="personKpis" hidden>
         <div class="kpi"><strong id="pkLogged"></strong><span>Logged of available · 8h = 1d</span></div>
@@ -498,6 +548,7 @@ def render_page(
         <div class="kpi"><strong id="pkUtil"></strong><span>Util (logged ÷ available)</span></div>
         <div class="kpi"><strong id="pkPlan"></strong><span>Sheet plan PD</span></div>
         <div class="kpi"><strong id="pkBugs"></strong><span>Unique bugs worked</span></div>
+        <div class="kpi"><strong id="pkScrum"></strong><span>Scrum attendance</span></div>
       </div>
 
       <div class="split">
@@ -678,6 +729,43 @@ def render_page(
         </div>
       </section>
 
+      <section class="block" id="scrum">
+        <h2>6. Scrum call attendance</h2>
+        <p class="note team-only">{scrum_note}</p>
+        <p class="note person-only" id="scrumPersonNote" hidden></p>
+        <div class="wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Person</th>
+                <th class="num">Expected</th>
+                <th class="num">Attended</th>
+                <th class="num">Missed</th>
+                <th class="num">On leave joined</th>
+                <th class="num">Attendance</th>
+                <th class="num">Avg duration</th>
+              </tr>
+            </thead>
+            <tbody id="scrumBody">{scrum_trs}</tbody>
+          </table>
+        </div>
+        <p class="empty-msg" data-empty-for="scrumBody" hidden>No scrum attendance row for this person.</p>
+        <h3 class="note" style="margin-top:18px">Call days</h3>
+        <p class="note">P present · M missed · L leave (not expected) · A attended on leave. Columns are the 20 recorded ~09:30 IST calls only.</p>
+        <div class="legend">
+          <span class="heat scrum-present" style="padding:2px 8px">P present</span>
+          <span class="heat scrum-missed" style="padding:2px 8px">M missed</span>
+          <span class="heat scrum-leave" style="padding:2px 8px">L leave</span>
+          <span class="heat scrum-leave-attended" style="padding:2px 8px">A on leave</span>
+        </div>
+        <div class="wrap heatmap">
+          <table id="scrumTicks">
+            <thead><tr><th>Person</th>{scrum_tick_head}</tr></thead>
+            <tbody id="scrumTickBody">{scrum_tick_body}</tbody>
+          </table>
+        </div>
+      </section>
+
       <section class="block" id="journal">
         <h2>Daily worklogs and comments</h2>
         <p class="note">Expand a day to see ticket keys, time spent, and comments. <em>sheet</em> = August 26 plan; <em>other</em> = off-sheet. The sidebar person control filters this journal with the rest of the report.</p>
@@ -747,6 +835,7 @@ def render_page(
       setText("pkUtil", stats.util);
       setText("pkPlan", stats.plan);
       setText("pkBugs", String(stats.bugs));
+      setText("pkScrum", stats.scrum_html || "—");
       const onChip = document.getElementById("personOnChip");
       const offChip = document.getElementById("personOffChip");
       if (onChip) onChip.innerHTML = "On sheet " + stats.on_html;
@@ -763,6 +852,9 @@ def render_page(
         : "No bugs this person worked in August.");
       const fh = document.getElementById("fhPersonNote");
       if (fh) fh.innerHTML = "Bug time " + stats.bug_hours_html + ". Task time " + stats.task_hours_html + ".";
+      setText("scrumPersonNote", stats.scrum_html
+        ? (stats.scrum_html + " expected scrums" + (stats.scrum_missed ? (", " + stats.scrum_missed + " missed") : "") + ". Avg duration " + (stats.scrum_avg || "—") + ".")
+        : "No expected scrum calls for this person.");
     }}
     function applyPersonView(name) {{
       name = name || "";
@@ -774,7 +866,7 @@ def render_page(
       const lead = document.getElementById("heroLead");
       if (lead) {{
         lead.innerHTML = name
-          ? "This view is <strong>" + name + "</strong> only — their logged of available, leave, util, sheet and off-sheet tickets they touched, bugs they worked, heatmap, and work log. Team totals are hidden. 8h = 1d. <button type='button' class='name-link' id='backToTeam'>Back to team overview</button>."
+          ? "This view is <strong>" + name + "</strong> only — their logged of available, leave, util, sheet and off-sheet tickets they touched, bugs they worked, scrum attendance, heatmap, and work log. Team totals are hidden. 8h = 1d. <button type='button' class='name-link' id='backToTeam'>Back to team overview</button>."
           : LEAD_TEAM;
         const back = document.getElementById("backToTeam");
         if (back) back.addEventListener("click", () => applyPersonView(""));

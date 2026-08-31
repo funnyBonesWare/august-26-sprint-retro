@@ -405,6 +405,28 @@ select, input[type="search"] {
   color: #3b2670;
 }
 .heatmap td.leave:not(.h0) { box-shadow: inset 0 0 0 2px #7b5cb3; }
+.scrum-present {
+  background: #dceee4;
+  color: var(--sheet);
+  font-weight: 650;
+}
+.scrum-missed {
+  background: #fde8e6;
+  color: var(--bad);
+  font-weight: 650;
+}
+.scrum-leave {
+  background: #d4c4f0;
+  color: #3b2670;
+  font-weight: 650;
+}
+.scrum-leave-attended {
+  background: #dceee4;
+  color: var(--sheet);
+  font-weight: 650;
+  box-shadow: inset 0 0 0 2px #7b5cb3;
+}
+.heatmap td.scrum-skip { color: transparent; }
 .heat.h0 { color: transparent; }
 .heat.h1 { background: #edf3fa; color: #3d5a77; }
 .heat.h2 { background: #d4e4f5; color: #1f4b7a; }

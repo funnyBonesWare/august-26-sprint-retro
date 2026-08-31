@@ -11,6 +11,7 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 - Fix hours = August worklogs on Bug tickets vs Task/Sub-task tickets (sheet and off-sheet).
 - Off-sheet work = HIEV tasks/bugs/other keys with August worklogs or comments that are not on the August 26 sheet.
 - Expected hours = weekdays in August minus Fri 28 public holiday minus that person's planned/sick leave (8h = 1d; Deepak 12 Aug is 0.5d first-half leave).
+- Scrum attendance = Teams call Participants sheet. Expected calls = weekdays with a recorded ~09:30 IST scrum minus PH 28 minus leave that covers the call (full-day, or Deepak 12 Aug first-half). Rate = attended expected ÷ expected. Joining on leave is recorded but not a miss.
 
 ## 1. Planned vs actual days
 
@@ -673,6 +674,63 @@ Total: **155** distinct HIEV bugs with August worklogs or comments (132 Done/Rea
 | Tarun |  |  | 13.0 |  | 16.0 | 1.0 |  |  | 3.0 | 7.5 | 8.0 | 8.0 | 8.0 |  |  | 8.0 | 8.0 | 7.0 | 6.0 | 7.0 |  |  | 7.0 | 8.0 | 0.5 | 8.0 |  |  |  | 7.0 |  | 16.4 of 20.0d (131h of 160h) |
 | Twisha |  | 18.0 | 2.0 | 4.0 | 3.0 | 13.2 | 5.0 |  |  | 6.0 | 1.0 | 9.0 | 4.0 | 2.0 |  |  | 6.0 | L | L | 0.2 | 8.0 |  |  |  | 8.0 | 11.3 |  |  |  |  | 6.0 | 13.3 of 18.0d (107h of 144h) |
 | Vinay |  |  | 3.8 | 4.8 | 4.2 |  |  |  |  | 8.0 |  | 6.0 |  |  |  | 10.0 | 5.9 |  |  |  | L |  |  |  |  |  |  |  |  |  | 5.0 | 6.0 of 19.0d (48h of 152h) |
+
+## 6. Scrum call attendance
+
+Team rate **258/332** expected calls (77.7%). 20 recorded Teams scrums, all ~09:30 IST. Leave-adjusted: full-day leave is not a miss; Deepak 12 Aug first-half leave covers the morning call.
+
+- Source: Teams Meeting Summary + Participants sheets (unique person per call).
+- Expected call days = weekdays in Aug 2026 with a recorded scrum, excluding Fri 28 public holiday and that person's leave covering the call.
+- No weekend calls in the export; weekends are not expected.
+- All 20 recorded calls started ~09:30 (morning IST), so Deepak's 12 Aug first-half leave covers the call: not expected, not a miss.
+- Full-day leave is never counted as a miss. Joining on a leave day is 'attended on leave' and does not change the rate.
+- Rate = attended expected calls ÷ expected calls (leave-adjusted).
+
+Unmatched attendees (not on the retro roster): Dinesh Chandra (13 calls); Saravana Kumar (1 call).
+
+| Person | Expected | Attended | Missed | On leave joined | Attendance | Avg duration |
+|---|---:|---:|---:|---:|---:|---|
+| Surya | 20 | 0 | 20 | 0 | 0% | — |
+| Twisha | 18 | 10 | 8 | 0 | 56% | 15m 39s |
+| Manjunath | 16 | 9 | 7 | 0 | 56% | 17m 6s |
+| Marish | 19 | 13 | 6 | 0 | 68% | 18m 1s |
+| Dharshini | 18 | 13 | 5 | 0 | 72% | 18m 24s |
+| Rushika | 20 | 15 | 5 | 0 | 75% | 16m 10s |
+| Sudeep | 19 | 15 | 4 | 0 | 79% | 16m 9s |
+| Rashmi | 15 | 12 | 3 | 0 | 80% | 13m 51s |
+| Dhanush | 18 | 15 | 3 | 0 | 83% | 15m 59s |
+| Shambu | 19 | 16 | 3 | 0 | 84% | 18m 8s |
+| Srikant | 17 | 15 | 2 | 0 | 88% | 18m 25s |
+| Vinay | 19 | 17 | 2 | 0 | 89% | 14m 39s |
+| Priyanshu | 20 | 18 | 2 | 0 | 90% | 17m 27s |
+| Sahil Siddiqui | 16 | 15 | 1 | 0 | 94% | 19m 9s |
+| Deepak | 19 | 18 | 1 | 0 | 95% | 17m 36s |
+| Sahil Kumar | 20 | 19 | 1 | 0 | 95% | 17m 20s |
+| Tarun | 20 | 19 | 1 | 0 | 95% | 17m 30s |
+| Nagaraju | 19 | 19 | 0 | 0 | 100% | 18m 22s |
+
+Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
+
+| Person | 03 | 04 | 05 | 06 | 07 | 10 | 11 | 12 | 13 | 14 | 17 | 18 | 19 | 20 | 21 | 24 | 25 | 26 | 27 | 31 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Deepak | P | P | P | P | P | P | P | L | P | P | P | M | P | P | P | P | P | P | P | P |
+| Dhanush | P | M | M | M | P | P | P | P | P | P | P | P | L | P | L | P | P | P | P | P |
+| Dharshini | L | M | P | P | M | P | P | P | M | P | P | P | P | P | L | M | P | P | P | M |
+| Manjunath | M | P | P | M | L | L | P | M | P | P | M | P | P | P | M | M | L | M | P | L |
+| Marish | P | P | P | M | P | P | M | P | P | P | M | P | L | M | P | M | P | M | P | P |
+| Nagaraju | P | P | P | P | P | P | P | P | P | P | P | P | P | P | P | P | P | P | P | L |
+| Priyanshu | P | P | P | P | M | P | P | P | P | P | M | P | P | P | P | P | P | P | P | P |
+| Rashmi | L | L | L | M | M | M | L | L | P | P | P | P | P | P | P | P | P | P | P | P |
+| Rushika | P | P | M | P | P | M | P | P | M | P | P | P | P | M | P | P | P | P | P | M |
+| Sahil Kumar | P | P | P | P | P | P | P | P | P | P | P | M | P | P | P | P | P | P | P | P |
+| Sahil Siddiqui | L | P | P | P | P | P | P | P | P | P | P | P | L | L | M | P | P | L | P | P |
+| Shambu | P | P | P | P | P | P | P | P | P | M | P | P | P | P | M | L | M | P | P | P |
+| Srikant | P | P | P | P | P | P | P | P | L | L | P | P | M | M | P | P | P | P | L | P |
+| Sudeep | P | P | P | P | M | P | P | P | P | P | M | P | M | P | P | L | P | P | M | P |
+| Surya | M | M | M | M | M | M | M | M | M | M | M | M | M | M | M | M | M | M | M | M |
+| Tarun | P | P | P | P | P | P | M | P | P | P | P | P | P | P | P | P | P | P | P | P |
+| Twisha | M | P | P | P | M | P | M | P | P | P | M | L | L | M | M | M | P | P | P | M |
+| Vinay | M | P | P | P | P | P | P | P | P | P | P | P | P | P | L | P | P | M | P | P |
 
 ## Daily worklogs and comments
 

@@ -11,7 +11,8 @@
     "Bugs worked = distinct HIEV issuetype Bug keys with at least one August worklog or August comment. A person is credited for a unique bug key if they logged time or commented on it in August \u2014 not the ticket assignee at create time.",
     "Fix hours = August worklogs on Bug tickets vs Task/Sub-task tickets (sheet and off-sheet).",
     "Off-sheet work = HIEV tasks/bugs/other keys with August worklogs or comments that are not on the August 26 sheet.",
-    "Expected hours = weekdays in August minus Fri 28 public holiday minus that person's planned/sick leave (8h = 1d; Deepak 12 Aug is 0.5d first-half leave)."
+    "Expected hours = weekdays in August minus Fri 28 public holiday minus that person's planned/sick leave (8h = 1d; Deepak 12 Aug is 0.5d first-half leave).",
+    "Scrum attendance = Teams call Participants sheet. Expected calls = weekdays with a recorded ~09:30 IST scrum minus PH 28 minus leave that covers the call (full-day, or Deepak 12 Aug first-half). Rate = attended expected \u00f7 expected. Joining on leave is recorded but not a miss."
   ],
   "leave": [
     {
@@ -6795,7 +6796,13 @@
       "worklog_count": 42,
       "offsheet_worklog_count": 27,
       "offsheet_comment_count": 26,
-      "bugs_worked": 0
+      "bugs_worked": 0,
+      "scrum_expected": 19,
+      "scrum_attended": 18,
+      "scrum_missed": 1,
+      "scrum_rate": 0.9474,
+      "scrum_avg_duration": "17m 36s",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Priyanshu",
@@ -6815,7 +6822,13 @@
       "worklog_count": 48,
       "offsheet_worklog_count": 42,
       "offsheet_comment_count": 16,
-      "bugs_worked": 0
+      "bugs_worked": 0,
+      "scrum_expected": 20,
+      "scrum_attended": 18,
+      "scrum_missed": 2,
+      "scrum_rate": 0.9,
+      "scrum_avg_duration": "17m 27s",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Sahil Kumar",
@@ -6835,7 +6848,13 @@
       "worklog_count": 65,
       "offsheet_worklog_count": 61,
       "offsheet_comment_count": 58,
-      "bugs_worked": 9
+      "bugs_worked": 9,
+      "scrum_expected": 20,
+      "scrum_attended": 19,
+      "scrum_missed": 1,
+      "scrum_rate": 0.95,
+      "scrum_avg_duration": "17m 20s",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Dhanush",
@@ -6855,7 +6874,13 @@
       "worklog_count": 50,
       "offsheet_worklog_count": 39,
       "offsheet_comment_count": 37,
-      "bugs_worked": 13
+      "bugs_worked": 13,
+      "scrum_expected": 18,
+      "scrum_attended": 15,
+      "scrum_missed": 3,
+      "scrum_rate": 0.8333,
+      "scrum_avg_duration": "15m 59s",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Sudeep",
@@ -6875,7 +6900,13 @@
       "worklog_count": 37,
       "offsheet_worklog_count": 37,
       "offsheet_comment_count": 56,
-      "bugs_worked": 13
+      "bugs_worked": 13,
+      "scrum_expected": 19,
+      "scrum_attended": 15,
+      "scrum_missed": 4,
+      "scrum_rate": 0.7895,
+      "scrum_avg_duration": "16m 9s",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Marish",
@@ -6895,7 +6926,13 @@
       "worklog_count": 20,
       "offsheet_worklog_count": 17,
       "offsheet_comment_count": 11,
-      "bugs_worked": 0
+      "bugs_worked": 0,
+      "scrum_expected": 19,
+      "scrum_attended": 13,
+      "scrum_missed": 6,
+      "scrum_rate": 0.6842,
+      "scrum_avg_duration": "18m 1s",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Nagaraju",
@@ -6915,7 +6952,13 @@
       "worklog_count": 169,
       "offsheet_worklog_count": 169,
       "offsheet_comment_count": 131,
-      "bugs_worked": 84
+      "bugs_worked": 84,
+      "scrum_expected": 19,
+      "scrum_attended": 19,
+      "scrum_missed": 0,
+      "scrum_rate": 1.0,
+      "scrum_avg_duration": "18m 22s",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Tarun",
@@ -6935,7 +6978,13 @@
       "worklog_count": 27,
       "offsheet_worklog_count": 7,
       "offsheet_comment_count": 7,
-      "bugs_worked": 0
+      "bugs_worked": 0,
+      "scrum_expected": 20,
+      "scrum_attended": 19,
+      "scrum_missed": 1,
+      "scrum_rate": 0.95,
+      "scrum_avg_duration": "17m 30s",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Sahil Siddiqui",
@@ -6955,7 +7004,13 @@
       "worklog_count": 97,
       "offsheet_worklog_count": 78,
       "offsheet_comment_count": 189,
-      "bugs_worked": 55
+      "bugs_worked": 55,
+      "scrum_expected": 16,
+      "scrum_attended": 15,
+      "scrum_missed": 1,
+      "scrum_rate": 0.9375,
+      "scrum_avg_duration": "19m 9s",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Twisha",
@@ -6975,7 +7030,13 @@
       "worklog_count": 34,
       "offsheet_worklog_count": 22,
       "offsheet_comment_count": 31,
-      "bugs_worked": 19
+      "bugs_worked": 19,
+      "scrum_expected": 18,
+      "scrum_attended": 10,
+      "scrum_missed": 8,
+      "scrum_rate": 0.5556,
+      "scrum_avg_duration": "15m 39s",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Dharshini",
@@ -6995,7 +7056,13 @@
       "worklog_count": 60,
       "offsheet_worklog_count": 46,
       "offsheet_comment_count": 54,
-      "bugs_worked": 25
+      "bugs_worked": 25,
+      "scrum_expected": 18,
+      "scrum_attended": 13,
+      "scrum_missed": 5,
+      "scrum_rate": 0.7222,
+      "scrum_avg_duration": "18m 24s",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Shambu",
@@ -7015,7 +7082,13 @@
       "worklog_count": 35,
       "offsheet_worklog_count": 28,
       "offsheet_comment_count": 32,
-      "bugs_worked": 20
+      "bugs_worked": 20,
+      "scrum_expected": 19,
+      "scrum_attended": 16,
+      "scrum_missed": 3,
+      "scrum_rate": 0.8421,
+      "scrum_avg_duration": "18m 8s",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Surya",
@@ -7035,7 +7108,13 @@
       "worklog_count": 65,
       "offsheet_worklog_count": 46,
       "offsheet_comment_count": 34,
-      "bugs_worked": 31
+      "bugs_worked": 31,
+      "scrum_expected": 20,
+      "scrum_attended": 0,
+      "scrum_missed": 20,
+      "scrum_rate": 0.0,
+      "scrum_avg_duration": "\u2014",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Srikant",
@@ -7055,7 +7134,13 @@
       "worklog_count": 29,
       "offsheet_worklog_count": 23,
       "offsheet_comment_count": 21,
-      "bugs_worked": 0
+      "bugs_worked": 0,
+      "scrum_expected": 17,
+      "scrum_attended": 15,
+      "scrum_missed": 2,
+      "scrum_rate": 0.8824,
+      "scrum_avg_duration": "18m 25s",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Manjunath",
@@ -7075,7 +7160,13 @@
       "worklog_count": 20,
       "offsheet_worklog_count": 4,
       "offsheet_comment_count": 3,
-      "bugs_worked": 1
+      "bugs_worked": 1,
+      "scrum_expected": 16,
+      "scrum_attended": 9,
+      "scrum_missed": 7,
+      "scrum_rate": 0.5625,
+      "scrum_avg_duration": "17m 6s",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Rashmi",
@@ -7095,7 +7186,13 @@
       "worklog_count": 75,
       "offsheet_worklog_count": 75,
       "offsheet_comment_count": 72,
-      "bugs_worked": 58
+      "bugs_worked": 58,
+      "scrum_expected": 15,
+      "scrum_attended": 12,
+      "scrum_missed": 3,
+      "scrum_rate": 0.8,
+      "scrum_avg_duration": "13m 51s",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Rushika",
@@ -7115,7 +7212,13 @@
       "worklog_count": 17,
       "offsheet_worklog_count": 8,
       "offsheet_comment_count": 0,
-      "bugs_worked": 0
+      "bugs_worked": 0,
+      "scrum_expected": 20,
+      "scrum_attended": 15,
+      "scrum_missed": 5,
+      "scrum_rate": 0.75,
+      "scrum_avg_duration": "16m 10s",
+      "scrum_attended_on_leave": 0
     },
     {
       "person": "Vinay",
@@ -7135,7 +7238,13 @@
       "worklog_count": 23,
       "offsheet_worklog_count": 19,
       "offsheet_comment_count": 36,
-      "bugs_worked": 13
+      "bugs_worked": 13,
+      "scrum_expected": 19,
+      "scrum_attended": 17,
+      "scrum_missed": 2,
+      "scrum_rate": 0.8947,
+      "scrum_avg_duration": "14m 39s",
+      "scrum_attended_on_leave": 0
     }
   ],
   "bugs": [
@@ -31646,5 +31755,3550 @@
       "body": "cpms unit tests will be reviewed after UAT release",
       "on_sheet": true
     }
-  ]
+  ],
+  "scrum": {
+    "call_dates": [
+      "2026-08-03",
+      "2026-08-04",
+      "2026-08-05",
+      "2026-08-06",
+      "2026-08-07",
+      "2026-08-10",
+      "2026-08-11",
+      "2026-08-12",
+      "2026-08-13",
+      "2026-08-14",
+      "2026-08-17",
+      "2026-08-18",
+      "2026-08-19",
+      "2026-08-20",
+      "2026-08-21",
+      "2026-08-24",
+      "2026-08-25",
+      "2026-08-26",
+      "2026-08-27",
+      "2026-08-31"
+    ],
+    "meetings": [
+      {
+        "date": "2026-08-03",
+        "title": "Scrum call",
+        "attended_participants": 12,
+        "start": "2026-08-03T09:30:14",
+        "end": "2026-08-03T09:43:33",
+        "duration": "13m 19s",
+        "duration_seconds": 799,
+        "average_attendance": "12m 38s",
+        "source_file": "Scrum_call_-_Attendance_report_8-03-26.csv"
+      },
+      {
+        "date": "2026-08-04",
+        "title": "Scrum call",
+        "attended_participants": 15,
+        "start": "2026-08-04T09:30:06",
+        "end": "2026-08-04T09:55:06",
+        "duration": "24m 59s",
+        "duration_seconds": 1499,
+        "average_attendance": "23m 45s",
+        "source_file": "Scrum_call_-_Attendance_report_8-04-26.csv"
+      },
+      {
+        "date": "2026-08-05",
+        "title": "Scrum call",
+        "attended_participants": 16,
+        "start": "2026-08-05T09:30:23",
+        "end": "2026-08-05T10:05:15",
+        "duration": "34m 51s",
+        "duration_seconds": 2091,
+        "average_attendance": "33m 26s",
+        "source_file": "Scrum_call_-_Attendance_report_8-05-26.csv"
+      },
+      {
+        "date": "2026-08-06",
+        "title": "Scrum call",
+        "attended_participants": 14,
+        "start": "2026-08-06T09:30:18",
+        "end": "2026-08-06T09:56:09",
+        "duration": "25m 51s",
+        "duration_seconds": 1551,
+        "average_attendance": "24m 4s",
+        "source_file": "Scrum_call_-_Attendance_report_8-06-26.csv"
+      },
+      {
+        "date": "2026-08-07",
+        "title": "Scrum call",
+        "attended_participants": 12,
+        "start": "2026-08-07T09:30:11",
+        "end": "2026-08-07T09:49:20",
+        "duration": "19m 8s",
+        "duration_seconds": 1148,
+        "average_attendance": "17m 56s",
+        "source_file": "Scrum_call_-_Attendance_report_8-07-26.csv"
+      },
+      {
+        "date": "2026-08-10",
+        "title": "Scrum call",
+        "attended_participants": 15,
+        "start": "2026-08-10T09:30:07",
+        "end": "2026-08-10T09:58:28",
+        "duration": "28m 21s",
+        "duration_seconds": 1701,
+        "average_attendance": "25m 17s",
+        "source_file": "Scrum_call_-_Attendance_report_8-10-26.csv"
+      },
+      {
+        "date": "2026-08-11",
+        "title": "Scrum call",
+        "attended_participants": 14,
+        "start": "2026-08-11T09:30:11",
+        "end": "2026-08-11T09:53:58",
+        "duration": "23m 47s",
+        "duration_seconds": 1427,
+        "average_attendance": "21m 9s",
+        "source_file": "Scrum_call_-_Attendance_report_8-11-26.csv"
+      },
+      {
+        "date": "2026-08-12",
+        "title": "Scrum call",
+        "attended_participants": 15,
+        "start": "2026-08-12T09:30:26",
+        "end": "2026-08-12T09:54:39",
+        "duration": "24m 12s",
+        "duration_seconds": 1452,
+        "average_attendance": "22m 39s",
+        "source_file": "Scrum_call_-_Attendance_report_8-12-26.csv"
+      },
+      {
+        "date": "2026-08-13",
+        "title": "Scrum call",
+        "attended_participants": 15,
+        "start": "2026-08-13T09:30:14",
+        "end": "2026-08-13T09:45:06",
+        "duration": "14m 51s",
+        "duration_seconds": 891,
+        "average_attendance": "13m 4s",
+        "source_file": "Scrum_call_-_Attendance_report_8-13-26.csv"
+      },
+      {
+        "date": "2026-08-14",
+        "title": "Scrum call",
+        "attended_participants": 15,
+        "start": "2026-08-14T09:30:04",
+        "end": "2026-08-14T09:51:00",
+        "duration": "20m 54s",
+        "duration_seconds": 1254,
+        "average_attendance": "19m 27s",
+        "source_file": "Scrum_call_-_Attendance_report_8-14-26.csv"
+      },
+      {
+        "date": "2026-08-17",
+        "title": "Scrum call",
+        "attended_participants": 12,
+        "start": "2026-08-17T09:28:16",
+        "end": "2026-08-17T09:53:33",
+        "duration": "25m 16s",
+        "duration_seconds": 1516,
+        "average_attendance": "16m 15s",
+        "source_file": "Scrum_call_-_Attendance_report_8-17-26.csv"
+      },
+      {
+        "date": "2026-08-18",
+        "title": "Scrum call",
+        "attended_participants": 15,
+        "start": "2026-08-18T09:29:10",
+        "end": "2026-08-18T09:44:23",
+        "duration": "15m 12s",
+        "duration_seconds": 912,
+        "average_attendance": "12m 40s",
+        "source_file": "Scrum_call_-_Attendance_report_8-18-26.csv"
+      },
+      {
+        "date": "2026-08-19",
+        "title": "Scrum call",
+        "attended_participants": 12,
+        "start": "2026-08-19T09:29:36",
+        "end": "2026-08-19T09:43:25",
+        "duration": "13m 49s",
+        "duration_seconds": 829,
+        "average_attendance": "12m 8s",
+        "source_file": "Scrum_call_-_Attendance_report_8-19-26.csv"
+      },
+      {
+        "date": "2026-08-20",
+        "title": "Scrum call",
+        "attended_participants": 13,
+        "start": "2026-08-20T09:30:15",
+        "end": "2026-08-20T09:42:46",
+        "duration": "12m 31s",
+        "duration_seconds": 751,
+        "average_attendance": "11m 50s",
+        "source_file": "Scrum_call_-_Attendance_report_8-20-26.csv"
+      },
+      {
+        "date": "2026-08-21",
+        "title": "Scrum call",
+        "attended_participants": 10,
+        "start": "2026-08-21T09:30:11",
+        "end": "2026-08-21T09:41:49",
+        "duration": "11m 37s",
+        "duration_seconds": 697,
+        "average_attendance": "10m 15s",
+        "source_file": "Scrum_call_-_Attendance_report_8-21-26.csv"
+      },
+      {
+        "date": "2026-08-24",
+        "title": "Scrum call",
+        "attended_participants": 11,
+        "start": "2026-08-24T09:29:42",
+        "end": "2026-08-24T09:42:09",
+        "duration": "12m 28s",
+        "duration_seconds": 748,
+        "average_attendance": "11m 8s",
+        "source_file": "Scrum_call_-_Attendance_report_8-24-26.csv"
+      },
+      {
+        "date": "2026-08-25",
+        "title": "Scrum call",
+        "attended_participants": 16,
+        "start": "2026-08-25T09:30:07",
+        "end": "2026-08-25T09:43:45",
+        "duration": "13m 38s",
+        "duration_seconds": 818,
+        "average_attendance": "12m 20s",
+        "source_file": "Scrum_call_-_Attendance_report_8-25-26.csv"
+      },
+      {
+        "date": "2026-08-26",
+        "title": "Scrum call",
+        "attended_participants": 13,
+        "start": "2026-08-26T09:30:10",
+        "end": "2026-08-26T09:43:41",
+        "duration": "13m 30s",
+        "duration_seconds": 810,
+        "average_attendance": "11m 35s",
+        "source_file": "Scrum_call_-_Attendance_report_8-26-26.csv"
+      },
+      {
+        "date": "2026-08-27",
+        "title": "Scrum call",
+        "attended_participants": 15,
+        "start": "2026-08-27T09:29:47",
+        "end": "2026-08-27T09:44:47",
+        "duration": "15m",
+        "duration_seconds": 900,
+        "average_attendance": "12m 49s",
+        "source_file": "Scrum_call_-_Attendance_report_8-27-26.csv"
+      },
+      {
+        "date": "2026-08-31",
+        "title": "Scrum call",
+        "attended_participants": 12,
+        "start": "2026-08-31T09:30:23",
+        "end": "2026-08-31T09:47:55",
+        "duration": "17m 30s",
+        "duration_seconds": 1050,
+        "average_attendance": "13m 29s",
+        "source_file": "Scrum_call_-_Attendance_report_8-31-26.csv"
+      }
+    ],
+    "people": [
+      {
+        "person": "Deepak",
+        "expected": 19,
+        "attended": 18,
+        "missed": 1,
+        "attended_on_leave": 0,
+        "leave_call_days": 1,
+        "rate": 0.9474,
+        "avg_duration_seconds": 1056,
+        "avg_duration": "17m 36s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "present",
+            "duration_seconds": 787,
+            "duration": "13m 7s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "present",
+            "duration_seconds": 1472,
+            "duration": "24m 32s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "present",
+            "duration_seconds": 2082,
+            "duration": "34m 42s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "present",
+            "duration_seconds": 1518,
+            "duration": "25m 18s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "present",
+            "duration_seconds": 1105,
+            "duration": "18m 25s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "present",
+            "duration_seconds": 1585,
+            "duration": "26m 25s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "present",
+            "duration_seconds": 1410,
+            "duration": "23m 30s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 0.5,
+            "leave_note": "First half"
+          },
+          {
+            "date": "2026-08-13",
+            "status": "present",
+            "duration_seconds": 851,
+            "duration": "14m 11s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "present",
+            "duration_seconds": 1233,
+            "duration": "20m 33s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "present",
+            "duration_seconds": 902,
+            "duration": "15m 2s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "present",
+            "duration_seconds": 774,
+            "duration": "12m 54s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "present",
+            "duration_seconds": 743,
+            "duration": "12m 23s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "present",
+            "duration_seconds": 669,
+            "duration": "11m 9s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "present",
+            "duration_seconds": 735,
+            "duration": "12m 15s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "present",
+            "duration_seconds": 748,
+            "duration": "12m 28s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "present",
+            "duration_seconds": 756,
+            "duration": "12m 36s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "present",
+            "duration_seconds": 843,
+            "duration": "14m 3s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "present",
+            "duration_seconds": 794,
+            "duration": "13m 14s",
+            "leave_fraction": null,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-18"
+        ],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Dhanush",
+        "expected": 18,
+        "attended": 15,
+        "missed": 3,
+        "attended_on_leave": 0,
+        "leave_call_days": 2,
+        "rate": 0.8333,
+        "avg_duration_seconds": 959,
+        "avg_duration": "15m 59s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "present",
+            "duration_seconds": 754,
+            "duration": "12m 34s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "present",
+            "duration_seconds": 1117,
+            "duration": "18m 37s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "present",
+            "duration_seconds": 1589,
+            "duration": "26m 29s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "present",
+            "duration_seconds": 1343,
+            "duration": "22m 23s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "present",
+            "duration_seconds": 1428,
+            "duration": "23m 48s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "present",
+            "duration_seconds": 853,
+            "duration": "14m 13s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "present",
+            "duration_seconds": 1232,
+            "duration": "20m 32s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "present",
+            "duration_seconds": 1117,
+            "duration": "18m 37s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "present",
+            "duration_seconds": 695,
+            "duration": "11m 35s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "present",
+            "duration_seconds": 613,
+            "duration": "10m 13s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "present",
+            "duration_seconds": 658,
+            "duration": "10m 58s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "present",
+            "duration_seconds": 703,
+            "duration": "11m 43s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "present",
+            "duration_seconds": 665,
+            "duration": "11m 5s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "present",
+            "duration_seconds": 793,
+            "duration": "13m 13s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "present",
+            "duration_seconds": 823,
+            "duration": "13m 43s",
+            "leave_fraction": null,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-04",
+          "2026-08-05",
+          "2026-08-06"
+        ],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Dharshini",
+        "expected": 18,
+        "attended": 13,
+        "missed": 5,
+        "attended_on_leave": 0,
+        "leave_call_days": 2,
+        "rate": 0.7222,
+        "avg_duration_seconds": 1104,
+        "avg_duration": "18m 24s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "present",
+            "duration_seconds": 2075,
+            "duration": "34m 35s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "present",
+            "duration_seconds": 1490,
+            "duration": "24m 50s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "present",
+            "duration_seconds": 1539,
+            "duration": "25m 39s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "present",
+            "duration_seconds": 1380,
+            "duration": "23m",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "present",
+            "duration_seconds": 1366,
+            "duration": "22m 46s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "present",
+            "duration_seconds": 1166,
+            "duration": "19m 26s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "present",
+            "duration_seconds": 919,
+            "duration": "15m 19s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "present",
+            "duration_seconds": 761,
+            "duration": "12m 41s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "present",
+            "duration_seconds": 695,
+            "duration": "11m 35s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "present",
+            "duration_seconds": 672,
+            "duration": "11m 12s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "present",
+            "duration_seconds": 808,
+            "duration": "13m 28s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "present",
+            "duration_seconds": 713,
+            "duration": "11m 53s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "present",
+            "duration_seconds": 765,
+            "duration": "12m 45s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-04",
+          "2026-08-07",
+          "2026-08-13",
+          "2026-08-24",
+          "2026-08-31"
+        ],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Manjunath",
+        "expected": 16,
+        "attended": 9,
+        "missed": 7,
+        "attended_on_leave": 0,
+        "leave_call_days": 4,
+        "rate": 0.5625,
+        "avg_duration_seconds": 1026,
+        "avg_duration": "17m 6s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "present",
+            "duration_seconds": 1446,
+            "duration": "24m 6s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "present",
+            "duration_seconds": 1663,
+            "duration": "27m 43s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "present",
+            "duration_seconds": 1348,
+            "duration": "22m 28s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "present",
+            "duration_seconds": 735,
+            "duration": "12m 15s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "present",
+            "duration_seconds": 1172,
+            "duration": "19m 32s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "present",
+            "duration_seconds": 846,
+            "duration": "14m 6s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "present",
+            "duration_seconds": 615,
+            "duration": "10m 15s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "present",
+            "duration_seconds": 692,
+            "duration": "11m 32s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "present",
+            "duration_seconds": 715,
+            "duration": "11m 55s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-03",
+          "2026-08-06",
+          "2026-08-12",
+          "2026-08-17",
+          "2026-08-21",
+          "2026-08-24",
+          "2026-08-26"
+        ],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Marish",
+        "expected": 19,
+        "attended": 13,
+        "missed": 6,
+        "attended_on_leave": 0,
+        "leave_call_days": 1,
+        "rate": 0.6842,
+        "avg_duration_seconds": 1081,
+        "avg_duration": "18m 1s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "present",
+            "duration_seconds": 769,
+            "duration": "12m 49s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "present",
+            "duration_seconds": 1433,
+            "duration": "23m 53s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "present",
+            "duration_seconds": 2059,
+            "duration": "34m 19s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "present",
+            "duration_seconds": 1101,
+            "duration": "18m 21s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "present",
+            "duration_seconds": 1573,
+            "duration": "26m 13s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "present",
+            "duration_seconds": 1437,
+            "duration": "23m 57s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "present",
+            "duration_seconds": 815,
+            "duration": "13m 35s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "present",
+            "duration_seconds": 1113,
+            "duration": "18m 33s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "present",
+            "duration_seconds": 801,
+            "duration": "13m 21s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "present",
+            "duration_seconds": 613,
+            "duration": "10m 13s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "present",
+            "duration_seconds": 740,
+            "duration": "12m 20s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "present",
+            "duration_seconds": 847,
+            "duration": "14m 7s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "present",
+            "duration_seconds": 751,
+            "duration": "12m 31s",
+            "leave_fraction": null,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-06",
+          "2026-08-11",
+          "2026-08-17",
+          "2026-08-20",
+          "2026-08-24",
+          "2026-08-26"
+        ],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Nagaraju",
+        "expected": 19,
+        "attended": 19,
+        "missed": 0,
+        "attended_on_leave": 0,
+        "leave_call_days": 1,
+        "rate": 1.0,
+        "avg_duration_seconds": 1102,
+        "avg_duration": "18m 22s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "present",
+            "duration_seconds": 790,
+            "duration": "13m 10s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "present",
+            "duration_seconds": 1497,
+            "duration": "24m 57s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "present",
+            "duration_seconds": 2057,
+            "duration": "34m 17s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "present",
+            "duration_seconds": 1541,
+            "duration": "25m 41s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "present",
+            "duration_seconds": 1125,
+            "duration": "18m 45s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "present",
+            "duration_seconds": 1596,
+            "duration": "26m 36s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "present",
+            "duration_seconds": 1421,
+            "duration": "23m 41s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "present",
+            "duration_seconds": 1420,
+            "duration": "23m 40s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "present",
+            "duration_seconds": 877,
+            "duration": "14m 37s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "present",
+            "duration_seconds": 1236,
+            "duration": "20m 36s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "present",
+            "duration_seconds": 1068,
+            "duration": "17m 48s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "present",
+            "duration_seconds": 895,
+            "duration": "14m 55s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "present",
+            "duration_seconds": 797,
+            "duration": "13m 17s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "present",
+            "duration_seconds": 741,
+            "duration": "12m 21s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "present",
+            "duration_seconds": 668,
+            "duration": "11m 8s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "present",
+            "duration_seconds": 725,
+            "duration": "12m 5s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "present",
+            "duration_seconds": 816,
+            "duration": "13m 36s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "present",
+            "duration_seconds": 777,
+            "duration": "12m 57s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "present",
+            "duration_seconds": 892,
+            "duration": "14m 52s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Priyanshu",
+        "expected": 20,
+        "attended": 18,
+        "missed": 2,
+        "attended_on_leave": 0,
+        "leave_call_days": 0,
+        "rate": 0.9,
+        "avg_duration_seconds": 1047,
+        "avg_duration": "17m 27s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "present",
+            "duration_seconds": 779,
+            "duration": "12m 59s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "present",
+            "duration_seconds": 1445,
+            "duration": "24m 5s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "present",
+            "duration_seconds": 2055,
+            "duration": "34m 15s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "present",
+            "duration_seconds": 1541,
+            "duration": "25m 41s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "present",
+            "duration_seconds": 1593,
+            "duration": "26m 33s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "present",
+            "duration_seconds": 1412,
+            "duration": "23m 32s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "present",
+            "duration_seconds": 1438,
+            "duration": "23m 58s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "present",
+            "duration_seconds": 868,
+            "duration": "14m 28s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "present",
+            "duration_seconds": 1144,
+            "duration": "19m 4s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "present",
+            "duration_seconds": 775,
+            "duration": "12m 55s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "present",
+            "duration_seconds": 691,
+            "duration": "11m 31s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "present",
+            "duration_seconds": 741,
+            "duration": "12m 21s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "present",
+            "duration_seconds": 665,
+            "duration": "11m 5s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "present",
+            "duration_seconds": 666,
+            "duration": "11m 6s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "present",
+            "duration_seconds": 711,
+            "duration": "11m 51s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "present",
+            "duration_seconds": 742,
+            "duration": "12m 22s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "present",
+            "duration_seconds": 815,
+            "duration": "13m 35s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "present",
+            "duration_seconds": 765,
+            "duration": "12m 45s",
+            "leave_fraction": null,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-07",
+          "2026-08-17"
+        ],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Rashmi",
+        "expected": 15,
+        "attended": 12,
+        "missed": 3,
+        "attended_on_leave": 0,
+        "leave_call_days": 5,
+        "rate": 0.8,
+        "avg_duration_seconds": 831,
+        "avg_duration": "13m 51s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "present",
+            "duration_seconds": 872,
+            "duration": "14m 32s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "present",
+            "duration_seconds": 1230,
+            "duration": "20m 30s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "present",
+            "duration_seconds": 1039,
+            "duration": "17m 19s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "present",
+            "duration_seconds": 886,
+            "duration": "14m 46s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "present",
+            "duration_seconds": 759,
+            "duration": "12m 39s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "present",
+            "duration_seconds": 739,
+            "duration": "12m 19s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "present",
+            "duration_seconds": 658,
+            "duration": "10m 58s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "present",
+            "duration_seconds": 668,
+            "duration": "11m 8s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "present",
+            "duration_seconds": 810,
+            "duration": "13m 30s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "present",
+            "duration_seconds": 750,
+            "duration": "12m 30s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "present",
+            "duration_seconds": 777,
+            "duration": "12m 57s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "present",
+            "duration_seconds": 788,
+            "duration": "13m 8s",
+            "leave_fraction": null,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-06",
+          "2026-08-07",
+          "2026-08-10"
+        ],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Rushika",
+        "expected": 20,
+        "attended": 15,
+        "missed": 5,
+        "attended_on_leave": 0,
+        "leave_call_days": 0,
+        "rate": 0.75,
+        "avg_duration_seconds": 970,
+        "avg_duration": "16m 10s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "present",
+            "duration_seconds": 788,
+            "duration": "13m 8s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "present",
+            "duration_seconds": 1475,
+            "duration": "24m 35s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "present",
+            "duration_seconds": 1257,
+            "duration": "20m 57s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "present",
+            "duration_seconds": 939,
+            "duration": "15m 39s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "present",
+            "duration_seconds": 1386,
+            "duration": "23m 6s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "present",
+            "duration_seconds": 1413,
+            "duration": "23m 33s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "present",
+            "duration_seconds": 938,
+            "duration": "15m 38s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "present",
+            "duration_seconds": 1009,
+            "duration": "16m 49s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "present",
+            "duration_seconds": 879,
+            "duration": "14m 39s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "present",
+            "duration_seconds": 769,
+            "duration": "12m 49s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "present",
+            "duration_seconds": 667,
+            "duration": "11m 7s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "present",
+            "duration_seconds": 731,
+            "duration": "12m 11s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "present",
+            "duration_seconds": 798,
+            "duration": "13m 18s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "present",
+            "duration_seconds": 757,
+            "duration": "12m 37s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "present",
+            "duration_seconds": 742,
+            "duration": "12m 22s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-05",
+          "2026-08-10",
+          "2026-08-13",
+          "2026-08-20",
+          "2026-08-31"
+        ],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Sahil Kumar",
+        "expected": 20,
+        "attended": 19,
+        "missed": 1,
+        "attended_on_leave": 0,
+        "leave_call_days": 0,
+        "rate": 0.95,
+        "avg_duration_seconds": 1040,
+        "avg_duration": "17m 20s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "present",
+            "duration_seconds": 750,
+            "duration": "12m 30s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "present",
+            "duration_seconds": 1489,
+            "duration": "24m 49s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "present",
+            "duration_seconds": 2072,
+            "duration": "34m 32s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "present",
+            "duration_seconds": 1465,
+            "duration": "24m 25s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "present",
+            "duration_seconds": 1124,
+            "duration": "18m 44s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "present",
+            "duration_seconds": 1569,
+            "duration": "26m 9s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "present",
+            "duration_seconds": 1322,
+            "duration": "22m 2s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "present",
+            "duration_seconds": 1295,
+            "duration": "21m 35s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "present",
+            "duration_seconds": 821,
+            "duration": "13m 41s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "present",
+            "duration_seconds": 1211,
+            "duration": "20m 11s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "present",
+            "duration_seconds": 916,
+            "duration": "15m 16s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "present",
+            "duration_seconds": 767,
+            "duration": "12m 47s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "present",
+            "duration_seconds": 728,
+            "duration": "12m 8s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "present",
+            "duration_seconds": 649,
+            "duration": "10m 49s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "present",
+            "duration_seconds": 645,
+            "duration": "10m 45s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "present",
+            "duration_seconds": 793,
+            "duration": "13m 13s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "present",
+            "duration_seconds": 637,
+            "duration": "10m 37s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "present",
+            "duration_seconds": 712,
+            "duration": "11m 52s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "present",
+            "duration_seconds": 793,
+            "duration": "13m 13s",
+            "leave_fraction": null,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-18"
+        ],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Sahil Siddiqui",
+        "expected": 16,
+        "attended": 15,
+        "missed": 1,
+        "attended_on_leave": 0,
+        "leave_call_days": 4,
+        "rate": 0.9375,
+        "avg_duration_seconds": 1149,
+        "avg_duration": "19m 9s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "present",
+            "duration_seconds": 1475,
+            "duration": "24m 35s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "present",
+            "duration_seconds": 2088,
+            "duration": "34m 48s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "present",
+            "duration_seconds": 1475,
+            "duration": "24m 35s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "present",
+            "duration_seconds": 1122,
+            "duration": "18m 42s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "present",
+            "duration_seconds": 1580,
+            "duration": "26m 20s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "present",
+            "duration_seconds": 1424,
+            "duration": "23m 44s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "present",
+            "duration_seconds": 1443,
+            "duration": "24m 3s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "present",
+            "duration_seconds": 871,
+            "duration": "14m 31s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "present",
+            "duration_seconds": 1242,
+            "duration": "20m 42s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "present",
+            "duration_seconds": 954,
+            "duration": "15m 54s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "present",
+            "duration_seconds": 759,
+            "duration": "12m 39s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "present",
+            "duration_seconds": 474,
+            "duration": "7m 54s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "present",
+            "duration_seconds": 799,
+            "duration": "13m 19s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "present",
+            "duration_seconds": 720,
+            "duration": "12m",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "present",
+            "duration_seconds": 807,
+            "duration": "13m 27s",
+            "leave_fraction": null,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-21"
+        ],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Shambu",
+        "expected": 19,
+        "attended": 16,
+        "missed": 3,
+        "attended_on_leave": 0,
+        "leave_call_days": 1,
+        "rate": 0.8421,
+        "avg_duration_seconds": 1088,
+        "avg_duration": "18m 8s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "present",
+            "duration_seconds": 667,
+            "duration": "11m 7s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "present",
+            "duration_seconds": 1454,
+            "duration": "24m 14s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "present",
+            "duration_seconds": 2041,
+            "duration": "34m 1s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "present",
+            "duration_seconds": 1528,
+            "duration": "25m 28s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "present",
+            "duration_seconds": 1101,
+            "duration": "18m 21s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "present",
+            "duration_seconds": 1526,
+            "duration": "25m 26s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "present",
+            "duration_seconds": 1317,
+            "duration": "21m 57s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "present",
+            "duration_seconds": 1328,
+            "duration": "22m 8s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "present",
+            "duration_seconds": 864,
+            "duration": "14m 24s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "present",
+            "duration_seconds": 921,
+            "duration": "15m 21s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "present",
+            "duration_seconds": 709,
+            "duration": "11m 49s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "present",
+            "duration_seconds": 565,
+            "duration": "9m 25s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "present",
+            "duration_seconds": 748,
+            "duration": "12m 28s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "present",
+            "duration_seconds": 739,
+            "duration": "12m 19s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "present",
+            "duration_seconds": 851,
+            "duration": "14m 11s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "present",
+            "duration_seconds": 1041,
+            "duration": "17m 21s",
+            "leave_fraction": null,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-14",
+          "2026-08-21",
+          "2026-08-25"
+        ],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Srikant",
+        "expected": 17,
+        "attended": 15,
+        "missed": 2,
+        "attended_on_leave": 0,
+        "leave_call_days": 3,
+        "rate": 0.8824,
+        "avg_duration_seconds": 1105,
+        "avg_duration": "18m 25s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "present",
+            "duration_seconds": 797,
+            "duration": "13m 17s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "present",
+            "duration_seconds": 1484,
+            "duration": "24m 44s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "present",
+            "duration_seconds": 2083,
+            "duration": "34m 43s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "present",
+            "duration_seconds": 1548,
+            "duration": "25m 48s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "present",
+            "duration_seconds": 1122,
+            "duration": "18m 42s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "present",
+            "duration_seconds": 1477,
+            "duration": "24m 37s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "present",
+            "duration_seconds": 1352,
+            "duration": "22m 32s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "present",
+            "duration_seconds": 1416,
+            "duration": "23m 36s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "present",
+            "duration_seconds": 919,
+            "duration": "15m 19s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "present",
+            "duration_seconds": 850,
+            "duration": "14m 10s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "present",
+            "duration_seconds": 579,
+            "duration": "9m 39s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "present",
+            "duration_seconds": 691,
+            "duration": "11m 31s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "present",
+            "duration_seconds": 733,
+            "duration": "12m 13s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "present",
+            "duration_seconds": 699,
+            "duration": "11m 39s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "present",
+            "duration_seconds": 821,
+            "duration": "13m 41s",
+            "leave_fraction": null,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-19",
+          "2026-08-20"
+        ],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Sudeep",
+        "expected": 19,
+        "attended": 15,
+        "missed": 4,
+        "attended_on_leave": 0,
+        "leave_call_days": 1,
+        "rate": 0.7895,
+        "avg_duration_seconds": 969,
+        "avg_duration": "16m 9s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "present",
+            "duration_seconds": 724,
+            "duration": "12m 4s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "present",
+            "duration_seconds": 1433,
+            "duration": "23m 53s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "present",
+            "duration_seconds": 2032,
+            "duration": "33m 52s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "present",
+            "duration_seconds": 1422,
+            "duration": "23m 42s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "present",
+            "duration_seconds": 1583,
+            "duration": "26m 23s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "present",
+            "duration_seconds": 1260,
+            "duration": "21m",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "present",
+            "duration_seconds": 733,
+            "duration": "12m 13s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "present",
+            "duration_seconds": 460,
+            "duration": "7m 40s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "present",
+            "duration_seconds": 1139,
+            "duration": "18m 59s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "present",
+            "duration_seconds": 770,
+            "duration": "12m 50s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "present",
+            "duration_seconds": 646,
+            "duration": "10m 46s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "present",
+            "duration_seconds": 301,
+            "duration": "5m 1s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "present",
+            "duration_seconds": 673,
+            "duration": "11m 13s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "present",
+            "duration_seconds": 644,
+            "duration": "10m 44s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "present",
+            "duration_seconds": 721,
+            "duration": "12m 1s",
+            "leave_fraction": null,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-07",
+          "2026-08-17",
+          "2026-08-19",
+          "2026-08-27"
+        ],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Surya",
+        "expected": 20,
+        "attended": 0,
+        "missed": 20,
+        "attended_on_leave": 0,
+        "leave_call_days": 0,
+        "rate": 0.0,
+        "avg_duration_seconds": 0,
+        "avg_duration": "\u2014",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-03",
+          "2026-08-04",
+          "2026-08-05",
+          "2026-08-06",
+          "2026-08-07",
+          "2026-08-10",
+          "2026-08-11",
+          "2026-08-12",
+          "2026-08-13",
+          "2026-08-14",
+          "2026-08-17",
+          "2026-08-18",
+          "2026-08-19",
+          "2026-08-20",
+          "2026-08-21",
+          "2026-08-24",
+          "2026-08-25",
+          "2026-08-26",
+          "2026-08-27",
+          "2026-08-31"
+        ],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Tarun",
+        "expected": 20,
+        "attended": 19,
+        "missed": 1,
+        "attended_on_leave": 0,
+        "leave_call_days": 0,
+        "rate": 0.95,
+        "avg_duration_seconds": 1050,
+        "avg_duration": "17m 30s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "present",
+            "duration_seconds": 782,
+            "duration": "13m 2s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "present",
+            "duration_seconds": 1480,
+            "duration": "24m 40s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "present",
+            "duration_seconds": 2067,
+            "duration": "34m 27s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "present",
+            "duration_seconds": 1537,
+            "duration": "25m 37s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "present",
+            "duration_seconds": 1101,
+            "duration": "18m 21s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "present",
+            "duration_seconds": 1584,
+            "duration": "26m 24s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "present",
+            "duration_seconds": 1428,
+            "duration": "23m 48s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "present",
+            "duration_seconds": 862,
+            "duration": "14m 22s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "present",
+            "duration_seconds": 1220,
+            "duration": "20m 20s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "present",
+            "duration_seconds": 967,
+            "duration": "16m 7s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "present",
+            "duration_seconds": 842,
+            "duration": "14m 2s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "present",
+            "duration_seconds": 765,
+            "duration": "12m 45s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "present",
+            "duration_seconds": 734,
+            "duration": "12m 14s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "present",
+            "duration_seconds": 681,
+            "duration": "11m 21s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "present",
+            "duration_seconds": 712,
+            "duration": "11m 52s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "present",
+            "duration_seconds": 801,
+            "duration": "13m 21s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "present",
+            "duration_seconds": 765,
+            "duration": "12m 45s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "present",
+            "duration_seconds": 820,
+            "duration": "13m 40s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "present",
+            "duration_seconds": 798,
+            "duration": "13m 18s",
+            "leave_fraction": null,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-11"
+        ],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Twisha",
+        "expected": 18,
+        "attended": 10,
+        "missed": 8,
+        "attended_on_leave": 0,
+        "leave_call_days": 2,
+        "rate": 0.5556,
+        "avg_duration_seconds": 939,
+        "avg_duration": "15m 39s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "present",
+            "duration_seconds": 859,
+            "duration": "14m 19s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "present",
+            "duration_seconds": 1599,
+            "duration": "26m 39s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "present",
+            "duration_seconds": 1468,
+            "duration": "24m 28s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "present",
+            "duration_seconds": 1206,
+            "duration": "20m 6s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "present",
+            "duration_seconds": 1433,
+            "duration": "23m 53s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "present",
+            "duration_seconds": 325,
+            "duration": "5m 25s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "present",
+            "duration_seconds": 1128,
+            "duration": "18m 48s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "present",
+            "duration_seconds": 496,
+            "duration": "8m 16s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "present",
+            "duration_seconds": 392,
+            "duration": "6m 32s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "present",
+            "duration_seconds": 487,
+            "duration": "8m 7s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-03",
+          "2026-08-07",
+          "2026-08-11",
+          "2026-08-17",
+          "2026-08-20",
+          "2026-08-21",
+          "2026-08-24",
+          "2026-08-31"
+        ],
+        "attended_on_leave_dates": []
+      },
+      {
+        "person": "Vinay",
+        "expected": 19,
+        "attended": 17,
+        "missed": 2,
+        "attended_on_leave": 0,
+        "leave_call_days": 1,
+        "rate": 0.8947,
+        "avg_duration_seconds": 879,
+        "avg_duration": "14m 39s",
+        "days": [
+          {
+            "date": "2026-08-03",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-04",
+            "status": "present",
+            "duration_seconds": 1454,
+            "duration": "24m 14s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-05",
+            "status": "present",
+            "duration_seconds": 1976,
+            "duration": "32m 56s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-06",
+            "status": "present",
+            "duration_seconds": 945,
+            "duration": "15m 45s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-07",
+            "status": "present",
+            "duration_seconds": 835,
+            "duration": "13m 55s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-10",
+            "status": "present",
+            "duration_seconds": 1176,
+            "duration": "19m 36s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-11",
+            "status": "present",
+            "duration_seconds": 10,
+            "duration": "10s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-12",
+            "status": "present",
+            "duration_seconds": 1351,
+            "duration": "22m 31s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-13",
+            "status": "present",
+            "duration_seconds": 807,
+            "duration": "13m 27s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-14",
+            "status": "present",
+            "duration_seconds": 1096,
+            "duration": "18m 16s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-17",
+            "status": "present",
+            "duration_seconds": 969,
+            "duration": "16m 9s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-18",
+            "status": "present",
+            "duration_seconds": 55,
+            "duration": "55s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-19",
+            "status": "present",
+            "duration_seconds": 725,
+            "duration": "12m 5s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-20",
+            "status": "present",
+            "duration_seconds": 724,
+            "duration": "12m 4s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-21",
+            "status": "leave",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": 1.0,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-24",
+            "status": "present",
+            "duration_seconds": 642,
+            "duration": "10m 42s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-25",
+            "status": "present",
+            "duration_seconds": 621,
+            "duration": "10m 21s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-26",
+            "status": "missed",
+            "duration_seconds": 0,
+            "duration": "",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-27",
+            "status": "present",
+            "duration_seconds": 751,
+            "duration": "12m 31s",
+            "leave_fraction": null,
+            "leave_note": ""
+          },
+          {
+            "date": "2026-08-31",
+            "status": "present",
+            "duration_seconds": 803,
+            "duration": "13m 23s",
+            "leave_fraction": null,
+            "leave_note": ""
+          }
+        ],
+        "missed_dates": [
+          "2026-08-03",
+          "2026-08-26"
+        ],
+        "attended_on_leave_dates": []
+      }
+    ],
+    "unmatched": [
+      {
+        "name": "Dinesh Chandra",
+        "raw_names": [
+          "Dinesh Chandra"
+        ],
+        "emails": [
+          "dinesh@elocitytech.com"
+        ],
+        "days": [
+          "2026-08-03",
+          "2026-08-04",
+          "2026-08-05",
+          "2026-08-06",
+          "2026-08-07",
+          "2026-08-10",
+          "2026-08-11",
+          "2026-08-12",
+          "2026-08-13",
+          "2026-08-18",
+          "2026-08-19",
+          "2026-08-20",
+          "2026-08-25"
+        ],
+        "calls": 13
+      },
+      {
+        "name": "Saravana Kumar",
+        "raw_names": [
+          "Saravana  Kumar"
+        ],
+        "emails": [
+          "Saravana@elocitytech.com"
+        ],
+        "days": [
+          "2026-08-05"
+        ],
+        "calls": 1
+      }
+    ],
+    "team": {
+      "expected": 332,
+      "attended": 258,
+      "missed": 74,
+      "rate": 0.7771,
+      "calls": 20
+    },
+    "rules": [
+      "Source: Teams Meeting Summary + Participants sheets (unique person per call).",
+      "Expected call days = weekdays in Aug 2026 with a recorded scrum, excluding Fri 28 public holiday and that person's leave covering the call.",
+      "No weekend calls in the export; weekends are not expected.",
+      "All 20 recorded calls started ~09:30 (morning IST), so Deepak's 12 Aug first-half leave covers the call: not expected, not a miss.",
+      "Full-day leave is never counted as a miss. Joining on a leave day is 'attended on leave' and does not change the rate.",
+      "Rate = attended expected calls \u00f7 expected calls (leave-adjusted)."
+    ],
+    "calls_are_morning_ist": true
+  }
 }

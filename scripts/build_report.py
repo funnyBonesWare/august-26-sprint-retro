@@ -15,6 +15,7 @@ from page_html import render_page
 ROOT = Path(__file__).resolve().parents[1]
 PLANNED_PATH = ROOT / "data" / "planned.json"
 LEAVE_PATH = ROOT / "data" / "leave.json"
+SCRUM_PATH = ROOT / "data" / "scrum-attendance.json"
 RAW_DIR = Path(__file__).resolve().parents[1] / "data" / "raw"
 HOURS_PER_DAY = 8.0
 SEC_PER_DAY = int(HOURS_PER_DAY * 3600)
@@ -43,11 +44,13 @@ def day_col_label(d: date) -> str:
 
 NAME_MAP = {
     "vinay chowdary chandra": "Vinay",
+    "vinay chandra": "Vinay",
     "vinay": "Vinay",
     "sahil siddiqui": "Sahil Siddiqui",
     "t n shambulinga": "Shambu",
     "shambu": "Shambu",
     "dhanush k g": "Dhanush",
+    "dhanush kg": "Dhanush",
     "dhanush": "Dhanush",
     "dharshini  m": "Dharshini",
     "dharshini m": "Dharshini",
@@ -60,12 +63,15 @@ NAME_MAP = {
     "twisha sagar": "Twisha",
     "twisha": "Twisha",
     "marish raj r": "Marish",
+    "marish raj": "Marish",
     "marish": "Marish",
     "srikant kumar sutar": "Srikant",
+    "srikant sutar": "Srikant",
     "srikant": "Srikant",
     "priyanshu rajput": "Priyanshu",
     "priyanshu": "Priyanshu",
     "manjunath gowda r": "Manjunath",
+    "manjunath gowda": "Manjunath",
     "manjunath": "Manjunath",
     "deepak bharadwaj": "Deepak",
     "deepak": "Deepak",
@@ -73,8 +79,11 @@ NAME_MAP = {
     "rushika": "Rushika",
     "tarun chandra": "Tarun",
     "tarun": "Tarun",
+    "sudeep b d": "Sudeep",
     "sudeep": "Sudeep",
+    "nagaraju k": "Nagaraju",
     "nagaraju": "Nagaraju",
+    "shambulinga": "Shambu",
     "lavanya": "Lavanya",
 }
 
@@ -98,6 +107,242 @@ def canon_name(name: str | None) -> str:
         return "Unassigned"
     key = re.sub(r"\s+", " ", name).strip().lower()
     return NAME_MAP.get(key, re.sub(r"\s+", " ", name).strip())
+
+
+def canon_attendee(name: str | None, email: str | None = None) -> str:
+    person = canon_name(name)
+    key = re.sub(r"\s+", " ", name or "").strip().lower()
+    if key in NAME_MAP:
+        return NAME_MAP[key]
+    if email:
+        local = email.split("@")[0].strip().lower()
+        spaced = re.sub(r"[._]+", " ", local)
+        if spaced in NAME_MAP:
+            return NAME_MAP[spaced]
+        if local in NAME_MAP:
+            return NAME_MAP[local]
+        if "shambu" in local:
+            return "Shambu"
+    return person
+
+
+def parse_iso_dt(value: str | None) -> datetime | None:
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value)
+    except ValueError:
+        return None
+
+
+def scrum_call_is_morning(start_iso: str | None) -> bool:
+    dt = parse_iso_dt(start_iso)
+    if dt is None:
+        return True
+    return dt.hour < 13
+
+
+def leave_covers_scrum(
+    leave: dict | None, meeting: dict
+) -> bool:
+    """True when leave means this person was not expected on that call."""
+    if not leave:
+        return False
+    frac = float(leave.get("fraction") or 0)
+    if frac >= 1:
+        return True
+    if frac <= 0:
+        return False
+    note = (leave.get("note") or "").lower()
+    morning = scrum_call_is_morning(meeting.get("start"))
+    if "first" in note:
+        return morning
+    if "second" in note:
+        return not morning
+    # Unspecified half-day: morning IST scrum is covered only if we treat it as AM leave.
+    return morning
+
+
+def scrum_day_expected(
+    person: str,
+    iso: str,
+    leave_map: dict[tuple[str, str], dict],
+    meeting: dict,
+) -> bool:
+    d = date.fromisoformat(iso)
+    if d.weekday() >= 5 or d in PUBLIC_HOLIDAYS:
+        return False
+    return not leave_covers_scrum(leave_map.get((person, iso)), meeting)
+
+
+def fmt_duration_seconds(seconds: int) -> str:
+    if seconds <= 0:
+        return "—"
+    minutes, sec = divmod(int(seconds), 60)
+    if minutes >= 60:
+        hours, minutes = divmod(minutes, 60)
+        return f"{hours}h {minutes}m"
+    if sec and minutes:
+        return f"{minutes}m {sec}s"
+    if minutes:
+        return f"{minutes}m"
+    return f"{sec}s"
+
+
+def att_pill(ratio: float | None) -> str:
+    if ratio is None:
+        return "na"
+    if ratio >= 0.9:
+        return "on-plan"
+    if ratio >= 0.75:
+        return "over"
+    return "well-over"
+
+
+def build_scrum(people: list[str], leave_map: dict[tuple[str, str], dict]) -> dict:
+    raw = load_json(SCRUM_PATH)
+    meetings = raw.get("meetings") or []
+    meeting_by_date = {m["date"]: m for m in meetings if m.get("date")}
+    call_dates = sorted(meeting_by_date)
+
+    attended: dict[tuple[str, str], dict] = {}
+    unmatched: dict[str, dict] = {}
+    for row in raw.get("participants") or []:
+        iso = row.get("date")
+        if not iso:
+            continue
+        person = canon_attendee(row.get("name"), row.get("email"))
+        rec = {
+            "raw_name": row.get("name"),
+            "email": row.get("email"),
+            "duration_seconds": int(row.get("duration_seconds") or 0),
+            "duration": row.get("duration") or "",
+            "first_join": row.get("first_join"),
+            "last_leave": row.get("last_leave"),
+            "role": row.get("role"),
+        }
+        if person in EXCLUDE_PEOPLE:
+            continue
+        if person not in people:
+            bucket = unmatched.setdefault(
+                person,
+                {"name": person, "raw_names": set(), "emails": set(), "days": []},
+            )
+            bucket["raw_names"].add(row.get("name") or person)
+            if row.get("email"):
+                bucket["emails"].add(row.get("email"))
+            bucket["days"].append(iso)
+            continue
+        prev = attended.get((person, iso))
+        if prev is None or rec["duration_seconds"] > prev["duration_seconds"]:
+            attended[(person, iso)] = rec
+
+    person_rows = []
+    team_expected = 0
+    team_attended = 0
+    for person in people:
+        expected_days = []
+        attended_expected = []
+        missed_days = []
+        leave_days = []
+        attended_on_leave = []
+        durations = []
+        day_status = []
+        for iso in call_dates:
+            meeting = meeting_by_date[iso]
+            leave = leave_map.get((person, iso))
+            expected = scrum_day_expected(person, iso, leave_map, meeting)
+            present = (person, iso) in attended
+            rec = attended.get((person, iso))
+            if present:
+                durations.append(rec["duration_seconds"])
+            if expected:
+                expected_days.append(iso)
+                if present:
+                    attended_expected.append(iso)
+                    status = "present"
+                else:
+                    missed_days.append(iso)
+                    status = "missed"
+            elif leave:
+                leave_days.append(iso)
+                if present:
+                    attended_on_leave.append(iso)
+                    status = "leave-attended"
+                else:
+                    status = "leave"
+            else:
+                status = "skip"
+            day_status.append(
+                {
+                    "date": iso,
+                    "status": status,
+                    "duration_seconds": rec["duration_seconds"] if rec else 0,
+                    "duration": rec["duration"] if rec else "",
+                    "leave_fraction": (leave or {}).get("fraction"),
+                    "leave_note": (leave or {}).get("note") or "",
+                }
+            )
+        expected_n = len(expected_days)
+        attended_n = len(attended_expected)
+        missed_n = len(missed_days)
+        rate = round(attended_n / expected_n, 4) if expected_n else None
+        avg_s = int(round(sum(durations) / len(durations))) if durations else 0
+        team_expected += expected_n
+        team_attended += attended_n
+        person_rows.append(
+            {
+                "person": person,
+                "expected": expected_n,
+                "attended": attended_n,
+                "missed": missed_n,
+                "attended_on_leave": len(attended_on_leave),
+                "leave_call_days": len(leave_days),
+                "rate": rate,
+                "avg_duration_seconds": avg_s,
+                "avg_duration": fmt_duration_seconds(avg_s),
+                "days": day_status,
+                "missed_dates": missed_days,
+                "attended_on_leave_dates": attended_on_leave,
+            }
+        )
+
+    unmatched_rows = []
+    for name, bucket in sorted(unmatched.items()):
+        unmatched_rows.append(
+            {
+                "name": name,
+                "raw_names": sorted(bucket["raw_names"]),
+                "emails": sorted(bucket["emails"]),
+                "days": sorted(set(bucket["days"])),
+                "calls": len(set(bucket["days"])),
+            }
+        )
+
+    team_rate = round(team_attended / team_expected, 4) if team_expected else None
+    morning = all(scrum_call_is_morning(m.get("start")) for m in meetings) if meetings else True
+    return {
+        "call_dates": call_dates,
+        "meetings": meetings,
+        "people": person_rows,
+        "unmatched": unmatched_rows,
+        "team": {
+            "expected": team_expected,
+            "attended": team_attended,
+            "missed": team_expected - team_attended,
+            "rate": team_rate,
+            "calls": len(call_dates),
+        },
+        "rules": [
+            "Source: Teams Meeting Summary + Participants sheets (unique person per call).",
+            "Expected call days = weekdays in Aug 2026 with a recorded scrum, excluding Fri 28 public holiday and that person's leave covering the call.",
+            "No weekend calls in the export; weekends are not expected.",
+            "All 20 recorded calls started ~09:30 (morning IST), so Deepak's 12 Aug first-half leave covers the call: not expected, not a miss.",
+            "Full-day leave is never counted as a miss. Joining on a leave day is 'attended on leave' and does not change the rate.",
+            "Rate = attended expected calls ÷ expected calls (leave-adjusted).",
+        ],
+        "calls_are_morning_ist": morning,
+    }
 
 
 def load_leave() -> dict[tuple[str, str], dict]:
@@ -779,6 +1024,16 @@ def build():
         for p in ({p for p, _ in daily} | {r["person"] for r in person_rows})
         if p not in EXCLUDE_PEOPLE
     )
+    scrum = build_scrum(daily_people, leave_map)
+    scrum_by_person = {r["person"]: r for r in scrum["people"]}
+    for row in person_rows:
+        rec = scrum_by_person.get(row["person"]) or {}
+        row["scrum_expected"] = rec.get("expected") or 0
+        row["scrum_attended"] = rec.get("attended") or 0
+        row["scrum_missed"] = rec.get("missed") or 0
+        row["scrum_rate"] = rec.get("rate")
+        row["scrum_avg_duration"] = rec.get("avg_duration") or "—"
+        row["scrum_attended_on_leave"] = rec.get("attended_on_leave") or 0
 
     extracted = {
         "period": {"start": PERIOD_START.isoformat(), "end": PERIOD_END.isoformat()},
@@ -791,6 +1046,7 @@ def build():
             "Fix hours = August worklogs on Bug tickets vs Task/Sub-task tickets (sheet and off-sheet).",
             "Off-sheet work = HIEV tasks/bugs/other keys with August worklogs or comments that are not on the August 26 sheet.",
             "Expected hours = weekdays in August minus Fri 28 public holiday minus that person's planned/sick leave (8h = 1d; Deepak 12 Aug is 0.5d first-half leave).",
+            "Scrum attendance = Teams call Participants sheet. Expected calls = weekdays with a recorded ~09:30 IST scrum minus PH 28 minus leave that covers the call (full-day, or Deepak 12 Aug first-half). Rate = attended expected ÷ expected. Joining on leave is recorded but not a miss.",
         ],
         "leave": [
             {
@@ -828,6 +1084,15 @@ def build():
         },
         "worklogs": worklogs,
         "comments": comments,
+        "scrum": {
+            "call_dates": scrum["call_dates"],
+            "meetings": scrum["meetings"],
+            "people": scrum["people"],
+            "unmatched": scrum["unmatched"],
+            "team": scrum["team"],
+            "rules": scrum["rules"],
+            "calls_are_morning_ist": scrum["calls_are_morning_ist"],
+        },
     }
     (ROOT / "data" / "extracted.json").write_text(json.dumps(extracted, indent=2))
     (ROOT / "data" / "worklog-audit.json").write_text(json.dumps(worklog_audit, indent=2))
@@ -837,7 +1102,10 @@ def build():
     print(f"Wrote {ROOT / 'report' / 'index.html'}")
     print(
         f"Sheet tickets: {len(ticket_rows)}  Off-sheet: {len(offsheet_tickets)}  "
-        f"People: {len(person_rows)}  Worklogs: {len(worklogs)}  Comments: {len(comments)}  Bugs worked: {len(bugs)}  resolved/open: {bugs_resolved}/{bugs_open}"
+        f"People: {len(person_rows)}  Worklogs: {len(worklogs)}  Comments: {len(comments)}  "
+        f"Bugs worked: {len(bugs)}  resolved/open: {bugs_resolved}/{bugs_open}  "
+        f"Scrum {scrum['team']['attended']}/{scrum['team']['expected']} "
+        f"({(scrum['team']['rate'] or 0) * 100:.1f}%)"
     )
     h6941 = sum(w["seconds"] for w in worklogs if w["key"] == "HIEV-6941")
     sahil = next((p for p in person_rows if p["person"] == "Sahil Siddiqui"), None)
@@ -986,6 +1254,48 @@ def write_markdown(data: dict, daily, people, dates) -> None:
             else:
                 cells.append("")
         a(f"| {person} | " + " | ".join(cells) + f" | {fmt_vs(total, expected_by.get(person, 0))} |")
+    a("")
+    scrum = data.get("scrum") or {}
+    team_scrum = scrum.get("team") or {}
+    a("## 6. Scrum call attendance")
+    a("")
+    rate_pct = f"{(team_scrum.get('rate') or 0) * 100:.1f}%" if team_scrum.get("rate") is not None else "—"
+    a(
+        f"Team rate **{team_scrum.get('attended', 0)}/{team_scrum.get('expected', 0)}** expected calls "
+        f"({rate_pct}). {team_scrum.get('calls', 0)} recorded Teams scrums, all ~09:30 IST. "
+        "Leave-adjusted: full-day leave is not a miss; Deepak 12 Aug first-half leave covers the morning call."
+    )
+    a("")
+    for rule in scrum.get("rules") or []:
+        a(f"- {rule}")
+    a("")
+    unmatched = scrum.get("unmatched") or []
+    if unmatched:
+        bits = [
+            f"{u['name']} ({u['calls']} call{'s' if u['calls'] != 1 else ''})"
+            for u in unmatched
+        ]
+        a("Unmatched attendees (not on the retro roster): " + "; ".join(bits) + ".")
+        a("")
+    a("| Person | Expected | Attended | Missed | On leave joined | Attendance | Avg duration |")
+    a("|---|---:|---:|---:|---:|---:|---|")
+    for row in sorted(scrum.get("people") or [], key=lambda r: (r.get("rate") is None, r.get("rate") or 0, r["person"])):
+        pct = "—" if row.get("rate") is None else f"{row['rate'] * 100:.0f}%"
+        a(
+            f"| {row['person']} | {row['expected']} | {row['attended']} | {row['missed']} | "
+            f"{row.get('attended_on_leave') or 0} | {pct} | {row.get('avg_duration') or '—'} |"
+        )
+    a("")
+    call_dates = scrum.get("call_dates") or []
+    a("Daily ticks (P = present, M = missed, L = leave, A = attended on leave):")
+    a("")
+    a("| Person | " + " | ".join(d[8:] for d in call_dates) + " |")
+    a("|" + "---|" * (len(call_dates) + 1))
+    mark = {"present": "P", "missed": "M", "leave": "L", "leave-attended": "A", "skip": ""}
+    for row in scrum.get("people") or []:
+        by_day = {c["date"]: c["status"] for c in row.get("days") or []}
+        cells = [mark.get(by_day.get(d, "skip"), "") for d in call_dates]
+        a(f"| {row['person']} | " + " | ".join(cells) + " |")
     a("")
     a("## Daily worklogs and comments")
     a("")
@@ -1270,6 +1580,91 @@ def write_html(data: dict, daily, people, dates) -> None:
                 f"{''.join(blocks)}</section>"
             )
 
+    scrum = data.get("scrum") or {}
+    team_scrum = scrum.get("team") or {}
+    scrum_rate = team_scrum.get("rate")
+    kpi_scrum = (
+        f"{team_scrum.get('attended', 0)}/{team_scrum.get('expected', 0)}"
+        f" ({scrum_rate * 100:.0f}%)"
+        if scrum_rate is not None
+        else "n/a"
+    )
+    unmatched = scrum.get("unmatched") or []
+    unmatched_note = ""
+    if unmatched:
+        bits = [
+            f"{u['name']} ({u['calls']} call{'s' if u['calls'] != 1 else ''})"
+            for u in unmatched
+        ]
+        unmatched_note = (
+            " Unmatched attendees not on this roster: " + "; ".join(bits) + "."
+        )
+    scrum_note = (
+        f"{team_scrum.get('calls', 0)} recorded Teams scrums (weekdays 3–27 and 31 Aug, none on weekends or Fri 28 PH). "
+        "Every call started ~09:30, so morning IST. Expected = those call days minus leave that covers the call "
+        "(full-day, or Deepak 12 Aug first-half). Rate = attended expected ÷ expected. "
+        "Joining while on leave is marked A and is not a miss."
+        + unmatched_note
+    )
+    scrum_trs = []
+    for row in sorted(
+        scrum.get("people") or [],
+        key=lambda r: (r.get("rate") is None, r.get("rate") if r.get("rate") is not None else 1, r["person"]),
+    ):
+        ratio = row.get("rate")
+        pct = "—" if ratio is None else f"{ratio * 100:.0f}%"
+        band = att_pill(ratio)
+        scrum_trs.append(
+            "<tr "
+            f"data-people='{people_attr(row['person'])}'>"
+            f"<td><button type='button' class='name-link' data-open-person='{h(row['person'])}'>{h(row['person'])}</button></td>"
+            f"<td class='num'>{row['expected']}</td>"
+            f"<td class='num'>{row['attended']}</td>"
+            f"<td class='num'>{row['missed']}</td>"
+            f"<td class='num'>{row.get('attended_on_leave') or 0}</td>"
+            f"<td class='num'><span class='pill {band}'>{pct}</span></td>"
+            f"<td class='num'>{h(row.get('avg_duration') or '—')}</td>"
+            "</tr>"
+        )
+    call_dates = scrum.get("call_dates") or []
+    scrum_tick_head_cells = []
+    for iso in call_dates:
+        d = date.fromisoformat(iso)
+        extra = day_col_class(d)
+        title = PUBLIC_HOLIDAYS.get(d, "")
+        title_attr = f" title='{h(title)}'" if title else ""
+        scrum_tick_head_cells.append(
+            f"<th class='dayh{extra}'{title_attr}>{d.day}<br /><span>{h(day_col_label(d))}</span></th>"
+        )
+    tick_label = {
+        "present": ("P", "present", "Present"),
+        "missed": ("M", "missed", "Missed"),
+        "leave": ("L", "leave", "Leave"),
+        "leave-attended": ("A", "leave-attended", "Attended on leave"),
+        "skip": ("", "skip", ""),
+    }
+    scrum_tick_body = []
+    people_order = {name: i for i, name in enumerate(people)}
+    for row in sorted(scrum.get("people") or [], key=lambda r: people_order.get(r["person"], 999)):
+        tds = []
+        by_day = {c["date"]: c for c in row.get("days") or []}
+        for iso in call_dates:
+            cell = by_day.get(iso) or {"status": "skip"}
+            mark, cls, title = tick_label.get(cell["status"], ("", "skip", ""))
+            dur = cell.get("duration") or ""
+            extra_title = title
+            if dur:
+                extra_title = f"{title} · {dur}" if title else dur
+            if cell.get("leave_note"):
+                extra_title += f" ({cell['leave_note']})"
+            title_attr = f" title='{h(extra_title)}'" if extra_title else ""
+            tds.append(f"<td class='num heat scrum-{cls}'{title_attr}>{h(mark)}</td>")
+        scrum_tick_body.append(
+            f"<tr data-people='{people_attr(row['person'])}'>"
+            f"<th><button type='button' class='name-link' data-open-person='{h(row['person'])}'>{h(row['person'])}</button></th>"
+            f"{''.join(tds)}</tr>"
+        )
+
     on_total = sum(p["actual_planned_seconds"] for p in data["people"])
     off_total = sum(p.get("actual_offsheet_seconds") or 0 for p in data["people"])
     on_pct, off_pct = mix_widths(on_total, off_total)
@@ -1310,6 +1705,16 @@ def write_html(data: dict, daily, people, dates) -> None:
             ),
             "bug_hours_html": html_vs(p["bug_fix_seconds"], expected_s),
             "task_hours_html": html_vs(p["task_seconds"], expected_s),
+            "scrum_html": (
+                f"{p.get('scrum_attended') or 0}/{p.get('scrum_expected') or 0}"
+                + (
+                    f" ({p['scrum_rate'] * 100:.0f}%)"
+                    if p.get("scrum_rate") is not None
+                    else ""
+                )
+            ),
+            "scrum_missed": int(p.get("scrum_missed") or 0),
+            "scrum_avg": p.get("scrum_avg_duration") or "—",
         }
     page = render_page(
         total_plan=total_plan,
@@ -1341,6 +1746,11 @@ def write_html(data: dict, daily, people, dates) -> None:
         fix_trs="".join(fix_trs),
         daily_head=daily_head,
         daily_body="".join(daily_body),
+        kpi_scrum=kpi_scrum,
+        scrum_note=scrum_note,
+        scrum_trs="".join(scrum_trs),
+        scrum_tick_head="".join(scrum_tick_head_cells),
+        scrum_tick_body="".join(scrum_tick_body),
         person_opts=person_opts,
         person_stats_json=json.dumps(person_stats),
         journal="".join(journal),
