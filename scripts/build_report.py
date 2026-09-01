@@ -804,12 +804,14 @@ def build():
     } | {c["key"] for c in comments if c["on_sheet"]} | set(sheet_jira)
 
     people_on_key: dict[str, set[str]] = defaultdict(set)
+    commenters_on_key: dict[str, set[str]] = defaultdict(set)
     for log in worklogs:
         if log["author"] not in EXCLUDE_PEOPLE and log["author"] != "Unassigned":
             people_on_key[log["key"]].add(log["author"])
     for comment in comments:
         if comment["author"] not in EXCLUDE_PEOPLE and comment["author"] != "Unassigned":
             people_on_key[comment["key"]].add(comment["author"])
+            commenters_on_key[comment["key"]].add(comment["author"])
 
     by_ticket_seconds: dict[str, int] = defaultdict(int)
     by_ticket_people: dict[str, set[str]] = defaultdict(set)
@@ -1091,6 +1093,7 @@ def build():
                 "actual_seconds": by_ticket_seconds.get(key, 0),
                 "comment_count": comments_by_key.get(key, 0),
                 "logged_by": sorted(by_ticket_people.get(key, [])),
+                "commented_by": sorted(commenters_on_key.get(key, set())),
                 "touched_by": sorted(people_on_key.get(key, set())),
             }
         )
@@ -1303,17 +1306,18 @@ def write_markdown(data: dict, daily, people, dates) -> None:
     a("")
     a(f"{len(off)} HIEV Jira tickets with August worklogs or comments that were not part of sprint planning (added mid-sprint). Time and comments here are included in person totals, daily hours, and the journal.")
     a("")
-    a("| Jira | Type | Summary | Logged by | Logged of available | Comments | Status |")
-    a("|---|---|---|---|---:|---:|---|")
+    a("| Jira | Type | Summary | Logged by | Commented by | Logged of available | Comments | Status |")
+    a("|---|---|---|---|---|---:|---:|---|")
     for t in off:
-        who = ", ".join(t.get("logged_by") or []) or t.get("assignee") or "—"
+        who = ", ".join(t.get("logged_by") or []) or "—"
+        commenters = ", ".join(t.get("commented_by") or []) or "—"
         summ = (t.get("summary") or "").replace("|", "/")
         avail = expected_by.get(t.get("assignee") or "", 0)
         if not avail and t.get("logged_by"):
             avail = expected_by.get(t["logged_by"][0], 0)
         actual = fmt_vs(t["actual_seconds"], avail) if avail else fmt_hd(t["actual_seconds"])
         a(
-            f"| [{t['key']}](https://elocity.atlassian.net/browse/{t['key']}) | {t['issuetype']} | {summ} | {who} | {actual} | {t['comment_count']} | {t['jira_status']} |"
+            f"| [{t['key']}](https://elocity.atlassian.net/browse/{t['key']}) | {t['issuetype']} | {summ} | {who} | {commenters} | {actual} | {t['comment_count']} | {t['jira_status']} |"
         )
     a("")
     a("## 2. Estimation accuracy")
@@ -1545,7 +1549,8 @@ def write_html(data: dict, daily, people, dates) -> None:
     off_seconds = sum(t["actual_seconds"] for t in offsheet)
     offsheet_trs = []
     for t in offsheet:
-        who = ", ".join(t.get("logged_by") or []) or t.get("assignee") or "—"
+        who = ", ".join(t.get("logged_by") or []) or "—"
+        commenters = ", ".join(t.get("commented_by") or []) or "—"
         avail = expected_by.get(t.get("assignee") or "", 0)
         if not avail and t.get("logged_by"):
             avail = expected_by.get(t["logged_by"][0], 0)
@@ -1558,14 +1563,21 @@ def write_html(data: dict, daily, people, dates) -> None:
             f"<td><span class='pill type-{h(t['issuetype'])}'>{h(t['issuetype'])}</span></td>"
             f"<td>{h(t['summary'])}</td>"
             f"<td>{h(who)}</td>"
+            f"<td>{h(commenters)}</td>"
             f"<td class='num'>{time_cell}</td>"
             f"<td class='num'>{t['comment_count']}</td>"
             f"<td>{h(t['jira_status'])}</td>"
             "</tr>"
         )
+    journal_type_counts: dict[str, int] = defaultdict(int)
+    for log in data.get("worklogs") or []:
+        journal_type_counts[log.get("issuetype") or "unknown"] += 1
+    for c in data.get("comments") or []:
+        journal_type_counts[c.get("issuetype") or "unknown"] += 1
+    type_names = set(off_types) | set(journal_type_counts)
     type_opts = "".join(
-        f'<option value="{h(name)}">{h(name)} ({count})</option>'
-        for name, count in sorted(off_types.items(), key=lambda x: -x[1])
+        f'<label class="ms-opt"><input type="checkbox" value="{h(name)}"> {h(name)} ({off_types.get(name, journal_type_counts.get(name, 0))})</label>'
+        for name in sorted(type_names, key=lambda n: (-int(off_types.get(n, 0)), n))
     )
 
     people_trs = []
@@ -1698,15 +1710,17 @@ def write_html(data: dict, daily, people, dates) -> None:
             for log in cell["worklogs"]:
                 note = f" — {h(log['comment'])}" if log["comment"] else ""
                 where = "planned" if log.get("on_sheet") else "mid-sprint"
+                log_type = log.get("issuetype") or "unknown"
                 items.append(
-                    f"<li><span class='meta'>worklog {h(log['time_spent'])}</span> "
+                    f"<li data-type='{h(log_type)}'><span class='meta'>worklog {h(log['time_spent'])}</span> "
                     f"<a href='https://elocity.atlassian.net/browse/{h(log['key'])}'>{h(log['key'])}</a> "
-                    f"<span class='type'>{h(log['issuetype'])} · {where}</span>{note}</li>"
+                    f"<span class='type'>{h(log_type)} · {where}</span>{note}</li>"
                 )
             for c in cell["comments"]:
                 where = "planned" if c.get("on_sheet") else "mid-sprint"
+                c_type = c.get("issuetype") or "unknown"
                 items.append(
-                    f"<li><span class='meta'>comment · {where}</span> "
+                    f"<li data-type='{h(c_type)}'><span class='meta'>comment · {where}</span> "
                     f"<a href='https://elocity.atlassian.net/browse/{h(c['key'])}'>{h(c['key'])}</a> "
                     f"— {h(c['body'])}</li>"
                 )

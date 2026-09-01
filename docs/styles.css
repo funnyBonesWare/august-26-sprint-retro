@@ -429,7 +429,8 @@ a:hover { text-decoration: underline; }
   align-items: center;
   flex-wrap: wrap;
 }
-label.field {
+label.field,
+.field {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -444,6 +445,54 @@ select, input[type="search"] {
   border-radius: 8px;
   min-width: 180px;
 }
+.ms-filter {
+  position: relative;
+  display: inline-block;
+}
+.ms-toggle {
+  font: inherit;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  border-radius: 8px;
+  min-width: 180px;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.ms-toggle:hover,
+.ms-toggle:focus {
+  border-color: #cfc8bb;
+  outline: none;
+}
+.ms-panel {
+  position: absolute;
+  z-index: 8;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: max(100%, 200px);
+  max-height: 280px;
+  overflow: auto;
+  padding: 6px 0;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(26, 25, 22, 0.12);
+}
+.ms-opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.ms-opt:hover { background: var(--accent-soft); }
+.ms-opt input { margin: 0; accent-color: var(--accent); }
+details[hidden] { display: none !important; }
 
 .heatmap table {
   width: 100%;

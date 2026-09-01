@@ -352,6 +352,7 @@ EXPORT_JS = r"""
         "type",
         "summary",
         "logged_by",
+        "commented_by",
         "logged_days",
         "logged_hours",
         "available_days",
@@ -361,18 +362,19 @@ EXPORT_JS = r"""
       ];
       const rows = personRows("#offsheetBody tr", name).map((tr) => {
         const td = tr.children;
-        const logged = parseTimepair(td[4]);
+        const logged = parseTimepair(td[5]);
         return [
           cellText(td[0]),
           cellText(td[1]),
           cellText(td[2]),
           cellText(td[3]),
+          cellText(td[4]),
           logged.loggedDays,
           logged.loggedHours,
           logged.availDays,
           logged.availHours,
-          cellText(td[5]),
-          cellText(td[6])
+          cellText(td[6]),
+          cellText(td[7])
         ];
       });
       return toCsv(headers, rows);
@@ -737,6 +739,13 @@ def render_page(
         f"{person_opts}"
         "</select></label>"
     )
+    type_field = (
+        '<div class="field">Type '
+        '<div class="ms-filter js-type-multiselect">'
+        '<button type="button" class="ms-toggle" aria-haspopup="listbox" aria-expanded="false">All types</button>'
+        f'<div class="ms-panel" hidden role="listbox">{type_opts}</div>'
+        "</div></div>"
+    )
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -896,12 +905,7 @@ def render_page(
         <p class="note person-only" id="offsheetPersonNote" hidden></p>
         <div class="controls">
           {assignee_field}
-          <label class="field">Type
-            <select id="offTypeFilter">
-              <option value="">All types</option>
-              {type_opts}
-            </select>
-          </label>
+          {type_field}
           <label class="field">Search <input type="search" id="offSearch" placeholder="Filter mid-sprint…" /></label>
         </div>
         <div class="wrap tall">
@@ -912,6 +916,7 @@ def render_page(
                 {th("Type", "Jira issuetype")}
                 {th("Summary", "Jira summary")}
                 {th("Logged by", "People with August worklogs on this Jira ticket")}
+                {th("Commented by", "People with an August comment on this Jira ticket")}
                 {th("Logged of available", "August days on this Jira ticket of first logger’s available days", True)}
                 {th("Comments", "August comment count", True)}
                 {th("Status", "Jira status")}
@@ -1136,8 +1141,8 @@ def render_page(
 
       <section class="block" id="journal">
         <h2>Daily worklogs and comments</h2>
-        <p class="note">Expand a day to see Jira tickets, time spent, and comments. <em>planned</em> = sprint planned; <em>mid-sprint</em> = added after planning. The assignee filter applies here with the rest of the report.</p>
-        <div class="controls">{assignee_field}</div>
+        <p class="note">Expand a day to see Jira tickets, time spent, and comments. <em>planned</em> = sprint planned; <em>mid-sprint</em> = added after planning. Assignee and Type filters apply here with the rest of the report. A day is hidden when every entry is filtered out.</p>
+        <div class="controls">{assignee_field}{type_field}</div>
         <div id="journal">{journal}</div>
         <p class="empty-msg" id="journalEmpty" hidden>No August worklogs or comments for this person.</p>
       </section>
@@ -1194,11 +1199,10 @@ def render_page(
       }});
       const journalEmpty = document.getElementById("journalEmpty");
       if (journalEmpty) {{
-        if (!name) journalEmpty.hidden = true;
-        else {{
-          const any = [...document.querySelectorAll("#journal .person-day")].some((el) => !el.hidden);
-          journalEmpty.hidden = any;
-        }}
+        const any = [...document.querySelectorAll("#journal .person-day")].some((el) =>
+          !el.hidden && [...el.querySelectorAll("details")].some((d) => !d.hidden)
+        );
+        journalEmpty.hidden = any;
       }}
     }}
     function fillPersonCopy(name) {{
@@ -1268,6 +1272,7 @@ def render_page(
       if (url.href !== location.href) history.replaceState(null, "", url);
       if (document.getElementById("sheetSearch")) filterRows("sheetSearch", "sheetBody");
       if (document.getElementById("offSearch")) filterRows("offSearch", "offsheetBody");
+      filterJournal();
       updateEmptyStates(name);
       const exportHint = document.getElementById("exportHint");
       if (exportHint) {{
@@ -1277,24 +1282,86 @@ def render_page(
       }}
       if (opts.scroll && name) window.scrollTo(0, 0);
     }}
+    function typeOk(type) {{
+      const sel = window._offTypes || [];
+      return !sel.length || sel.indexOf(type) !== -1;
+    }}
+    function typeToggleLabel(values) {{
+      if (!values.length) return "All types";
+      if (values.length <= 2) return values.join(", ");
+      return values.length + " types";
+    }}
+    function selectedTypesFrom(widget) {{
+      return [...widget.querySelectorAll('input[type="checkbox"]:checked')].map((cb) => cb.value);
+    }}
+    function closeTypePanels() {{
+      document.querySelectorAll(".js-type-multiselect").forEach((w) => {{
+        const panel = w.querySelector(".ms-panel");
+        const btn = w.querySelector(".ms-toggle");
+        if (panel) panel.hidden = true;
+        if (btn) btn.setAttribute("aria-expanded", "false");
+      }});
+    }}
+    function syncTypeWidgets(values) {{
+      window._offTypes = values;
+      document.querySelectorAll(".js-type-multiselect").forEach((w) => {{
+        w.querySelectorAll('input[type="checkbox"]').forEach((cb) => {{
+          cb.checked = values.indexOf(cb.value) !== -1;
+        }});
+        const btn = w.querySelector(".ms-toggle");
+        if (btn) btn.textContent = typeToggleLabel(values);
+      }});
+    }}
+    function applyTypeFilter() {{
+      if (document.getElementById("offSearch")) filterRows("offSearch", "offsheetBody");
+      filterJournal();
+      updateEmptyStates((document.getElementById("reportPerson") || {{}}).value || "");
+    }}
+    function filterJournal() {{
+      document.querySelectorAll("#journal .person-day").forEach((section) => {{
+        section.querySelectorAll("details").forEach((day) => {{
+          const items = [...day.querySelectorAll("li")];
+          items.forEach((li) => {{
+            li.style.display = typeOk(li.getAttribute("data-type") || "unknown") ? "" : "none";
+          }});
+          const any = items.some((li) => li.style.display !== "none");
+          day.hidden = !any;
+        }});
+      }});
+    }}
     function filterRows(inputId, bodyId) {{
       const q = (document.getElementById(inputId).value || "").toLowerCase();
       const person = (document.getElementById("reportPerson") || {{}}).value || "";
       document.querySelectorAll("#" + bodyId + " tr").forEach((row) => {{
-        const typeOk = bodyId !== "offsheetBody" || !window._offType || row.dataset.type === window._offType;
+        const typeMatch = bodyId !== "offsheetBody" || typeOk(row.dataset.type);
         const textOk = !q || row.innerText.toLowerCase().includes(q);
         const personOk = matchesPerson(row, person);
-        row.style.display = typeOk && textOk && personOk && !row.hidden ? "" : "none";
+        row.style.display = typeMatch && textOk && personOk && !row.hidden ? "" : "none";
       }});
     }}
-    const offType = document.getElementById("offTypeFilter");
-    window._offType = "";
-    if (offType) {{
-      offType.addEventListener("change", () => {{
-        window._offType = offType.value;
-        filterRows("offSearch", "offsheetBody");
+    window._offTypes = [];
+    document.querySelectorAll(".js-type-multiselect").forEach((widget) => {{
+      const btn = widget.querySelector(".ms-toggle");
+      const panel = widget.querySelector(".ms-panel");
+      if (btn && panel) {{
+        btn.addEventListener("click", (e) => {{
+          e.stopPropagation();
+          const willOpen = panel.hidden;
+          closeTypePanels();
+          panel.hidden = !willOpen;
+          btn.setAttribute("aria-expanded", willOpen ? "true" : "false");
+        }});
+      }}
+      widget.querySelectorAll('input[type="checkbox"]').forEach((cb) => {{
+        cb.addEventListener("change", () => {{
+          syncTypeWidgets(selectedTypesFrom(widget));
+          applyTypeFilter();
+        }});
       }});
-    }}
+    }});
+    document.addEventListener("click", (e) => {{
+      if (!e.target.closest(".js-type-multiselect")) closeTypePanels();
+    }});
     const offSearch = document.getElementById("offSearch");
     if (offSearch) offSearch.addEventListener("input", () => filterRows("offSearch", "offsheetBody"));
     const sheetSearch = document.getElementById("sheetSearch");
