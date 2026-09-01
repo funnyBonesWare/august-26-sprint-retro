@@ -546,6 +546,9 @@ select, input[type="search"] {
   margin: 8px 0;
   font-size: 13px;
 }
+.bars .row[hidden] { display: none !important; }
+tr[hidden],
+.person-day[hidden] { display: none !important; }
 .bars .track {
   height: 10px;
   background: var(--line);

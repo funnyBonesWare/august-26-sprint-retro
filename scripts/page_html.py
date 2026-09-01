@@ -667,7 +667,8 @@ def render_page(
           <h2>Logged of available</h2>
           <p class="note">Bar fills toward that person’s available time. Label is <em>logged of available</em> (days, then hours).<small class="formula">fill% = min(100, 100 × logged seconds ÷ available seconds)</small></p>
           <div class="controls">{assignee_field}</div>
-          <div class="bars">{people_mix}</div>
+          <div class="bars" id="loggedBars">{people_mix}</div>
+          <p class="empty-msg" data-empty-for-bars="loggedBars" hidden>No logged-of-available row for this person.</p>
         </div>
       </div>
 
@@ -790,8 +791,8 @@ def render_page(
           <h2>Bugs worked in August</h2>
           <p class="note">Bars are unique bug keys each person logged time on or commented on in August.<small class="formula">fill% = 100 × person bug keys ÷ max person bug keys</small></p>
           <div class="controls">{assignee_field}</div>
-          <div class="bars">{bug_bars}</div>
-          <p class="empty-msg" data-empty-for-bars="1" hidden>No August bug worklogs or comments for this person.</p>
+          <div class="bars" id="bugBars">{bug_bars}</div>
+          <p class="empty-msg" data-empty-for-bars="bugBars" hidden>No August bug worklogs or comments for this person.</p>
         </div>
         <h3 class="note" style="margin-top:18px">Fix hours</h3>
         <p class="note team-only">Bugs {fh_bug}. Tasks {fh_task}. Other {fh_other}.</p>
@@ -931,14 +932,19 @@ def render_page(
         );
         msg.hidden = any;
       }});
-      const barEmpty = document.querySelector("[data-empty-for-bars]");
-      if (barEmpty) {{
-        if (!name) barEmpty.hidden = true;
-        else {{
-          const any = [...document.querySelectorAll("#quality .bars .row")].some((row) => !row.hidden);
-          barEmpty.hidden = any;
+      const barEmpties = document.querySelectorAll("[data-empty-for-bars]");
+      barEmpties.forEach((msg) => {{
+        if (!name) {{
+          msg.hidden = true;
+          return;
         }}
-      }}
+        const id = msg.getAttribute("data-empty-for-bars");
+        const root = id ? document.getElementById(id) : null;
+        const any = [...((root && root.querySelectorAll(".row")) || [])].some(
+          (row) => !row.hidden && row.style.display !== "none"
+        );
+        msg.hidden = any;
+      }});
       const journalEmpty = document.getElementById("journalEmpty");
       if (journalEmpty) {{
         if (!name) journalEmpty.hidden = true;
@@ -1000,9 +1006,10 @@ def render_page(
         if (back) back.addEventListener("click", () => applyPersonView(""));
       }}
       document.querySelectorAll("[data-people], [data-person]").forEach((el) => {{
-        el.hidden = !matchesPerson(el, name);
+        const show = matchesPerson(el, name);
+        el.hidden = !show;
         if (el.tagName === "TR" || el.classList.contains("row") || el.classList.contains("person-day")) {{
-          el.style.display = "";
+          el.style.display = show ? "" : "none";
         }}
       }});
       fillPersonCopy(name);
