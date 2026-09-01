@@ -1356,13 +1356,6 @@ def render_page(
             <div id="notesMissedScrum"></div>
           </div>
           <div class="notes-panel">
-            <h3 class="notes-sub">What they said</h3>
-            <label class="notes-compose">
-              <span>On the call</span>
-              <textarea class="notes-input" data-note="on_call" rows="6" placeholder="Write what they said on the call…"></textarea>
-            </label>
-          </div>
-          <div class="notes-panel">
             <h3 class="notes-sub">Retro prompts</h3>
             <div class="notes-prompts">
               <label class="notes-compose">
