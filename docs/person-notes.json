@@ -1,8 +1,281 @@
 {
   "sprint": "August 2026",
-  "updated": "2026-09-01T08:56:48.088Z",
+  "updated": "2026-09-01T11:15:51.756Z",
   "people": {
     "Sahil Siddiqui": {
+      "on_call": "",
+      "went_well": "",
+      "hard": "1. Delay in getting live api.",
+      "mid_sprint": "",
+      "estimation": "",
+      "quality": "",
+      "blockers": "",
+      "next_actions": "",
+      "shoutout": "",
+      "unfinished": {
+        "HIEV-6941": "This is a Recurring Task. This Task will go on for few more sprints",
+        "HIEV-7348": "Need To integration testion. recieved live api on 1 august",
+        "HIEV-7359": "Completed. Need to stage"
+      },
+      "missed_log_days": {
+        "2026-08-07": "Due to a health emergency"
+      },
+      "missed_scrum_days": {
+        "2026-08-21": "Posted on the chat"
+      }
+    },
+    "Sahil Kumar": {
+      "on_call": "",
+      "went_well": "",
+      "hard": "UAT Release Made Testing to slip for more than a week",
+      "mid_sprint": "",
+      "estimation": "",
+      "quality": "",
+      "blockers": "",
+      "next_actions": "",
+      "shoutout": "",
+      "unfinished": {
+        "HIEV-6939": "This is a major Epic. It is an ongoing ticket, it will spillover to many sprints",
+        "HIEV-7205": "Part of EVLM EPIC. Kept open Because during testing work will come up in this. Yet to Start on this",
+        "HIEV-7471": "Completed, Kept in progress for release to finish",
+        "HIEV-7482": "Completed, Kept in progress for release to finish",
+        "HIEV-7581": "Part of EVLM EPIC. Kept open Because during testing work will come up in this. Yet to Start on this"
+      },
+      "missed_log_days": {},
+      "missed_scrum_days": {
+        "2026-08-18": "Not Available that day, shared Update on Chat"
+      }
+    },
+    "Deepak": {
+      "on_call": "",
+      "went_well": "",
+      "hard": "Impelementation docs review takes time becuase task assignee research is less. assignee using AI to Plan as well",
+      "mid_sprint": "",
+      "estimation": "",
+      "quality": "",
+      "blockers": "",
+      "next_actions": "",
+      "shoutout": "",
+      "unfinished": {
+        "HIEV-6824": "Recurring thing . will go on for sprint",
+        "HIEV-6938": "Evlm ticket , it is a recurring thing for coming sprints"
+      },
+      "missed_log_days": {
+        "2026-08-07": "Forgot to add",
+        "2026-08-21": "Forgot to add",
+        "2026-08-27": "Forgot to add"
+      },
+      "missed_scrum_days": {
+        "2026-08-18": "Added in the Chat - Updates"
+      }
+    },
+    "Dhanush": {
+      "on_call": "",
+      "went_well": "",
+      "hard": "Backend Dependency, hence can't close the planned tickets.",
+      "mid_sprint": "",
+      "estimation": "",
+      "quality": "",
+      "blockers": "",
+      "next_actions": "",
+      "shoutout": "",
+      "unfinished": {
+        "HIEV-7150": "Recurring activity requiring api integrations",
+        "HIEV-7306": "Recurring activity requiring api integrations. Api contracts provided, api integration pending",
+        "HIEV-6942": "Backend depenecy for api/api contracts"
+      },
+      "missed_log_days": {
+        "2026-08-04": "Due to personal Reason. had worked on weekedns to make it up",
+        "2026-08-06": "Due to personal Reason. had worked on weekedns to make it up",
+        "2026-08-31": "Forgot to Add"
+      },
+      "missed_scrum_days": {
+        "2026-08-04": "Due to personal Reason. had worked on weekedns to make it up",
+        "2026-08-05": "Due to personal Reason. had worked on weekedns to make it up",
+        "2026-08-06": "Due to personal Reason. had worked on weekedns to make it up"
+      }
+    },
+    "Dharshini": {
+      "on_call": "",
+      "went_well": "",
+      "hard": "Api contracts recieved late in the sprint - recieved 2 days before sprint end",
+      "mid_sprint": "",
+      "estimation": "",
+      "quality": "",
+      "blockers": "",
+      "next_actions": "",
+      "shoutout": "",
+      "unfinished": {
+        "HIEV-7345": "Recieved api contract 2-3 days back. Currnt progress is started implementation"
+      },
+      "missed_log_days": {
+        "2026-08-14": "Forgot to Log",
+        "2026-08-27": "Forgot to Log"
+      },
+      "missed_scrum_days": {
+        "2026-08-04": "Since Travelling not able to join. Have added the updates in chat",
+        "2026-08-07": "Since Travelling not able to join. Have added the updates in chat",
+        "2026-08-13": "Since Travelling not able to join. Have added the updates in chat",
+        "2026-08-24": "Since Travelling not able to join. Have added the updates in chat",
+        "2026-08-31": "Since Travelling not able to join. Have added the updates in chat"
+      }
+    },
+    "Manjunath": {
+      "on_call": "",
+      "went_well": "",
+      "hard": "EStimation Could have been done better from Developer(Himself)",
+      "mid_sprint": "",
+      "estimation": "",
+      "quality": "",
+      "blockers": "",
+      "next_actions": "",
+      "shoutout": "",
+      "unfinished": {
+        "HIEV-6940": "In case any support required, openend , Can close it",
+        "HIEV-7354": "Didn't get time to work on this due to other ticket(Fleet). Not yet started",
+        "HIEV-7147": "Received PRD and got doubts cleared in 2nd week, workflow setup required time. First week of Sept , will give api integration support."
+      },
+      "missed_log_days": {
+        "2026-08-11": "Due to personal reason, ",
+        "2026-08-21": "Due to personal reason, ",
+        "2026-08-24": "Due to personal reason, "
+      },
+      "missed_scrum_days": {
+        "2026-08-03": "Due to Travelling, Posted in Chat",
+        "2026-08-12": "Due to Travelling, Posted in Chat",
+        "2026-08-17": "Due to Travelling, Posted in Chat",
+        "2026-08-21": "Due to Travelling, Posted in Chat",
+        "2026-08-26": "Due to Travelling, Posted in Chat",
+        "2026-08-06": "They were Not Able to Tell Anything",
+        "2026-08-24": "They were Not Able to Tell Anything"
+      }
+    },
+    "Marish": {
+      "on_call": "",
+      "went_well": "",
+      "hard": "No Comments",
+      "mid_sprint": "",
+      "estimation": "",
+      "quality": "",
+      "blockers": "",
+      "next_actions": "",
+      "shoutout": "",
+      "unfinished": {},
+      "missed_log_days": {
+        "2026-08-21": "Forgot to Add",
+        "2026-08-26": "Forgot to Add"
+      },
+      "missed_scrum_days": {
+        "2026-08-06": "Added in Chat",
+        "2026-08-11": "Added in Chat",
+        "2026-08-17": "Added in Chat",
+        "2026-08-20": "Added in Chat",
+        "2026-08-26": "Added in Chat",
+        "2026-08-24": "No Explanation provided"
+      }
+    },
+    "Priyanshu": {
+      "on_call": "",
+      "went_well": "",
+      "hard": "1. Gitlab Migration took time\n",
+      "mid_sprint": "",
+      "estimation": "",
+      "quality": "",
+      "blockers": "",
+      "next_actions": "",
+      "shoutout": "",
+      "unfinished": {
+        "HIEV-7370": "Due to Gitlab, priority was reduced, It will be picked up in next sprint"
+      },
+      "missed_log_days": {
+        "2026-08-14": "Logged on Sunday",
+        "2026-08-21": "Logged on Sunday",
+        "2026-08-27": "Logged on Sunday"
+      },
+      "missed_scrum_days": {
+        "2026-08-07": "Provide on Chat",
+        "2026-08-17": "Provided on chat"
+      }
+    },
+    "Shambu": {
+      "on_call": "",
+      "went_well": "",
+      "hard": "Download diagnostics report - Got many Bug tickets, For one single issue multiple tickets were created\nWrong MR were Merged - MR belonging to some other ticket was ",
+      "mid_sprint": "",
+      "estimation": "",
+      "quality": "",
+      "blockers": "",
+      "next_actions": "",
+      "shoutout": "",
+      "unfinished": {
+        "HIEV-7347": "Blocked by UAT Release,",
+        "HIEV-7360": "Haven't got time to check, since he got lot of bug tickets"
+      },
+      "missed_log_days": {
+        "2026-08-27": "Forgot",
+        "2026-08-14": "No Explanation Provided"
+      },
+      "missed_scrum_days": {
+        "2026-08-21": "Posted on Chat",
+        "2026-08-25": "Posted on chat",
+        "2026-08-14": "Didn't join due to network issue and forgot to add in chat"
+      }
+    },
+    "Srikant": {
+      "on_call": "",
+      "went_well": "",
+      "hard": "Gitlab Migration\nNew Technologies Estimation does go off",
+      "mid_sprint": "",
+      "estimation": "",
+      "quality": "",
+      "blockers": "",
+      "next_actions": "",
+      "shoutout": "",
+      "unfinished": {
+        "HIEV-6925": "Gitlab Migration",
+        "HIEV-6932": "Gitlab Migration",
+        "HIEV-7365": "Gitlab Migration",
+        "HIEV-7366": "Gitlab Migration",
+        "HIEV-7367": "Gitlab Migration"
+      },
+      "missed_log_days": {
+        "2026-08-18": "Personal Reasons",
+        "2026-08-19": "Personal Reasons"
+      },
+      "missed_scrum_days": {
+        "2026-08-19": "Personal Reasons",
+        "2026-08-20": "Personal Reasons"
+      }
+    },
+    "Sudeep": {
+      "on_call": "",
+      "went_well": "",
+      "hard": "Adhoc Work made the items to get spilled over",
+      "mid_sprint": "",
+      "estimation": "",
+      "quality": "",
+      "blockers": "",
+      "next_actions": "",
+      "shoutout": "",
+      "unfinished": {
+        "HIEV-6372": "Due to Adhoc work and bug tickets. planning to take over mid spint of September",
+        "HIEV-7422": "Subtask of above ticket -7422"
+      },
+      "missed_log_days": {
+        "2026-08-14": "Due to House shifiting and personal work",
+        "2026-08-19": "Due to House shifiting and personal work",
+        "2026-08-21": "Due to House shifiting and personal work",
+        "2026-08-25": "Due to House shifiting and personal work",
+        "2026-08-27": "Due to House shifiting and personal work"
+      },
+      "missed_scrum_days": {
+        "2026-08-17": "Due to House shifiting and personal work",
+        "2026-08-19": "Due to House shifiting and personal work",
+        "2026-08-07": "Posted on Chat",
+        "2026-08-27": "Due to House shifiting and personal work"
+      }
+    },
+    "Tarun": {
       "on_call": "",
       "went_well": "",
       "hard": "",
@@ -13,8 +286,94 @@
       "next_actions": "",
       "shoutout": "",
       "unfinished": {
-        "HIEV-6941": "This is a Recurring Task. This Task will go on for few more sprints"
+        "HIEV-7254": "Finished. Need to Closed"
       },
+      "missed_log_days": {
+        "2026-08-04": "Logged next Days",
+        "2026-08-07": "Logged on Sunday",
+        "2026-08-14": "Logged on Sunday",
+        "2026-08-21": "Logged on Sunday",
+        "2026-08-27": "Logged on Sunday"
+      },
+      "missed_scrum_days": {
+        "2026-08-11": "Due to Health issue. Posted on Chat"
+      }
+    },
+    "Twisha": {
+      "on_call": "",
+      "went_well": "",
+      "hard": "No Comments",
+      "mid_sprint": "",
+      "estimation": "",
+      "quality": "",
+      "blockers": "",
+      "next_actions": "",
+      "shoutout": "",
+      "unfinished": {
+        "HIEV-7350": "Done from Devloper's end. ",
+        "HIEV-7358": "Done from Devloper's end. ",
+        "HIEV-7357": "Subtask of HIEV-7358",
+        "HIEV-7344": "Implementation is done, currently it is review, Integration support Pending"
+      },
+      "missed_log_days": {
+        "2026-08-27": "Travellling",
+        "2026-08-24": "Forgot to add"
+      },
+      "missed_scrum_days": {
+        "2026-08-03": "Posted on Chat",
+        "2026-08-07": "Posted on Chat",
+        "2026-08-11": "Posted on Chat",
+        "2026-08-17": "Posted on Chat",
+        "2026-08-20": "Posted on Chat",
+        "2026-08-21": "Posted on Chat",
+        "2026-08-24": "Posted on Chat",
+        "2026-08-31": "Posted on Chat"
+      }
+    },
+    "Vinay": {
+      "on_call": "",
+      "went_well": "",
+      "hard": "1. Hopping Between Multiple Task . Context Switching was issue .\n2. Gitlab Runner issue.\n3. Most time went in unit test case review and reservation review.",
+      "mid_sprint": "",
+      "estimation": "",
+      "quality": "",
+      "blockers": "",
+      "next_actions": "",
+      "shoutout": "",
+      "unfinished": {
+        "HIEV-6945": "Done, Waiting for deployments",
+        "HIEV-7406": "70% is done. Pending is analytics part"
+      },
+      "missed_log_days": {
+        "2026-08-06": "Forgot",
+        "2026-08-07": "Forgot",
+        "2026-08-11": "Forgot",
+        "2026-08-13": "Forgot",
+        "2026-08-14": "Forgot",
+        "2026-08-18": "Forgot",
+        "2026-08-19": "Forgot",
+        "2026-08-20": "Forgot",
+        "2026-08-24": "Forgot",
+        "2026-08-25": "Forgot",
+        "2026-08-26": "Forgot",
+        "2026-08-27": "Forgot"
+      },
+      "missed_scrum_days": {
+        "2026-08-03": "Started Day Late. Posted on Chat",
+        "2026-08-26": "Network issue. Posted on Chat"
+      }
+    },
+    "Nagaraju": {
+      "on_call": "",
+      "went_well": "",
+      "hard": "1. Developers Don't do dev testing.\n2. Bulk Bug tickets were re assigned at last 2 days of sprint.",
+      "mid_sprint": "",
+      "estimation": "",
+      "quality": "",
+      "blockers": "",
+      "next_actions": "",
+      "shoutout": "",
+      "unfinished": {},
       "missed_log_days": {},
       "missed_scrum_days": {}
     }
