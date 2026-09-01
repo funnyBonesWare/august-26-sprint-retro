@@ -16,12 +16,12 @@ Markdown copy: `report/retrospective.md`
 
 ## What it answers
 
-1. **Planned vs actual days** — sheet PD vs Jira worklogs started in August
+1. **Planned vs actual days** — sprint-planned PD vs Jira worklogs started in August
 2. **Estimation accuracy** — actual days ÷ estimated PD (tickets with numeric estimates)
-3. **Off-sheet work** — tasks/bugs not on the sheet that still had August time or comments
+3. **Mid-sprint work** — tickets not in sprint planning that were added during the sprint, with August time or comments
 4. **Bugs worked** — distinct HIEV `Bug` keys with August worklogs or comments, credited to who logged or commented (unique keys, not assignee)
 5. **Fix hours** — August worklogs on Bug tickets vs Task/Sub-task tickets
-6. **Daily log** — hours per person per day, plus worklog notes and ticket comments (sheet + other)
+6. **Daily log** — hours per person per day, plus worklog notes and ticket comments (sprint planned + mid-sprint)
 
 ## Rebuild
 

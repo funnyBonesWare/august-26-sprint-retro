@@ -45,16 +45,16 @@ logged_hours of available_hours</code>
 team_util = Σ logged_days ÷ Σ available_days</code>
           </div>
           <div class="formula-card">
-            <dt>On / off sheet mix %</dt>
-            <dd>Share of that person’s (or the team’s) August worklog seconds. Off-sheet keys are not on the August 26 sheet.</dd>
-            <code>on% = 100 × on_sheet_seconds ÷ (on + off)
-off% = 100 × off_sheet_seconds ÷ (on + off)</code>
+            <dt>Sprint planned / mid-sprint mix %</dt>
+            <dd>Share of that person’s (or the team’s) August worklog seconds. Sprint planned = keys on the sprint plan. Mid-sprint = keys added after planning, not on the plan.</dd>
+            <code>planned% = 100 × planned_seconds ÷ (planned + mid-sprint)
+mid% = 100 × mid_sprint_seconds ÷ (planned + mid-sprint)</code>
           </div>
           <div class="formula-card">
             <dt>Estimation accuracy</dt>
-            <dd>Same-scope only. Missing or NA sheet PD → not computed. 1.00 = exact; &gt; 1 over-ran the estimate. Colour: green ≤ 1.10, amber ≤ 1.50, else red. Bar fill = min(100%, accuracy × 50%) so 2.0 fills the track.</dd>
-            <code>ticket_acc = August_days_on_that_key ÷ sheet_PD
-person_acc = August_days_on_their_planned_keys ÷ their_sheet_PD
+            <dd>Same-scope only. Missing or NA sprint-plan PD → not computed. 1.00 = exact; &gt; 1 over-ran the estimate. Colour: green ≤ 1.10, amber ≤ 1.50, else red. Bar fill = min(100%, accuracy × 50%) so 2.0 fills the track.</dd>
+            <code>ticket_acc = August_days_on_that_key ÷ sprint_plan_PD
+person_acc = August_days_on_their_planned_keys ÷ their_sprint_plan_PD
 mean_ticket_acc = average(ticket_acc)
   only keys with a numeric plan and logged &gt; 0</code>
           </div>
@@ -146,8 +146,8 @@ EXPORT_JS = r"""
     function mixPercents(td) {
       const mix = td && td.querySelector ? td.querySelector(".mix") : null;
       const title = (mix && mix.getAttribute("title")) || "";
-      const on = title.match(/On sheet\s+([\d.]+)%/i);
-      const off = title.match(/Off sheet\s+([\d.]+)%/i);
+      const on = title.match(/Sprint planned\s+([\d.]+)%/i);
+      const off = title.match(/Mid-sprint\s+([\d.]+)%/i);
       return { on: on ? on[1] : "", off: off ? off[1] : "" };
     }
     function worklogHours(label) {
@@ -275,12 +275,12 @@ EXPORT_JS = r"""
         "logged_days",
         "logged_hours",
         "util",
-        "on_sheet_pct",
-        "off_sheet_pct",
-        "on_sheet_days",
-        "on_sheet_hours",
-        "off_sheet_days",
-        "off_sheet_hours",
+        "sprint_planned_pct",
+        "mid_sprint_pct",
+        "sprint_planned_days",
+        "sprint_planned_hours",
+        "mid_sprint_days",
+        "mid_sprint_hours",
         "accuracy",
         "worklogs",
         "comments"
@@ -460,7 +460,7 @@ EXPORT_JS = r"""
       return toCsv(headers, rows);
     }
     function exportJournalCsv(name) {
-      const headers = ["person", "date", "kind", "key", "hours", "on_sheet", "comment"];
+      const headers = ["person", "date", "kind", "key", "hours", "sprint_planned", "comment"];
       const rows = [];
       personRows("#journal .person-day", name).forEach((section) => {
         const person = (section.getAttribute("data-person") || cellText(section.querySelector("h3"))).replace(/\s+\d.*/, "").trim();
@@ -473,9 +473,9 @@ EXPORT_JS = r"""
             const key = cellText(li.querySelector("a"));
             const typeEl = li.querySelector(".type");
             const typeText = cellText(typeEl);
-            const onSheet = /sheet/i.test(typeText) && !/other/i.test(typeText)
-              ? "sheet"
-              : (/other/i.test(meta + " " + typeText) ? "other" : (/sheet/i.test(typeText) ? "sheet" : ""));
+            const onSheet = /planned/i.test(typeText) && !/mid-sprint/i.test(typeText)
+              ? "planned"
+              : (/mid-sprint/i.test(meta + " " + typeText) ? "mid-sprint" : (/planned/i.test(typeText) ? "planned" : ""));
             let comment = "";
             const html = li.innerHTML;
             const dash = html.split(" — ");
@@ -508,8 +508,8 @@ EXPORT_JS = r"""
       try {
         const files = [
           { name: prefix + "-people.csv", content: exportPeopleCsv(name) },
-          { name: prefix + "-sheet.csv", content: exportSheetCsv(name) },
-          { name: prefix + "-offsheet.csv", content: exportOffsheetCsv(name) },
+          { name: prefix + "-sprint-planned.csv", content: exportSheetCsv(name) },
+          { name: prefix + "-mid-sprint.csv", content: exportOffsheetCsv(name) },
           { name: prefix + "-bugs.csv", content: exportBugsCsv(name) },
           { name: prefix + "-heatmap.csv", content: exportHeatmapCsv(name) },
           { name: prefix + "-scrum.csv", content: exportScrumCsv(name) },
@@ -600,8 +600,8 @@ def render_page(
       <a href="#overview">Overview</a>
       <a href="#formulas">Formulas</a>
       <a href="#people">People</a>
-      <a href="#sheet">Sheet tickets</a>
-      <a href="#offsheet">Off-sheet work</a>
+      <a href="#sheet">Sprint planned</a>
+      <a href="#offsheet">Mid-sprint</a>
       <a href="#accuracy">Estimation</a>
       <a href="#quality">Bugs &amp; fix hours</a>
       <a href="#daily">Daily time</a>
@@ -611,12 +611,12 @@ def render_page(
     <div class="content">
       <header class="hero" id="overview">
         <h1>August 2026 sprint retrospective</h1>
-        <p class="lead" id="heroLead">Sheet plan from Deepak’s August 26 workbook, plus every HIEV task and bug the team logged time or comments on during 1–31 Aug 2026. Conversion is fixed: <strong>8 hours = 1 person-day</strong>. Use the <strong>Assignee</strong> filter (sticky bar, sidebar, or any table) to show one person, or <strong>All (team)</strong> for the full set. Click a name in a table for the same filter.</p>
+        <p class="lead" id="heroLead">Sprint planned tickets from Deepak’s August 26 workbook, plus every HIEV task and bug the team logged time or comments on during 1–31 Aug 2026 — including work added mid-sprint. Conversion is fixed: <strong>8 hours = 1 person-day</strong>. Use the <strong>Assignee</strong> filter (sticky bar, sidebar, or any table) to show one person, or <strong>All (team)</strong> for the full set. Click a name in a table for the same filter.</p>
         <div class="meta-row">
           <span class="chip">Period 1–31 Aug 2026</span>
           <span class="chip">8h = 1d</span>
-          <span class="chip sheet team-only">On sheet {on_hours_label}</span>
-          <span class="chip other team-only">Off sheet {off_mix_label}</span>
+          <span class="chip sheet team-only">Sprint planned {on_hours_label}</span>
+          <span class="chip other team-only">Mid-sprint {off_mix_label}</span>
           <span class="chip sheet person-only" id="personOnChip" hidden></span>
           <span class="chip other person-only" id="personOffChip" hidden></span>
           <span class="chip">Jira project HIEV</span>
@@ -632,18 +632,18 @@ def render_page(
       </div>
 
       <div class="kpis team-only">
-        <div class="kpi"><strong>{total_plan:.0f} PD</strong><span>Numeric sheet estimates<small class="formula">Σ sheet PD (NA excluded)</small></span></div>
+        <div class="kpi"><strong>{total_plan:.0f} PD</strong><span>Sprint planned estimates<small class="formula">Σ sprint-plan PD (NA excluded)</small></span></div>
         <div class="kpi"><strong>{kpi_logged}</strong><span>Logged of available<small class="formula">Σ logged of Σ available · 8h = 1d</small></span></div>
         <div class="kpi"><strong>{team_util if team_util is not None else "n/a"}</strong><span>Team util<small class="formula">Σ logged days ÷ Σ available days</small></span></div>
-        <div class="kpi"><strong>{avg_acc if avg_acc is not None else "n/a"}</strong><span>Mean ticket accuracy<small class="formula">avg(Aug days on key ÷ sheet PD) for worked keys</small></span></div>
-        <div class="kpi"><strong>{off_count}</strong><span>Off-sheet keys<small class="formula">{off_hours_label} · not on August 26 sheet</small></span></div>
+        <div class="kpi"><strong>{avg_acc if avg_acc is not None else "n/a"}</strong><span>Mean ticket accuracy<small class="formula">avg(Aug days on key ÷ sprint-plan PD) for worked keys</small></span></div>
+        <div class="kpi"><strong>{off_count}</strong><span>Mid-sprint keys<small class="formula">{off_hours_label} · not in sprint planning</small></span></div>
         <div class="kpi"><strong>{kpi_scrum}</strong><span>Scrum attendance<small class="formula">attended expected ÷ expected (leave-adjusted)</small></span></div>
       </div>
       <div class="kpis person-only" id="personKpis" hidden>
         <div class="kpi"><strong id="pkLogged"></strong><span>Logged of available<small class="formula">logged days of available days</small></span></div>
         <div class="kpi"><strong id="pkLeave"></strong><span>Leave<small class="formula">Σ leave fraction in August</small></span></div>
         <div class="kpi"><strong id="pkUtil"></strong><span>Util<small class="formula">logged days ÷ available days</small></span></div>
-        <div class="kpi"><strong id="pkPlan"></strong><span>Sheet plan PD<small class="formula">Σ sheet PD for this assignee</small></span></div>
+        <div class="kpi"><strong id="pkPlan"></strong><span>Sprint planned PD<small class="formula">Σ sprint-plan PD for this assignee</small></span></div>
         <div class="kpi"><strong id="pkBugs"></strong><span>Unique bugs worked<small class="formula">count of Bug keys with Aug log or comment</small></span></div>
         <div class="kpi"><strong id="pkScrum"></strong><span>Scrum attendance<small class="formula">attended expected ÷ expected</small></span></div>
       </div>
@@ -652,14 +652,14 @@ def render_page(
       <div class="split">
         <div class="card team-only">
           <h2>Where August time went</h2>
-          <p class="note">Share of logged hours on planned sheet tickets versus everything else.<small class="formula">on% = 100 × on-sheet seconds ÷ (on + off); off% = 100 × off-sheet seconds ÷ (on + off)</small></p>
+          <p class="note">Share of logged hours on <strong>sprint planned</strong> tickets versus <strong>mid-sprint</strong> work (added after planning).<small class="formula">planned% = 100 × planned seconds ÷ (planned + mid-sprint); mid% = 100 × mid-sprint seconds ÷ (planned + mid-sprint)</small></p>
           <div class="mix" style="height:14px;margin:12px 0 8px">
             <span class="on" style="width:{on_pct}%"></span>
             <span class="off" style="width:{off_pct}%"></span>
           </div>
           <div class="legend">
-            <span><i class="swatch sheet"></i>Sheet {on_pct}%</span>
-            <span><i class="swatch other"></i>Off-sheet {off_pct}%</span>
+            <span><i class="swatch sheet"></i>Sprint planned {on_pct}%</span>
+            <span><i class="swatch other"></i>Mid-sprint {off_pct}%</span>
           </div>
           <p class="note">Nine long-running tickets exceeded Jira’s 20-worklog payload cap. Missing August logs were rebuilt from changelog time deltas and checked against each issue’s timespent.</p>
         </div>
@@ -676,20 +676,20 @@ def render_page(
         <h2>1. Planned vs actual</h2>
         <p class="note">Every time figure is <strong>logged of available</strong>: days first, hours underneath. See <a href="#formulas">Formulas</a>.</p>
         <div class="controls">{assignee_field}</div>
-        <div class="legend"><span><i class="swatch sheet"></i>On sheet</span><span><i class="swatch other"></i>Off sheet</span></div>
+        <div class="legend"><span><i class="swatch sheet"></i>Sprint planned</span><span><i class="swatch other"></i>Mid-sprint</span></div>
         <div class="wrap">
           <table>
             <thead>
               <tr>
                 {th("Person", "Canonical name")}
-                {th("Plan PD", "Σ sheet PD for this assignee (NA excluded)", True)}
+                {th("Plan PD", "Σ sprint-plan PD for this assignee (NA excluded)", True)}
                 {th("Leave", "Σ leave fraction in August", True)}
                 {th("Logged of available", "logged days of available days", True)}
                 {th("Util", "logged days ÷ available days", True)}
-                {th("Mix", "on% = 100 × on-sheet seconds ÷ (on + off)")}
-                {th("On sheet of avail", "on-sheet days of available days", True)}
-                {th("Off sheet of avail", "off-sheet days of available days", True)}
-                {th("Accuracy", "August days on planned keys ÷ sheet PD", True)}
+                {th("Mix", "planned% = 100 × sprint-planned seconds ÷ (planned + mid-sprint)")}
+                {th("Sprint planned of avail", "sprint-planned days of available days", True)}
+                {th("Mid-sprint of avail", "mid-sprint days of available days", True)}
+                {th("Accuracy", "August days on sprint-planned keys ÷ sprint-plan PD", True)}
                 {th("Logs", "count of August worklogs", True)}
                 {th("Comments", "count of August comments", True)}
               </tr>
@@ -700,36 +700,36 @@ def render_page(
       </section>
 
       <section class="block" id="sheet">
-        <h2>Sheet tickets</h2>
-        <p class="note team-only">Rows from the August 26 sheet. Search by feature, assignee, or key.</p>
+        <h2>Sprint planned tickets</h2>
+        <p class="note team-only">Tickets that were part of sprint planning (August 26 workbook). Search by feature, assignee, or key.</p>
         <p class="note person-only" id="sheetPersonNote" hidden></p>
         <div class="controls">
           {assignee_field}
-          <label class="field">Search <input type="search" id="sheetSearch" placeholder="Filter sheet tickets…" /></label>
+          <label class="field">Search <input type="search" id="sheetSearch" placeholder="Filter sprint planned…" /></label>
         </div>
         <div class="wrap tall">
           <table>
             <thead>
               <tr>
                 {th("Jira", "Issue key")}
-                {th("Section", "Sheet section")}
-                {th("Feature", "Sheet feature")}
-                {th("Assignee", "Sheet assignee")}
-                {th("Plan", "Sheet PD", True)}
+                {th("Section", "Sprint-plan section")}
+                {th("Feature", "Sprint-plan feature")}
+                {th("Assignee", "Sprint-plan assignee")}
+                {th("Plan", "Sprint-plan PD", True)}
                 {th("Logged of assignee avail", "August days on this key of assignee available days", True)}
-                {th("Accuracy", "August days on this key ÷ sheet PD", True)}
+                {th("Accuracy", "August days on this key ÷ sprint-plan PD", True)}
                 {th("Status", "Jira status")}
               </tr>
             </thead>
             <tbody id="sheetBody">{ticket_trs}</tbody>
           </table>
         </div>
-        <p class="empty-msg" data-empty-for="sheetBody" hidden>No sheet tickets for this person.</p>
+        <p class="empty-msg" data-empty-for="sheetBody" hidden>No sprint-planned tickets for this person.</p>
       </section>
 
       <section class="block" id="offsheet">
-        <h2>Off-sheet tasks and bugs</h2>
-        <p class="note team-only">{offsheet_count} keys had August worklogs or comments but were not on the plan. Included in person totals, heatmap, and the journal (marked <em>other</em>).</p>
+        <h2>Mid-sprint tickets</h2>
+        <p class="note team-only">{offsheet_count} keys had August worklogs or comments but were <strong>not</strong> in sprint planning — they were added mid-sprint. Included in person totals, heatmap, and the journal (marked <em>mid-sprint</em>).</p>
         <p class="note person-only" id="offsheetPersonNote" hidden></p>
         <div class="controls">
           {assignee_field}
@@ -739,7 +739,7 @@ def render_page(
               {type_opts}
             </select>
           </label>
-          <label class="field">Search <input type="search" id="offSearch" placeholder="Filter off-sheet…" /></label>
+          <label class="field">Search <input type="search" id="offSearch" placeholder="Filter mid-sprint…" /></label>
         </div>
         <div class="wrap tall">
           <table>
@@ -757,12 +757,12 @@ def render_page(
             <tbody id="offsheetBody">{offsheet_trs}</tbody>
           </table>
         </div>
-        <p class="empty-msg" data-empty-for="offsheetBody" hidden>No off-sheet keys this person logged or commented on.</p>
+        <p class="empty-msg" data-empty-for="offsheetBody" hidden>No mid-sprint keys this person logged or commented on.</p>
       </section>
 
       <section class="block" id="accuracy">
         <h2>2. Estimation accuracy</h2>
-        <p class="note team-only">Same-scope only. Off-sheet time is utilisation, not an estimate miss. Bar fill = min(100%, accuracy × 50%) so 2.0 fills the track. Green ≤1.10, amber ≤1.50, red above.</p>
+        <p class="note team-only">Same-scope only. Mid-sprint time is utilisation, not an estimate miss. Bar fill = min(100%, accuracy × 50%) so 2.0 fills the track. Green ≤1.10, amber ≤1.50, red above.</p>
         <p class="note person-only" id="accPersonNote" hidden></p>
         <div class="controls">{assignee_field}</div>
         <div class="wrap">
@@ -770,17 +770,17 @@ def render_page(
             <thead>
               <tr>
                 {th("Person", "Canonical name")}
-                {th("Plan PD", "Σ sheet PD", True)}
+                {th("Plan PD", "Σ sprint-plan PD", True)}
                 {th("Actual on plan", "August days on planned keys", True)}
                 {th("Logged of available", "all August days of available days", True)}
                 {th("Ratio", "bar% = min(100, accuracy × 50)")}
-                {th("Accuracy", "August days on planned keys ÷ sheet PD", True)}
+                {th("Accuracy", "August days on sprint-planned keys ÷ sprint-plan PD", True)}
               </tr>
             </thead>
             <tbody id="accBody">{person_acc_trs}</tbody>
           </table>
         </div>
-        <p class="empty-msg" data-empty-for="accBody" hidden>No numeric sheet estimate for this person, so accuracy is not computed.</p>
+        <p class="empty-msg" data-empty-for="accBody" hidden>No numeric sprint-plan estimate for this person, so accuracy is not computed.</p>
       </section>
 
       <section class="block" id="quality">
@@ -890,7 +890,7 @@ def render_page(
 
       <section class="block" id="journal">
         <h2>Daily worklogs and comments</h2>
-        <p class="note">Expand a day to see ticket keys, time spent, and comments. <em>sheet</em> = August 26 plan; <em>other</em> = off-sheet. The assignee filter applies here with the rest of the report.</p>
+        <p class="note">Expand a day to see ticket keys, time spent, and comments. <em>planned</em> = sprint planned; <em>mid-sprint</em> = added after planning. The assignee filter applies here with the rest of the report.</p>
         <div class="controls">{assignee_field}</div>
         <div id="journal">{journal}</div>
         <p class="empty-msg" id="journalEmpty" hidden>No August worklogs or comments for this person.</p>
@@ -966,15 +966,15 @@ def render_page(
       setText("pkScrum", stats.scrum_html || "—");
       const onChip = document.getElementById("personOnChip");
       const offChip = document.getElementById("personOffChip");
-      if (onChip) onChip.innerHTML = "On sheet " + stats.on_html;
-      if (offChip) offChip.innerHTML = "Off sheet " + stats.off_html;
+      if (onChip) onChip.innerHTML = "Sprint planned " + stats.on_html;
+      if (offChip) offChip.innerHTML = "Mid-sprint " + stats.off_html;
       setText("sheetPersonNote", stats.sheet
-        ? (stats.sheet + " sheet ticket" + (stats.sheet === 1 ? "" : "s") + " this person owns or touched (worklog or comment).")
-        : "No sheet tickets for this person.");
+        ? (stats.sheet + " sprint-planned ticket" + (stats.sheet === 1 ? "" : "s") + " this person owns or touched (worklog or comment).")
+        : "No sprint-planned tickets for this person.");
       setText("offsheetPersonNote", stats.offsheet
-        ? (stats.offsheet + " off-sheet key" + (stats.offsheet === 1 ? "" : "s") + " this person logged time on or commented on.")
-        : "No off-sheet keys this person logged or commented on.");
-      setText("accPersonNote", "Same-scope only: this person’s August days on their planned keys ÷ their sheet PD. Off-sheet time is not an estimate miss.");
+        ? (stats.offsheet + " mid-sprint key" + (stats.offsheet === 1 ? "" : "s") + " this person logged time on or commented on.")
+        : "No mid-sprint keys this person logged or commented on.");
+      setText("accPersonNote", "Same-scope only: this person’s August days on their sprint-planned keys ÷ their sprint-plan PD. Mid-sprint time is not an estimate miss.");
       setText("bugPersonNote", stats.bugs
         ? (stats.bugs + " unique bug" + (stats.bugs === 1 ? "" : "s") + " this person logged time on or commented on in August.")
         : "No bugs this person worked in August.");

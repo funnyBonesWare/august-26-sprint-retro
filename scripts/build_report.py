@@ -1040,11 +1040,11 @@ def build():
         "hours_per_day": HOURS_PER_DAY,
         "notes": [
             "Actuals are Jira worklogs started 1–31 Aug 2026 (8h = 1d).",
-            "Estimation accuracy uses only matching scope: ticket = August days on that Jira key ÷ sheet PD; person = August days on that person's planned keys ÷ their sheet PD. Time on tickets outside the sheet is not counted as estimation error.",
+            "Estimation accuracy uses only matching scope: ticket = August days on that Jira key ÷ sprint-plan PD; person = August days on that person's sprint-planned keys ÷ their sprint-plan PD. Mid-sprint time is not counted as estimation error.",
             "August hours use worklog `started` when Jira returned the log. For the 9 tickets with more than 20 worklogs, missing logs are filled from issue changelog timespent deltas (date = when the log was submitted). Those fills were checked against issue timespent (HIEV-6785 changelog page misses 0.7h of pre-May history, not August).",
             "Bugs worked = distinct HIEV issuetype Bug keys with at least one August worklog or August comment. A person is credited for a unique bug key if they logged time or commented on it in August — not the ticket assignee at create time.",
-            "Fix hours = August worklogs on Bug tickets vs Task/Sub-task tickets (sheet and off-sheet).",
-            "Off-sheet work = HIEV tasks/bugs/other keys with August worklogs or comments that are not on the August 26 sheet.",
+            "Fix hours = August worklogs on Bug tickets vs Task/Sub-task tickets (sprint planned and mid-sprint).",
+            "Mid-sprint work = HIEV keys with August worklogs or comments that were not part of sprint planning and were added during the sprint.",
             "Expected hours = weekdays in August minus Fri 28 public holiday minus that person's planned/sick leave (8h = 1d; Deepak 12 Aug is 0.5d first-half leave).",
             "Scrum attendance = Teams call Participants sheet. Expected calls = weekdays with a recorded ~09:30 IST scrum minus PH 28 minus leave that covers the call (full-day, or Deepak 12 Aug first-half). Rate = attended expected ÷ expected. Joining on leave is recorded but not a miss.",
         ],
@@ -1101,7 +1101,7 @@ def build():
     write_html(extracted, daily, daily_people, dates)
     print(f"Wrote {ROOT / 'report' / 'index.html'}")
     print(
-        f"Sheet tickets: {len(ticket_rows)}  Off-sheet: {len(offsheet_tickets)}  "
+        f"Sprint planned: {len(ticket_rows)}  Mid-sprint: {len(offsheet_tickets)}  "
         f"People: {len(person_rows)}  Worklogs: {len(worklogs)}  Comments: {len(comments)}  "
         f"Bugs worked: {len(bugs)}  resolved/open: {bugs_resolved}/{bugs_open}  "
         f"Scrum {scrum['team']['attended']}/{scrum['team']['expected']} "
@@ -1138,8 +1138,8 @@ def write_markdown(data: dict, daily, people, dates) -> None:
     a("- **Available days:** for each Mon–Fri except Fri 28 PH, add `1 − leave_fraction`. `available_hours = available_days × 8`. `leave_days = Σ leave_fraction`.")
     a("- **Logged of available:** `logged_days of available_days` (hours on the second line). Not a percentage.")
     a("- **Util:** `logged_days ÷ available_days`. Team util = `Σ logged_days ÷ Σ available_days`. Green ≥ 0.90, amber ≥ 0.75, else red.")
-    a("- **Mix %:** `on% = 100 × on_sheet_seconds ÷ (on + off)`; `off% = 100 × off_sheet_seconds ÷ (on + off)`.")
-    a("- **Ticket accuracy:** `August_days_on_that_key ÷ sheet_PD`. **Person accuracy:** `August_days_on_planned_keys ÷ sheet_PD`. Mean KPI averages ticket accuracy only where plan exists and logged > 0. 1.00 = exact. Green ≤ 1.10, amber ≤ 1.50, else red. Accuracy bar fill = `min(100%, accuracy × 50%)`.")
+    a("- **Mix %:** `planned% = 100 × sprint_planned_seconds ÷ (planned + mid-sprint)`; `mid% = 100 × mid_sprint_seconds ÷ (planned + mid-sprint)`.")
+    a("- **Ticket accuracy:** `August_days_on_that_key ÷ sprint_plan_PD`. **Person accuracy:** `August_days_on_planned_keys ÷ sprint_plan_PD`. Mean KPI averages ticket accuracy only where plan exists and logged > 0. 1.00 = exact. Green ≤ 1.10, amber ≤ 1.50, else red. Accuracy bar fill = `min(100%, accuracy × 50%)`.")
     a("- **Logged bar fill:** `min(100, 100 × logged_seconds ÷ available_seconds)`.")
     a("- **Bug bar fill:** `100 × person_bug_keys ÷ max(person_bug_keys)`.")
     a("- **Scrum attendance %:** `100 × attended_expected ÷ expected`. Expected = recorded ~09:30 weekday calls minus PH minus leave covering the call. Missed = `expected − attended`. Avg duration = mean join time on calls joined.")
@@ -1150,7 +1150,7 @@ def write_markdown(data: dict, daily, people, dates) -> None:
     a("")
     a("## 1. Planned vs actual days")
     a("")
-    a("| Person | Planned (PD) | Leave (d) | Logged of available | Util | On sheet of avail | Off sheet of avail | Est. accuracy |")
+    a("| Person | Planned (PD) | Leave (d) | Logged of available | Util | Sprint planned of avail | Mid-sprint of avail | Est. accuracy |")
     a("|---|---:|---:|---:|---:|---:|---:|---:|---:|")
     for p in data["people"]:
         plan = "—" if p["planned_days"] is None else f"{p['planned_days']:.1f}"
@@ -1177,9 +1177,9 @@ def write_markdown(data: dict, daily, people, dates) -> None:
         )
     a("")
     off = data.get("offsheet_tickets") or []
-    a("### Tasks and bugs not on the sheet")
+    a("### Tasks and bugs added mid-sprint")
     a("")
-    a(f"{len(off)} HIEV keys with August worklogs or comments that were not on the August 26 sheet. Time and comments here are included in person totals, daily hours, and the journal.")
+    a(f"{len(off)} HIEV keys with August worklogs or comments that were not part of sprint planning (added mid-sprint). Time and comments here are included in person totals, daily hours, and the journal.")
     a("")
     a("| Jira | Type | Summary | Logged by | Logged of available | Comments | Status |")
     a("|---|---|---|---|---:|---:|---|")
@@ -1196,7 +1196,7 @@ def write_markdown(data: dict, daily, people, dates) -> None:
     a("")
     a("## 2. Estimation accuracy")
     a("")
-    a("Same-scope only: **ticket** = August days on that key ÷ sheet PD. **Person** = August days on *their planned keys* ÷ their sheet PD. Time logged elsewhere is utilization, not estimation error. Values above 1.0 mean over estimate. NA / missing estimates are excluded.")
+    a("Same-scope only: **ticket** = August days on that key ÷ sprint-plan PD. **Person** = August days on *their sprint-planned keys* ÷ their sprint-plan PD. Mid-sprint time is utilization, not estimation error. Values above 1.0 mean over estimate. NA / missing estimates are excluded.")
     a("")
     a("| Person | Plan (PD) | Actual on planned keys | Logged of available | Accuracy |")
     a("|---|---:|---:|---:|---:|")
@@ -1330,7 +1330,7 @@ def write_markdown(data: dict, daily, people, dates) -> None:
             a("")
             for log in cell["worklogs"]:
                 note = f" — {log['comment']}" if log["comment"] else ""
-                where = "sheet" if log.get("on_sheet") else "other"
+                where = "planned" if log.get("on_sheet") else "mid-sprint"
                 a(f"- Worklog {log['time_spent']} on [{log['key']}](https://elocity.atlassian.net/browse/{log['key']}) ({log['issuetype']}, {where}){note}")
             for c in cell["comments"]:
                 a(f"- Comment on [{c['key']}](https://elocity.atlassian.net/browse/{c['key']}): {c['body']}")
@@ -1461,7 +1461,7 @@ def write_html(data: dict, daily, people, dates) -> None:
             f"<td class='num'>{leave_d:.1f}d</td>"
             f"<td class='num'>{html_vs(p['actual_all_seconds'], expected_s)}</td>"
             f"<td class='num'><span class='pill {util_band}'>{util_label}</span></td>"
-            f"<td><div class='mix' title='On sheet {on_w}% · Off sheet {off_w}%'><span class='on' style='width:{on_w}%'></span><span class='off' style='width:{off_w}%'></span></div></td>"
+            f"<td><div class='mix' title='Sprint planned {on_w}% · Mid-sprint {off_w}%'><span class='on' style='width:{on_w}%'></span><span class='off' style='width:{off_w}%'></span></div></td>"
             f"<td class='num'>{html_vs(on_s, expected_s)}</td>"
             f"<td class='num'>{html_vs(off_s, expected_s)}</td>"
             f"<td class='num'><span class='pill {acc_band}'>{acc_label}</span></td>"
@@ -1567,14 +1567,14 @@ def write_html(data: dict, daily, people, dates) -> None:
             items = []
             for log in cell["worklogs"]:
                 note = f" — {h(log['comment'])}" if log["comment"] else ""
-                where = "sheet" if log.get("on_sheet") else "other"
+                where = "planned" if log.get("on_sheet") else "mid-sprint"
                 items.append(
                     f"<li><span class='meta'>worklog {h(log['time_spent'])}</span> "
                     f"<a href='https://elocity.atlassian.net/browse/{h(log['key'])}'>{h(log['key'])}</a> "
                     f"<span class='type'>{h(log['issuetype'])} · {where}</span>{note}</li>"
                 )
             for c in cell["comments"]:
-                where = "sheet" if c.get("on_sheet") else "other"
+                where = "planned" if c.get("on_sheet") else "mid-sprint"
                 items.append(
                     f"<li><span class='meta'>comment · {where}</span> "
                     f"<a href='https://elocity.atlassian.net/browse/{h(c['key'])}'>{h(c['key'])}</a> "
