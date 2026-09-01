@@ -688,26 +688,22 @@ def render_page(
         <h2>3. Bugs worked in August and 4. Fix hours</h2>
         <p class="note team-only">{bug_note}</p>
         <p class="note person-only" id="bugPersonNote" hidden></p>
-        <div class="split">
-          <div class="card">
-            <h2>Bugs worked in August</h2>
-            <p class="note">Bars are unique bug keys each person logged time on or commented on in August.</p>
-            <div class="controls">{assignee_field}</div>
-            <div class="bars">{bug_bars}</div>
-            <p class="empty-msg" data-empty-for-bars="1" hidden>No August bug worklogs or comments for this person.</p>
-          </div>
-          <div class="card">
-            <h2>Fix hours</h2>
-            <p class="note team-only">Bugs {fh_bug}. Tasks {fh_task}. Other {fh_other}.</p>
-            <p class="note person-only" id="fhPersonNote" hidden></p>
-            <div class="controls">{assignee_field}</div>
-            <div class="wrap" style="max-height:280px;border:0;padding:0">
-              <table>
-                <thead><tr><th>Person</th><th class="num">Bug of available</th><th class="num">Task of available</th></tr></thead>
-                <tbody id="fixBody">{fix_trs}</tbody>
-              </table>
-            </div>
-          </div>
+        <div class="card">
+          <h2>Bugs worked in August</h2>
+          <p class="note">Bars are unique bug keys each person logged time on or commented on in August.</p>
+          <div class="controls">{assignee_field}</div>
+          <div class="bars">{bug_bars}</div>
+          <p class="empty-msg" data-empty-for-bars="1" hidden>No August bug worklogs or comments for this person.</p>
+        </div>
+        <h3 class="note" style="margin-top:18px">Fix hours</h3>
+        <p class="note team-only">Bugs {fh_bug}. Tasks {fh_task}. Other {fh_other}.</p>
+        <p class="note person-only" id="fhPersonNote" hidden></p>
+        <div class="controls">{assignee_field}</div>
+        <div class="wrap">
+          <table>
+            <thead><tr><th>Person</th><th class="num">Bug of available</th><th class="num">Task of available</th></tr></thead>
+            <tbody id="fixBody">{fix_trs}</tbody>
+          </table>
         </div>
         <h3 class="note" style="margin-top:18px">Bug list</h3>
         <div class="controls">{assignee_field}</div>

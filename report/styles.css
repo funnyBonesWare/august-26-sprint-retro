@@ -135,7 +135,12 @@ body.person-mode .split { grid-template-columns: 1fr; }
 .name-link:hover { color: var(--ink); }
 nav.toc .name-link { color: #9ec0e8; }
 
-.content { padding: 36px 40px 80px; max-width: 1280px; }
+.content {
+  padding: 36px 40px 80px;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
 
 .hero h1 {
   font-family: "Fraunces", Georgia, serif;
@@ -312,7 +317,10 @@ table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
+  table-layout: auto;
 }
+.wrap table { width: 100%; }
+.mix { width: 100%; }
 th, td {
   padding: 9px 10px;
   border-bottom: 1px solid var(--line);
@@ -337,6 +345,8 @@ a:hover { text-decoration: underline; }
 
 .wrap {
   overflow: auto;
+  width: 100%;
+  max-width: 100%;
   max-height: 440px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -385,16 +395,37 @@ select, input[type="search"] {
   min-width: 180px;
 }
 
-.heatmap td:last-child { min-width: 108px; vertical-align: middle; }
+.heatmap table {
+  width: 100%;
+  table-layout: fixed;
+}
+.heatmap th.num,
+.heatmap td.num {
+  width: 7.5rem;
+  min-width: 7.5rem;
+  vertical-align: middle;
+}
 .heatmap th:first-child,
 .heatmap td:first-child {
   position: sticky;
   left: 0;
   background: #faf7f1;
   z-index: 2;
-  min-width: 120px;
+  width: 8.5rem;
+  min-width: 8.5rem;
 }
-.heatmap th.dayh { font-size: 10px; text-align: center; line-height: 1.2; min-width: 36px; }
+.heatmap th.dayh {
+  font-size: 10px;
+  text-align: center;
+  line-height: 1.2;
+  min-width: 0;
+  width: auto;
+}
+.heatmap td.heat {
+  text-align: center;
+  min-width: 0;
+  width: auto;
+}
 .heatmap th.dayh span { font-weight: 400; color: var(--muted); text-transform: none; letter-spacing: 0; }
 .heatmap th.sat {
   background: #f3d18a;
