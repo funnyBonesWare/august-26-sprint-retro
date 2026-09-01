@@ -758,6 +758,27 @@ details ul { margin: 0 0 10px 18px; padding: 0; }
   outline: 2px solid var(--accent-soft);
   border-color: var(--accent);
 }
+.notes-table-wrap {
+  max-height: none;
+}
+#notesEditor .notes-why-table {
+  width: 100%;
+}
+#notesEditor .notes-why-table td {
+  vertical-align: top;
+}
+#notesEditor .notes-why-table td:last-child {
+  width: 42%;
+  min-width: 180px;
+}
+#notesEditor textarea.notes-input.notes-why {
+  min-height: 72px;
+  font-size: 14px;
+}
+.pill.status.todo { background: #eee; color: var(--muted); }
+.pill.status.progress { background: var(--accent-soft); color: var(--accent); }
+.pill.status.review { background: #fff1d6; color: var(--warn); }
+.pill.status.missed { background: #fde8e6; color: var(--bad); }
 #notes .notes-prompts {
   display: grid;
   grid-template-columns: 1fr 1fr;

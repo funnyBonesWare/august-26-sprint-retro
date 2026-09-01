@@ -532,17 +532,44 @@ EXPORT_JS = r"""
 
 NOTES_JS = r"""
     const NOTE_FIELDS = ["on_call", "went_well", "hard", "mid_sprint", "estimation", "quality", "blockers", "next_actions", "shoutout"];
+    const NOTE_MAP_FIELDS = ["unfinished", "missed_log_days", "missed_scrum_days"];
     const NOTES_STORE = "august26-person-notes";
     function emptyPersonNotes() {
       const o = {};
       NOTE_FIELDS.forEach((k) => { o[k] = ""; });
+      NOTE_MAP_FIELDS.forEach((k) => { o[k] = {}; });
       return o;
+    }
+    function mergePersonNotes(entry) {
+      const base = emptyPersonNotes();
+      if (!entry || typeof entry !== "object") return base;
+      NOTE_FIELDS.forEach((k) => {
+        if (entry[k] != null) base[k] = String(entry[k]);
+      });
+      NOTE_MAP_FIELDS.forEach((k) => {
+        const src = entry[k];
+        if (!src || typeof src !== "object" || Array.isArray(src)) return;
+        const copy = {};
+        Object.keys(src).forEach((key) => {
+          copy[key] = src[key] == null ? "" : String(src[key]);
+        });
+        base[k] = copy;
+      });
+      return base;
+    }
+    function normalizeNotesPeople(data) {
+      if (!data || typeof data !== "object") return { sprint: "August 2026", updated: "", people: {} };
+      if (!data.people || typeof data.people !== "object") data.people = {};
+      Object.keys(data.people).forEach((name) => {
+        data.people[name] = mergePersonNotes(data.people[name]);
+      });
+      return data;
     }
     function parseNotesPayload(text) {
       try {
         const data = JSON.parse(text || "{}");
         if (!data.people || typeof data.people !== "object") data.people = {};
-        return data;
+        return normalizeNotesPeople(data);
       } catch (e) {
         return { sprint: "August 2026", updated: "", people: {} };
       }
@@ -555,13 +582,19 @@ NOTES_JS = r"""
       const merged = JSON.parse(JSON.stringify(PUBLISHED_NOTES));
       merged.people = Object.assign({}, PUBLISHED_NOTES.people || {}, notesState.people || {});
       if (notesState.updated) merged.updated = notesState.updated;
-      notesState = merged;
+      notesState = normalizeNotesPeople(merged);
     }
     function notesFingerprint(data) {
       return JSON.stringify((data && data.people) || {});
     }
+    function notesMapHasText(entry) {
+      return NOTE_MAP_FIELDS.some((k) => {
+        const m = (entry || {})[k] || {};
+        return Object.keys(m).some((key) => String(m[key] || "").trim());
+      });
+    }
     function notesHasText(entry) {
-      return NOTE_FIELDS.some((k) => String((entry || {})[k] || "").trim());
+      return NOTE_FIELDS.some((k) => String((entry || {})[k] || "").trim()) || notesMapHasText(entry);
     }
     function snippet(text) {
       const t = String(text || "").replace(/\s+/g, " ").trim();
@@ -597,6 +630,96 @@ NOTES_JS = r"""
           + "<td>" + snippet(entry.hard) + "</td>"
           + "<td>" + snippet(entry.next_actions) + "</td></tr>";
       }).join("");
+    }
+    function escapeHtml(s) {
+      return String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    }
+    function statusPillClass(status) {
+      const n = String(status || "").toLowerCase().replace(/\s+/g, " ").trim();
+      if (n === "to do") return "todo";
+      if (n === "in progress") return "progress";
+      if (n === "in review") return "review";
+      if (n === "missed") return "missed";
+      return "";
+    }
+    function formatNoteDate(iso) {
+      const m = String(iso || "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      if (!m) return escapeHtml(iso);
+      const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      return days[d.getDay()] + " " + d.getDate() + " " + months[d.getMonth()];
+    }
+    function renderNotesWhyTable(hostId, rows, columns, mapName, notesMap, emptyMsg, placeholder, whyLabel) {
+      const host = document.getElementById(hostId);
+      if (!host) return;
+      if (!rows || !rows.length) {
+        host.innerHTML = "<p class='note'>" + emptyMsg + "</p>";
+        return;
+      }
+      const head = columns.map((c) => "<th>" + c.label + "</th>").join("") + "<th>" + (whyLabel || "Why") + "</th>";
+      const body = rows.map((row) => {
+        const key = String(row.key || "");
+        const cells = columns.map((c) => "<td>" + c.cell(row) + "</td>").join("");
+        const why = escapeHtml((notesMap || {})[key] || "");
+        return "<tr>" + cells
+          + "<td><textarea class='notes-input notes-why' data-note-map='" + mapName
+          + "' data-note-key='" + escapeHtml(key) + "' rows='2' placeholder='" + placeholder + "'>" + why
+          + "</textarea></td></tr>";
+      }).join("");
+      host.innerHTML = "<div class='wrap notes-table-wrap'><table class='notes-why-table'><thead><tr>"
+        + head + "</tr></thead><tbody>" + body + "</tbody></table></div>";
+    }
+    function fillNotesTables(name) {
+      const hosts = ["notesUnfinished", "notesMissedLog", "notesMissedScrum"];
+      if (!name) {
+        hosts.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.innerHTML = "";
+        });
+        return;
+      }
+      const stats = PERSON_STATS[name] || {};
+      const entry = mergePersonNotes((notesState.people || {})[name]);
+      renderNotesWhyTable(
+        "notesUnfinished",
+        (stats.unfinished || []).map((t) => ({ key: t.jira, jira: t.jira, feature: t.feature, status: t.status })),
+        [
+          { label: "Jira", cell: (r) => "<a href='https://elocity.atlassian.net/browse/" + escapeHtml(r.jira) + "'>" + escapeHtml(r.jira) + "</a>" },
+          { label: "Feature / summary", cell: (r) => escapeHtml(r.feature) },
+          { label: "Status", cell: (r) => "<span class='pill status " + statusPillClass(r.status) + "'>" + escapeHtml(r.status || "—") + "</span>" }
+        ],
+        "unfinished",
+        entry.unfinished,
+        "None of this person's sprint-planned tickets are still in To Do, In Progress, or In Review.",
+        "Why it did not finish…",
+        "Why it didn't finish"
+      );
+      renderNotesWhyTable(
+        "notesMissedLog",
+        (stats.missed_log_days || []).map((d) => ({ key: d.date, date: d.date, available: d.available, logged: d.logged })),
+        [
+          { label: "Date", cell: (r) => formatNoteDate(r.date) },
+          { label: "Available that day", cell: (r) => escapeHtml(r.available) },
+          { label: "Logged that day", cell: (r) => escapeHtml(r.logged) }
+        ],
+        "missed_log_days",
+        entry.missed_log_days,
+        "No working days with available time and 0 hours logged.",
+        "Why nothing was logged…"
+      );
+      renderNotesWhyTable(
+        "notesMissedScrum",
+        (stats.missed_scrum_days || []).map((d) => ({ key: d.date, date: d.date, status: d.status })),
+        [
+          { label: "Date", cell: (r) => formatNoteDate(r.date) },
+          { label: "Status", cell: (r) => "<span class='pill status " + statusPillClass(r.status) + "'>" + escapeHtml(r.status || "Missed") + "</span>" }
+        ],
+        "missed_scrum_days",
+        entry.missed_scrum_days,
+        "No missed scrum calls for this person.",
+        "Why they missed scrum…"
+      );
     }
     function fillNotesFacts(name) {
       const box = document.getElementById("notesFacts");
@@ -643,7 +766,8 @@ NOTES_JS = r"""
       const title = document.getElementById("notesEditorTitle");
       if (title) title.textContent = name ? ("Call notes · " + name) : "Call notes";
       fillNotesFacts(name);
-      const entry = name ? ((notesState.people || {})[name] || emptyPersonNotes()) : emptyPersonNotes();
+      fillNotesTables(name);
+      const entry = name ? mergePersonNotes((notesState.people || {})[name]) : emptyPersonNotes();
       document.querySelectorAll("#notesEditor [data-note]").forEach((el) => {
         el.value = name ? (entry[el.getAttribute("data-note")] || "") : "";
         el.disabled = !name;
@@ -651,16 +775,31 @@ NOTES_JS = r"""
       renderNotesTeam();
       updateNotesStatus();
     }
-    document.querySelectorAll("#notesEditor [data-note]").forEach((el) => {
-      el.addEventListener("input", () => {
+    const notesEditorEl = document.getElementById("notesEditor");
+    if (notesEditorEl) {
+      notesEditorEl.addEventListener("input", (ev) => {
+        const el = ev.target;
+        if (!el || el.nodeName !== "TEXTAREA") return;
         const name = currentPerson();
         if (!name) return;
         if (!notesState.people) notesState.people = {};
-        if (!notesState.people[name]) notesState.people[name] = emptyPersonNotes();
-        notesState.people[name][el.getAttribute("data-note")] = el.value;
+        notesState.people[name] = mergePersonNotes(notesState.people[name]);
+        const mapName = el.getAttribute("data-note-map");
+        if (mapName) {
+          const key = el.getAttribute("data-note-key") || "";
+          if (!key) return;
+          if (!notesState.people[name][mapName] || typeof notesState.people[name][mapName] !== "object") {
+            notesState.people[name][mapName] = {};
+          }
+          notesState.people[name][mapName][key] = el.value;
+        } else {
+          const field = el.getAttribute("data-note");
+          if (!field) return;
+          notesState.people[name][field] = el.value;
+        }
         persistNotesDraft();
       });
-    });
+    }
     fetch("person-notes.json", { cache: "no-store" }).then((res) => {
       if (!res.ok) return null;
       return res.json();
@@ -669,22 +808,27 @@ NOTES_JS = r"""
       const remoteFp = notesFingerprint(remote);
       const pubFp = notesFingerprint(PUBLISHED_NOTES);
       const draftFp = notesFingerprint(notesState);
-      Object.assign(PUBLISHED_NOTES, remote);
+      Object.assign(PUBLISHED_NOTES, normalizeNotesPeople(remote));
       if (!PUBLISHED_NOTES.people) PUBLISHED_NOTES.people = {};
       if (draftFp === pubFp || draftFp === notesFingerprint({ people: {} })) {
         notesState = JSON.parse(JSON.stringify(PUBLISHED_NOTES));
+        notesState = normalizeNotesPeople(notesState);
         localStorage.setItem(NOTES_STORE, JSON.stringify(notesState));
       } else if (remoteFp !== pubFp && draftFp === pubFp) {
-        notesState = JSON.parse(JSON.stringify(PUBLISHED_NOTES));
+        notesState = normalizeNotesPeople(JSON.parse(JSON.stringify(PUBLISHED_NOTES)));
+      } else {
+        notesState = normalizeNotesPeople(notesState);
       }
       refreshCallNotes(currentPerson());
     }).catch(() => {});
     function exportNotesCsv(name) {
-      const headers = ["person"].concat(NOTE_FIELDS);
+      const headers = ["person"].concat(NOTE_FIELDS).concat(NOTE_MAP_FIELDS);
       const names = name ? [name] : Object.keys(PERSON_STATS || {}).sort();
       const rows = names.map((p) => {
-        const entry = (notesState.people || {})[p] || {};
-        return [p].concat(NOTE_FIELDS.map((k) => entry[k] || ""));
+        const entry = mergePersonNotes((notesState.people || {})[p]);
+        return [p]
+          .concat(NOTE_FIELDS.map((k) => entry[k] || ""))
+          .concat(NOTE_MAP_FIELDS.map((k) => JSON.stringify(entry[k] || {})));
       });
       return toCsv(headers, rows);
     }
@@ -1091,6 +1235,27 @@ def render_page(
               <p class="note">Read-only. Pulled from Jira and the sprint plan so you don’t retype numbers.</p>
             </div>
             <div class="notes-facts" id="notesFacts"></div>
+          </div>
+          <div class="notes-panel">
+            <div class="notes-panel-head">
+              <h3 class="notes-sub">Unfinished sprint-planned tickets</h3>
+              <p class="note">Tickets from the August 26 plan still in To Do, In Progress, or In Review. Note why they did not finish this sprint.</p>
+            </div>
+            <div id="notesUnfinished"></div>
+          </div>
+          <div class="notes-panel">
+            <div class="notes-panel-head">
+              <h3 class="notes-sub">Missed logged days in Jira</h3>
+              <p class="note">Working days (Mon–Fri except Fri 28 Aug PH) with available time — including half-leave — where this person logged 0 hours.</p>
+            </div>
+            <div id="notesMissedLog"></div>
+          </div>
+          <div class="notes-panel">
+            <div class="notes-panel-head">
+              <h3 class="notes-sub">Missed Scrum call days</h3>
+              <p class="note">Days this person was expected at scrum and missed (not leave, not present).</p>
+            </div>
+            <div id="notesMissedScrum"></div>
           </div>
           <div class="notes-panel">
             <h3 class="notes-sub">What they said</h3>

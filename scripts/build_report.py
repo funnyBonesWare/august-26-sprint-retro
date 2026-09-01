@@ -727,6 +727,79 @@ def day_available_seconds(
     return int(round(max(0.0, 1.0 - frac) * SEC_PER_DAY))
 
 
+UNFINISHED_JIRA_STATUSES = frozenset({"to do", "in progress", "in review"})
+
+
+def is_unfinished_jira_status(status: str | None) -> bool:
+    return " ".join((status or "").lower().split()) in UNFINISHED_JIRA_STATUSES
+
+
+def unfinished_planned_for_person(tickets: list[dict], name: str) -> list[dict]:
+    """Sheet-assigned tickets (and listed subtasks) still To Do / In Progress / In Review."""
+    out: list[dict] = []
+    seen: set[str] = set()
+    for t in tickets:
+        jira = t.get("jira") or ""
+        if not jira or jira in seen:
+            continue
+        if canon_name(t.get("assignee")) != name:
+            continue
+        if (t.get("kind") or "") not in ("sheet", "subtask"):
+            continue
+        if not is_unfinished_jira_status(t.get("jira_status")):
+            continue
+        seen.add(jira)
+        out.append(
+            {
+                "jira": jira,
+                "feature": t.get("feature") or "",
+                "status": t.get("jira_status") or "",
+            }
+        )
+    return out
+
+
+def missed_log_days_for_person(
+    person: str,
+    dates: list[str],
+    daily: dict,
+    leave_lookup: dict[tuple[str, str], dict],
+) -> list[dict]:
+    """Working days with available time (not full leave) and 0 Jira hours logged."""
+    out: list[dict] = []
+    for iso in dates:
+        d = date.fromisoformat(iso)
+        if not is_working_day(d):
+            continue
+        avail = day_available_seconds(person, iso, leave_lookup)
+        if avail <= 0:
+            continue
+        logged = int((daily.get((person, iso)) or {}).get("seconds") or 0)
+        if logged > 0:
+            continue
+        out.append(
+            {
+                "date": iso,
+                "available": fmt_hd(avail),
+                "logged": fmt_hd(0),
+            }
+        )
+    return out
+
+
+def missed_scrum_days_for_person(scrum_row: dict | None) -> list[dict]:
+    """Days expected at scrum and missed (not leave, not present)."""
+    out: list[dict] = []
+    for cell in (scrum_row or {}).get("days") or []:
+        if (cell.get("status") or "") != "missed":
+            continue
+        iso = cell.get("date") or ""
+        if not iso:
+            continue
+        out.append({"date": iso, "status": "Missed"})
+    return out
+
+
 def pill(ratio: float | None) -> str:
     if ratio is None:
         return "n/a"
@@ -1837,6 +1910,9 @@ def write_html(data: dict, daily, people, dates) -> None:
         bug_note += (
             f" {meta['under_hiev_7334']} of {len(data['bugs'])} sit under HIEV-7334."
         )
+    scrum_by_person = {
+        r["person"]: r for r in ((data.get("scrum") or {}).get("people") or [])
+    }
     person_stats = {}
     for p in data["people"]:
         name = p["person"]
@@ -1872,6 +1948,13 @@ def write_html(data: dict, daily, people, dates) -> None:
             ),
             "scrum_missed": int(p.get("scrum_missed") or 0),
             "scrum_avg": p.get("scrum_avg_duration") or "—",
+            "unfinished": unfinished_planned_for_person(data.get("tickets") or [], name),
+            "missed_log_days": missed_log_days_for_person(
+                name, dates, daily, leave_lookup
+            ),
+            "missed_scrum_days": missed_scrum_days_for_person(
+                scrum_by_person.get(name)
+            ),
         }
     page = render_page(
         total_plan=total_plan,
