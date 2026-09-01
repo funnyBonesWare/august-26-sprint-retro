@@ -386,21 +386,21 @@ h3: 4 ≤ h &lt; 6 h4: 6 ≤ h &lt; 8 h5: h ≥ 8</code>
 
       <section class="block" id="notes">
         <h2>Call notes</h2>
-        <p class="note">One person types during the retro. Numbers below are pulled from this report. Comments are drafts in <em>this browser</em> until you download JSON and commit <code>data/person-notes.json</code> plus <code>docs/person-notes.json</code> — then everyone who opens the published page sees them.</p>
-        <div class="notes-toolbar">
-          <button type="button" class="export-btn" id="notesDownload">Download notes JSON</button>
-          <label class="field">Import JSON <input type="file" id="notesImport" accept="application/json,.json" /></label>
-          <span class="export-hint" id="notesStatus"></span>
-        </div>
+        <ol class="notes-steps">
+          <li><strong>Pick someone</strong> in Assignee (or the table below).</li>
+          <li><strong>Type</strong> what they said. It saves on this computer as you type.</li>
+          <li><strong>When the call is done</strong>, tell me here: <em>commit and push call notes</em>. I write them into the repo and push so the published page shows the same notes to everyone.</li>
+        </ol>
+        <p class="note" id="notesStatus"></p>
         <div class="card team-only" id="notesTeam">
-          <h2>Who has notes</h2>
-          <p class="note">Pick an assignee to edit. This table is what the team sees at a glance after notes are published.</p>
+          <h2>Team</h2>
+          <p class="note">Click a name to open their sheet. After notes are published, this is the glance view for everyone.</p>
           <div class="wrap">
             <table>
               <thead>
                 <tr>
                   <th>Person</th>
-                  <th>On-call</th>
+                  <th>On the call</th>
                   <th>Went well</th>
                   <th>Hard / slipped</th>
                   <th>Next sprint</th>
@@ -410,36 +410,42 @@ h3: 4 ≤ h &lt; 6 h4: 6 ≤ h &lt; 8 h5: h ≥ 8</code>
             </table>
           </div>
         </div>
-        <div class="card person-only" id="notesEditor" hidden>
+        <div class="card person-only notes-editor" id="notesEditor" hidden>
           <h2 id="notesEditorTitle">Notes</h2>
-          <dl class="notes-facts" id="notesFacts"></dl>
-          <label class="notes-field">What they said on the call
-            <textarea data-note="on_call" rows="4" placeholder="Capture what they said…"></textarea>
+          <h3 class="notes-sub">From this report</h3>
+          <p class="note">Read-only. Pulled from Jira and the sprint plan so you don’t retype numbers.</p>
+          <div class="notes-facts" id="notesFacts"></div>
+          <h3 class="notes-sub">What they said</h3>
+          <label class="notes-field notes-field-lead">On the call
+            <textarea data-note="on_call" rows="5" placeholder="Capture what they said…"></textarea>
           </label>
-          <label class="notes-field">What went well
-            <textarea data-note="went_well" rows="3"></textarea>
-          </label>
-          <label class="notes-field">What was hard or slipped
-            <textarea data-note="hard" rows="3"></textarea>
-          </label>
-          <label class="notes-field">Mid-sprint work (why it landed after planning)
-            <textarea data-note="mid_sprint" rows="3"></textarea>
-          </label>
-          <label class="notes-field">Plan vs actual / estimation
-            <textarea data-note="estimation" rows="3"></textarea>
-          </label>
-          <label class="notes-field">Bugs / quality
-            <textarea data-note="quality" rows="3"></textarea>
-          </label>
-          <label class="notes-field">Blockers / help needed
-            <textarea data-note="blockers" rows="3"></textarea>
-          </label>
-          <label class="notes-field">Action for next sprint
-            <textarea data-note="next_actions" rows="3"></textarea>
-          </label>
-          <label class="notes-field">Shout-out
-            <textarea data-note="shoutout" rows="2"></textarea>
-          </label>
+          <h3 class="notes-sub">Retro prompts</h3>
+          <div class="notes-prompts">
+            <label class="notes-field">What went well
+              <textarea data-note="went_well" rows="4"></textarea>
+            </label>
+            <label class="notes-field">What was hard or slipped
+              <textarea data-note="hard" rows="4"></textarea>
+            </label>
+            <label class="notes-field">Mid-sprint / ad hoc — why it landed
+              <textarea data-note="mid_sprint" rows="4"></textarea>
+            </label>
+            <label class="notes-field">Plan vs actual / estimation
+              <textarea data-note="estimation" rows="4"></textarea>
+            </label>
+            <label class="notes-field">Bugs / quality
+              <textarea data-note="quality" rows="4"></textarea>
+            </label>
+            <label class="notes-field">Blockers / help needed
+              <textarea data-note="blockers" rows="4"></textarea>
+            </label>
+            <label class="notes-field">Action for next sprint
+              <textarea data-note="next_actions" rows="4"></textarea>
+            </label>
+            <label class="notes-field">Shout-out
+              <textarea data-note="shoutout" rows="4"></textarea>
+            </label>
+          </div>
         </div>
       </section>
 
@@ -667,8 +673,8 @@ h3: 4 ≤ h &lt; 6 h4: 6 ≤ h &lt; 8 h5: h ≥ 8</code>
       if (!el) return;
       const dirty = notesFingerprint(notesState) !== notesFingerprint(PUBLISHED_NOTES);
       el.textContent = dirty
-        ? "Draft in this browser only. Download JSON, put it in data/person-notes.json and docs/person-notes.json, commit and push so others see it."
-        : "Showing published notes (everyone who opens this page sees the same file).";
+        ? "Saved on this computer only. When the call is done, say “commit and push call notes” here so the published page updates for everyone."
+        : "These notes are already on the published page. Edit if you need to, then say “commit and push call notes” again.";
     }
     function renderNotesTeam() {
       const body = document.getElementById("notesTeamBody");
@@ -690,21 +696,39 @@ h3: 4 ≤ h &lt; 6 h4: 6 ≤ h &lt; 8 h5: h ≥ 8</code>
       const stats = PERSON_STATS[name];
       if (!box) return;
       if (!stats) { box.innerHTML = ""; return; }
-      const rows = [
-        ["Logged of available", stats.logged_html],
-        ["Util", stats.util],
-        ["Leave", stats.leave],
-        ["Sprint planned PD", stats.plan],
-        ["Sprint planned time", stats.on_html],
-        ["Mid-sprint time", stats.off_html],
-        ["Sprint-planned tickets touched", String(stats.sheet)],
-        ["Mid-sprint keys touched", String(stats.offsheet)],
-        ["Bugs worked", String(stats.bugs)],
-        ["Bug time", stats.bug_hours_html],
-        ["Task time", stats.task_hours_html],
-        ["Scrum", stats.scrum_html || "—"]
+      const groups = [
+        {
+          title: "Capacity",
+          rows: [
+            ["Logged of available", stats.logged_html],
+            ["Util", stats.util],
+            ["Leave", stats.leave],
+            ["Scrum", stats.scrum_html || "—"]
+          ]
+        },
+        {
+          title: "Sprint mix",
+          rows: [
+            ["Sprint planned PD", stats.plan],
+            ["Sprint planned time", stats.on_html],
+            ["Mid-sprint time", stats.off_html],
+            ["Planned tickets touched", String(stats.sheet)],
+            ["Mid-sprint keys touched", String(stats.offsheet)]
+          ]
+        },
+        {
+          title: "Bugs & tasks",
+          rows: [
+            ["Bugs worked", String(stats.bugs)],
+            ["Bug time", stats.bug_hours_html],
+            ["Task time", stats.task_hours_html]
+          ]
+        }
       ];
-      box.innerHTML = rows.map((r) => "<div><dt>" + r[0] + "</dt><dd>" + r[1] + "</dd></div>").join("");
+      box.innerHTML = groups.map((g) => {
+        const items = g.rows.map((r) => "<div><dt>" + r[0] + "</dt><dd>" + r[1] + "</dd></div>").join("");
+        return "<section class='notes-metric-group'><h4>" + g.title + "</h4><div class='notes-metric-rows'>" + items + "</div></section>";
+      }).join("");
     }
     function refreshCallNotes(name) {
       const title = document.getElementById("notesEditorTitle");
@@ -727,29 +751,6 @@ h3: 4 ≤ h &lt; 6 h4: 6 ≤ h &lt; 8 h5: h ≥ 8</code>
         notesState.people[name][el.getAttribute("data-note")] = el.value;
         persistNotesDraft();
       });
-    });
-    const notesDl = document.getElementById("notesDownload");
-    if (notesDl) notesDl.addEventListener("click", () => {
-      const payload = {
-        sprint: "August 2026",
-        updated: new Date().toISOString(),
-        people: notesState.people || {}
-      };
-      downloadBlob("person-notes.json", new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" }));
-    });
-    const notesImp = document.getElementById("notesImport");
-    if (notesImp) notesImp.addEventListener("change", () => {
-      const file = notesImp.files && notesImp.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        const incoming = parseNotesPayload(String(reader.result || "{}"));
-        notesState.people = Object.assign({}, notesState.people || {}, incoming.people || {});
-        persistNotesDraft();
-        refreshCallNotes(currentPerson());
-      };
-      reader.readAsText(file);
-      notesImp.value = "";
     });
     fetch("person-notes.json", { cache: "no-store" }).then((res) => {
       if (!res.ok) return null;

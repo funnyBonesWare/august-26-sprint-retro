@@ -22,7 +22,7 @@ Markdown copy: `report/retrospective.md`
 4. **Bugs worked** — distinct HIEV `Bug` keys with August worklogs or comments, credited to who logged or commented (unique keys, not assignee)
 5. **Fix hours** — August worklogs on Bug tickets vs Task/Sub-task tickets
 6. **Daily log** — hours per person per day, plus worklog notes and ticket comments (sprint planned + mid-sprint)
-7. **Call notes** — per-person retro comments. Typed in the page, published via `data/person-notes.json` + `docs/person-notes.json` so everyone sees the same notes.
+7. **Call notes** — per-person retro comments. Type in the page during the call, then ask to commit and push so everyone sees them.
 
 ## Rebuild
 

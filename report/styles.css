@@ -586,48 +586,83 @@ details ul { margin: 0 0 10px 18px; padding: 0; }
 .meta { color: var(--muted); font-size: 12px; }
 .type { color: var(--muted); }
 
-.notes-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px 14px;
-  margin: 0 0 16px;
+.notes-steps {
+  max-width: 72ch;
+  margin: 0 0 14px;
+  padding-left: 1.2rem;
+  color: var(--muted);
+  font-size: 14px;
+}
+.notes-steps li { margin: 0 0 6px; }
+.notes-steps strong { color: var(--ink); }
+.notes-editor .notes-sub {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 18px;
+  font-weight: 560;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  color: var(--ink);
+  margin: 22px 0 8px;
 }
 .notes-facts {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 8px 16px;
-  margin: 0 0 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 8px;
 }
-.notes-facts div { margin: 0; }
-.notes-facts dt {
+.notes-metric-group {
+  background: #faf7f1;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.notes-metric-group h4 {
+  margin: 0 0 8px;
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.notes-metric-rows {
+  display: grid;
+  gap: 8px;
+}
+.notes-metric-rows dt {
+  font-size: 11px;
   color: var(--muted);
   font-weight: 650;
 }
-.notes-facts dd { margin: 2px 0 0; font-size: 13px; }
+.notes-metric-rows dd { margin: 2px 0 0; font-size: 13px; color: var(--ink); }
+.notes-prompts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+}
 .notes-field {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin: 0 0 12px;
+  margin: 0;
   font-size: 13px;
   color: var(--muted);
   font-weight: 650;
+  width: 100%;
 }
+.notes-field-lead { margin-bottom: 8px; }
 .notes-field textarea {
   font: inherit;
   font-weight: 400;
   color: var(--ink);
-  padding: 8px 10px;
+  padding: 10px 12px;
   border: 1px solid var(--line);
   border-radius: 8px;
   width: 100%;
-  min-height: 4.5rem;
+  min-height: 5.5rem;
   resize: vertical;
-  background: #fffcf7;
+  background: #fff;
+}
+@media (max-width: 900px) {
+  .notes-facts, .notes-prompts { grid-template-columns: 1fr; }
 }
 #notesTeamBody tr.has-notes td:first-child { font-weight: 650; }
 
