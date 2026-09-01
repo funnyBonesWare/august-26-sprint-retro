@@ -531,6 +531,7 @@ EXPORT_JS = r"""
 """
 
 NOTES_JS = r"""
+    const NOTES_EDITABLE = false;
     const NOTE_FIELDS = ["on_call", "went_well", "hard", "mid_sprint", "estimation", "quality", "blockers", "next_actions", "shoutout"];
     const NOTE_MAP_FIELDS = ["unfinished", "missed_log_days", "missed_scrum_days"];
     const NOTES_STORE = "august26-person-notes";
@@ -603,14 +604,29 @@ NOTES_JS = r"""
       return cut.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
     }
     function persistNotesDraft() {
+      if (!NOTES_EDITABLE) return;
       notesState.updated = new Date().toISOString();
       localStorage.setItem(NOTES_STORE, JSON.stringify(notesState));
       updateNotesStatus();
       renderNotesTeam();
     }
+    function applyNotesEditability() {
+      document.querySelectorAll("#notesEditor textarea, #notesEditor input").forEach((el) => {
+        if (!NOTES_EDITABLE) {
+          el.readOnly = true;
+          el.disabled = false;
+        } else {
+          el.readOnly = false;
+        }
+      });
+    }
     function updateNotesStatus() {
       const el = document.getElementById("notesStatus");
       if (!el) return;
+      if (!NOTES_EDITABLE) {
+        el.textContent = "Notes are view only (published GitHub copy / pull).";
+        return;
+      }
       const dirty = notesFingerprint(notesState) !== notesFingerprint(PUBLISHED_NOTES);
       el.textContent = dirty
         ? "Saved on this computer only. When the call is done, say “commit and push call notes” here so the published page updates for everyone."
@@ -664,7 +680,8 @@ NOTES_JS = r"""
         const why = escapeHtml((notesMap || {})[key] || "");
         return "<tr>" + cells
           + "<td><textarea class='notes-input notes-why' data-note-map='" + mapName
-          + "' data-note-key='" + escapeHtml(key) + "' rows='2' placeholder='" + placeholder + "'>" + why
+          + "' data-note-key='" + escapeHtml(key) + "' rows='2' placeholder='" + placeholder + "'"
+          + (NOTES_EDITABLE ? "" : " readonly") + ">" + why
           + "</textarea></td></tr>";
       }).join("");
       host.innerHTML = "<div class='wrap notes-table-wrap'><table class='notes-why-table'><thead><tr>"
@@ -797,14 +814,16 @@ NOTES_JS = r"""
       const entry = name ? mergePersonNotes((notesState.people || {})[name]) : emptyPersonNotes();
       document.querySelectorAll("#notesEditor [data-note]").forEach((el) => {
         el.value = name ? (entry[el.getAttribute("data-note")] || "") : "";
-        el.disabled = !name;
+        el.disabled = NOTES_EDITABLE ? !name : false;
       });
+      applyNotesEditability();
       renderNotesTeam();
       updateNotesStatus();
     }
     const notesEditorEl = document.getElementById("notesEditor");
     if (notesEditorEl) {
       notesEditorEl.addEventListener("input", (ev) => {
+        if (!NOTES_EDITABLE) return;
         const el = ev.target;
         if (!el || el.nodeName !== "TEXTAREA") return;
         const name = currentPerson();
