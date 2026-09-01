@@ -2,7 +2,20 @@
 
 Source: `Sprint wise employe task list.xlsx` sheet **August 26** + Jira HIEV worklogs/comments/bugs for 1–31 Aug 2026.
 
-Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August (not lifetime `timespent`). Accuracy = actual days ÷ sheet estimate. Expected = working days (weekdays minus Fri 28 PH) minus that person's leave.
+Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August (not lifetime `timespent`).
+
+## Formulas
+
+- **Hours / days:** `hours = seconds ÷ 3600`; `days = seconds ÷ 28800`.
+- **Available days:** for each Mon–Fri except Fri 28 PH, add `1 − leave_fraction`. `available_hours = available_days × 8`. `leave_days = Σ leave_fraction`.
+- **Logged of available:** `logged_days of available_days` (hours on the second line). Not a percentage.
+- **Util:** `logged_days ÷ available_days`. Team util = `Σ logged_days ÷ Σ available_days`. Green ≥ 0.90, amber ≥ 0.75, else red.
+- **Mix %:** `on% = 100 × on_sheet_seconds ÷ (on + off)`; `off% = 100 × off_sheet_seconds ÷ (on + off)`.
+- **Ticket accuracy:** `August_days_on_that_key ÷ sheet_PD`. **Person accuracy:** `August_days_on_planned_keys ÷ sheet_PD`. Mean KPI averages ticket accuracy only where plan exists and logged > 0. 1.00 = exact. Green ≤ 1.10, amber ≤ 1.50, else red. Accuracy bar fill = `min(100%, accuracy × 50%)`.
+- **Logged bar fill:** `min(100, 100 × logged_seconds ÷ available_seconds)`.
+- **Bug bar fill:** `100 × person_bug_keys ÷ max(person_bug_keys)`.
+- **Scrum attendance %:** `100 × attended_expected ÷ expected`. Expected = recorded ~09:30 weekday calls minus PH minus leave covering the call. Missed = `expected − attended`. Avg duration = mean join time on calls joined.
+- **Heatmap bands (hours that day):** (0, 2), [2, 4), [4, 6), [6, 8), ≥ 8.
 
 - Actuals are Jira worklogs started 1–31 Aug 2026 (8h = 1d).
 - Estimation accuracy uses only matching scope: ticket = August days on that Jira key ÷ sheet PD; person = August days on that person's planned keys ÷ their sheet PD. Time on tickets outside the sheet is not counted as estimation error.

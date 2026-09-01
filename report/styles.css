@@ -279,6 +279,56 @@ section.block > h2 {
   margin-bottom: 6px;
 }
 .note { color: var(--muted); font-size: 13px; max-width: 78ch; margin: 0 0 14px; }
+.note .formula { display: block; margin-top: 6px; max-width: none; }
+
+.formula-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+  margin: 8px 0 8px;
+}
+.formula-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+}
+.formula-card dt {
+  font-size: 13px;
+  font-weight: 650;
+  margin: 0;
+}
+.formula-card dd {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.formula-card code {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink);
+  background: #faf7f1;
+  padding: 8px 10px;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+small.formula {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--muted);
+  margin-top: 3px;
+  line-height: 1.3;
+  white-space: normal;
+  max-width: 16rem;
+}
+.kpi .formula { max-width: none; }
 
 .legend { display: flex; gap: 14px; font-size: 12px; color: var(--muted); margin: 8px 0 12px; }
 .swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 6px; vertical-align: middle; }

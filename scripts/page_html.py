@@ -1,5 +1,90 @@
 """HTML shell for the August retrospective."""
 
+import html as html_lib
+
+
+def th(label: str, formula: str, num: bool = False) -> str:
+    cls = " class='num'" if num else ""
+    title = html_lib.escape(formula)
+    return (
+        f"<th{cls} title='{title}'>{html_lib.escape(label)}"
+        f"<small class='formula'>{html_lib.escape(formula)}</small></th>"
+    )
+
+
+FORMULAS_HTML = """
+      <section class="block" id="formulas">
+        <h2>Formulas</h2>
+        <p class="note">Every ratio, percentage, and “of available” figure on this page uses these identities. Units: <strong>1 person-day = 8 hours = 28 800 seconds</strong>. Days and hours are rounded for display (days to 1 decimal, hours to whole hours, ratios to 2 decimals, percentages to 0 or 1 decimal as labelled).</p>
+        <div class="formula-grid">
+          <div class="formula-card">
+            <dt>Hours and days</dt>
+            <dd>Convert Jira worklog seconds.</dd>
+            <code>hours = seconds ÷ 3600
+days = seconds ÷ 28 800</code>
+          </div>
+          <div class="formula-card">
+            <dt>Available (person)</dt>
+            <dd>Working days are Mon–Fri excluding Fri 28 Aug PH. Leave fraction is 1 (full day) or 0.5 (half day).</dd>
+            <code>day_available = 1 − leave_fraction
+  (0 on weekends and PH)
+available_days = Σ day_available over 1–31 Aug
+available_hours = available_days × 8
+leave_days = Σ leave_fraction in August</code>
+          </div>
+          <div class="formula-card">
+            <dt>Logged of available</dt>
+            <dd>Not a percentage. Big number is days; small line is hours.</dd>
+            <code>logged_days of available_days
+logged_hours of available_hours</code>
+          </div>
+          <div class="formula-card">
+            <dt>Utilisation</dt>
+            <dd>Person and team. &gt; 1.0 means logged more than available. Colour: green ≥ 0.90, amber ≥ 0.75, else red.</dd>
+            <code>util = logged_days ÷ available_days
+team_util = Σ logged_days ÷ Σ available_days</code>
+          </div>
+          <div class="formula-card">
+            <dt>On / off sheet mix %</dt>
+            <dd>Share of that person’s (or the team’s) August worklog seconds. Off-sheet keys are not on the August 26 sheet.</dd>
+            <code>on% = 100 × on_sheet_seconds ÷ (on + off)
+off% = 100 × off_sheet_seconds ÷ (on + off)</code>
+          </div>
+          <div class="formula-card">
+            <dt>Estimation accuracy</dt>
+            <dd>Same-scope only. Missing or NA sheet PD → not computed. 1.00 = exact; &gt; 1 over-ran the estimate. Colour: green ≤ 1.10, amber ≤ 1.50, else red. Bar fill = min(100%, accuracy × 50%) so 2.0 fills the track.</dd>
+            <code>ticket_acc = August_days_on_that_key ÷ sheet_PD
+person_acc = August_days_on_their_planned_keys ÷ their_sheet_PD
+mean_ticket_acc = average(ticket_acc)
+  only keys with a numeric plan and logged &gt; 0</code>
+          </div>
+          <div class="formula-card">
+            <dt>Logged-of-available bar fill</dt>
+            <dd>How full the person bar is. Caps at 100% even if util &gt; 1.</dd>
+            <code>bar% = min(100, 100 × logged_seconds ÷ available_seconds)</code>
+          </div>
+          <div class="formula-card">
+            <dt>Bug-count bar fill</dt>
+            <dd>Unique Bug keys with an August worklog or comment by that person.</dd>
+            <code>bar% = 100 × person_bug_keys ÷ max(person_bug_keys)</code>
+          </div>
+          <div class="formula-card">
+            <dt>Scrum attendance %</dt>
+            <dd>Expected calls = recorded ~09:30 IST weekday scrums minus PH 28 minus leave that covers the call. Joining on leave is not a miss.</dd>
+            <code>attendance% = 100 × attended_expected ÷ expected
+missed = expected − attended_expected
+avg_duration = mean(join duration on calls joined)</code>
+          </div>
+          <div class="formula-card">
+            <dt>Heatmap cell colour</dt>
+            <dd>Hours that calendar day from worklogs (or changelog fill date). Blank = 0h and not leave.</dd>
+            <code>h1: 0 &lt; h &lt; 2 h2: 2 ≤ h &lt; 4
+h3: 4 ≤ h &lt; 6 h4: 6 ≤ h &lt; 8 h5: h ≥ 8</code>
+          </div>
+        </div>
+      </section>
+"""
+
 # Plain JS (not an f-string) so `{` / `}` stay valid.
 EXPORT_JS = r"""
     function currentPerson() {
@@ -513,6 +598,7 @@ def render_page(
       </label>
       <span class="nav-hint" id="personViewHint">All (team)</span>
       <a href="#overview">Overview</a>
+      <a href="#formulas">Formulas</a>
       <a href="#people">People</a>
       <a href="#sheet">Sheet tickets</a>
       <a href="#offsheet">Off-sheet work</a>
@@ -546,26 +632,27 @@ def render_page(
       </div>
 
       <div class="kpis team-only">
-        <div class="kpi"><strong>{total_plan:.0f} PD</strong><span>Numeric sheet estimates</span></div>
-        <div class="kpi"><strong>{kpi_logged}</strong><span>Logged of available · 8h = 1d</span></div>
-        <div class="kpi"><strong>{team_util if team_util is not None else "n/a"}</strong><span>Team util (logged ÷ available)</span></div>
-        <div class="kpi"><strong>{avg_acc if avg_acc is not None else "n/a"}</strong><span>Mean ticket accuracy (worked keys)</span></div>
-        <div class="kpi"><strong>{off_count}</strong><span>Off-sheet keys · {off_hours_label}</span></div>
-        <div class="kpi"><strong>{kpi_scrum}</strong><span>Scrum attendance (leave-adjusted)</span></div>
+        <div class="kpi"><strong>{total_plan:.0f} PD</strong><span>Numeric sheet estimates<small class="formula">Σ sheet PD (NA excluded)</small></span></div>
+        <div class="kpi"><strong>{kpi_logged}</strong><span>Logged of available<small class="formula">Σ logged of Σ available · 8h = 1d</small></span></div>
+        <div class="kpi"><strong>{team_util if team_util is not None else "n/a"}</strong><span>Team util<small class="formula">Σ logged days ÷ Σ available days</small></span></div>
+        <div class="kpi"><strong>{avg_acc if avg_acc is not None else "n/a"}</strong><span>Mean ticket accuracy<small class="formula">avg(Aug days on key ÷ sheet PD) for worked keys</small></span></div>
+        <div class="kpi"><strong>{off_count}</strong><span>Off-sheet keys<small class="formula">{off_hours_label} · not on August 26 sheet</small></span></div>
+        <div class="kpi"><strong>{kpi_scrum}</strong><span>Scrum attendance<small class="formula">attended expected ÷ expected (leave-adjusted)</small></span></div>
       </div>
       <div class="kpis person-only" id="personKpis" hidden>
-        <div class="kpi"><strong id="pkLogged"></strong><span>Logged of available · 8h = 1d</span></div>
-        <div class="kpi"><strong id="pkLeave"></strong><span>Leave</span></div>
-        <div class="kpi"><strong id="pkUtil"></strong><span>Util (logged ÷ available)</span></div>
-        <div class="kpi"><strong id="pkPlan"></strong><span>Sheet plan PD</span></div>
-        <div class="kpi"><strong id="pkBugs"></strong><span>Unique bugs worked</span></div>
-        <div class="kpi"><strong id="pkScrum"></strong><span>Scrum attendance</span></div>
+        <div class="kpi"><strong id="pkLogged"></strong><span>Logged of available<small class="formula">logged days of available days</small></span></div>
+        <div class="kpi"><strong id="pkLeave"></strong><span>Leave<small class="formula">Σ leave fraction in August</small></span></div>
+        <div class="kpi"><strong id="pkUtil"></strong><span>Util<small class="formula">logged days ÷ available days</small></span></div>
+        <div class="kpi"><strong id="pkPlan"></strong><span>Sheet plan PD<small class="formula">Σ sheet PD for this assignee</small></span></div>
+        <div class="kpi"><strong id="pkBugs"></strong><span>Unique bugs worked<small class="formula">count of Bug keys with Aug log or comment</small></span></div>
+        <div class="kpi"><strong id="pkScrum"></strong><span>Scrum attendance<small class="formula">attended expected ÷ expected</small></span></div>
       </div>
+      {FORMULAS_HTML}
 
       <div class="split">
         <div class="card team-only">
           <h2>Where August time went</h2>
-          <p class="note">Share of logged hours on planned sheet tickets versus everything else.</p>
+          <p class="note">Share of logged hours on planned sheet tickets versus everything else.<small class="formula">on% = 100 × on-sheet seconds ÷ (on + off); off% = 100 × off-sheet seconds ÷ (on + off)</small></p>
           <div class="mix" style="height:14px;margin:12px 0 8px">
             <span class="on" style="width:{on_pct}%"></span>
             <span class="off" style="width:{off_pct}%"></span>
@@ -578,7 +665,7 @@ def render_page(
         </div>
         <div class="card">
           <h2>Logged of available</h2>
-          <p class="note">Bar fills toward that person’s available time. Label is <em>logged of available</em> (days, then hours).</p>
+          <p class="note">Bar fills toward that person’s available time. Label is <em>logged of available</em> (days, then hours).<small class="formula">fill% = min(100, 100 × logged seconds ÷ available seconds)</small></p>
           <div class="controls">{assignee_field}</div>
           <div class="bars">{people_mix}</div>
         </div>
@@ -586,24 +673,24 @@ def render_page(
 
       <section class="block" id="people">
         <h2>1. Planned vs actual</h2>
-        <p class="note">Every time figure is <strong>logged of available</strong>: days first, hours underneath. Available = weekdays − Fri 28 PH − that person’s leave (8h = 1d). Util = logged ÷ available. Mix is sheet vs off-sheet share of logged time.</p>
+        <p class="note">Every time figure is <strong>logged of available</strong>: days first, hours underneath. See <a href="#formulas">Formulas</a>.</p>
         <div class="controls">{assignee_field}</div>
         <div class="legend"><span><i class="swatch sheet"></i>On sheet</span><span><i class="swatch other"></i>Off sheet</span></div>
         <div class="wrap">
           <table>
             <thead>
               <tr>
-                <th>Person</th>
-                <th class="num">Plan PD</th>
-                <th class="num">Leave</th>
-                <th class="num">Logged of available</th>
-                <th class="num">Util</th>
-                <th>Mix</th>
-                <th class="num">On sheet of avail</th>
-                <th class="num">Off sheet of avail</th>
-                <th class="num">Accuracy</th>
-                <th class="num">Logs</th>
-                <th class="num">Comments</th>
+                {th("Person", "Canonical name")}
+                {th("Plan PD", "Σ sheet PD for this assignee (NA excluded)", True)}
+                {th("Leave", "Σ leave fraction in August", True)}
+                {th("Logged of available", "logged days of available days", True)}
+                {th("Util", "logged days ÷ available days", True)}
+                {th("Mix", "on% = 100 × on-sheet seconds ÷ (on + off)")}
+                {th("On sheet of avail", "on-sheet days of available days", True)}
+                {th("Off sheet of avail", "off-sheet days of available days", True)}
+                {th("Accuracy", "August days on planned keys ÷ sheet PD", True)}
+                {th("Logs", "count of August worklogs", True)}
+                {th("Comments", "count of August comments", True)}
               </tr>
             </thead>
             <tbody id="peopleBody">{people_trs}</tbody>
@@ -613,7 +700,7 @@ def render_page(
 
       <section class="block" id="sheet">
         <h2>Sheet tickets</h2>
-        <p class="note team-only">Rows from the August 26 sheet. Accuracy is August days on that key ÷ sheet PD. Search by feature, assignee, or key.</p>
+        <p class="note team-only">Rows from the August 26 sheet. Search by feature, assignee, or key.</p>
         <p class="note person-only" id="sheetPersonNote" hidden></p>
         <div class="controls">
           {assignee_field}
@@ -623,8 +710,14 @@ def render_page(
           <table>
             <thead>
               <tr>
-                <th>Jira</th><th>Section</th><th>Feature</th><th>Assignee</th>
-                <th class="num">Plan</th><th class="num">Logged of assignee avail</th><th class="num">Accuracy</th><th>Status</th>
+                {th("Jira", "Issue key")}
+                {th("Section", "Sheet section")}
+                {th("Feature", "Sheet feature")}
+                {th("Assignee", "Sheet assignee")}
+                {th("Plan", "Sheet PD", True)}
+                {th("Logged of assignee avail", "August days on this key of assignee available days", True)}
+                {th("Accuracy", "August days on this key ÷ sheet PD", True)}
+                {th("Status", "Jira status")}
               </tr>
             </thead>
             <tbody id="sheetBody">{ticket_trs}</tbody>
@@ -651,8 +744,13 @@ def render_page(
           <table>
             <thead>
               <tr>
-                <th>Jira</th><th>Type</th><th>Summary</th><th>Logged by</th>
-                <th class="num">Logged of available</th><th class="num">Comments</th><th>Status</th>
+                {th("Jira", "Issue key")}
+                {th("Type", "Jira issuetype")}
+                {th("Summary", "Jira summary")}
+                {th("Logged by", "People with August worklogs on this key")}
+                {th("Logged of available", "August days on this key of first logger’s available days", True)}
+                {th("Comments", "August comment count", True)}
+                {th("Status", "Jira status")}
               </tr>
             </thead>
             <tbody id="offsheetBody">{offsheet_trs}</tbody>
@@ -663,19 +761,19 @@ def render_page(
 
       <section class="block" id="accuracy">
         <h2>2. Estimation accuracy</h2>
-        <p class="note team-only">Same-scope only. Ticket = days on that key ÷ sheet PD. Person = days on that person’s planned keys ÷ their sheet PD. Off-sheet time is not an estimate miss. Bar is scaled so 2.0 fills the track. Green ≤1.1, amber ≤1.5, red above.</p>
+        <p class="note team-only">Same-scope only. Off-sheet time is utilisation, not an estimate miss. Bar fill = min(100%, accuracy × 50%) so 2.0 fills the track. Green ≤1.10, amber ≤1.50, red above.</p>
         <p class="note person-only" id="accPersonNote" hidden></p>
         <div class="controls">{assignee_field}</div>
         <div class="wrap">
           <table>
             <thead>
               <tr>
-                <th>Person</th>
-                <th class="num">Plan PD</th>
-                <th class="num">Actual on plan</th>
-                <th class="num">Logged of available</th>
-                <th>Ratio</th>
-                <th class="num">Accuracy</th>
+                {th("Person", "Canonical name")}
+                {th("Plan PD", "Σ sheet PD", True)}
+                {th("Actual on plan", "August days on planned keys", True)}
+                {th("Logged of available", "all August days of available days", True)}
+                {th("Ratio", "bar% = min(100, accuracy × 50)")}
+                {th("Accuracy", "August days on planned keys ÷ sheet PD", True)}
               </tr>
             </thead>
             <tbody id="accBody">{person_acc_trs}</tbody>
@@ -690,7 +788,7 @@ def render_page(
         <p class="note person-only" id="bugPersonNote" hidden></p>
         <div class="card">
           <h2>Bugs worked in August</h2>
-          <p class="note">Bars are unique bug keys each person logged time on or commented on in August.</p>
+          <p class="note">Bars are unique bug keys each person logged time on or commented on in August.<small class="formula">fill% = 100 × person bug keys ÷ max person bug keys</small></p>
           <div class="controls">{assignee_field}</div>
           <div class="bars">{bug_bars}</div>
           <p class="empty-msg" data-empty-for-bars="1" hidden>No August bug worklogs or comments for this person.</p>
@@ -701,7 +799,7 @@ def render_page(
         <div class="controls">{assignee_field}</div>
         <div class="wrap">
           <table>
-            <thead><tr><th>Person</th><th class="num">Bug of available</th><th class="num">Task of available</th></tr></thead>
+            <thead><tr>{th("Person", "Canonical name")}{th("Bug of available", "Bug worklog days of available days", True)}{th("Task of available", "Task/Sub-task/Story/Epic worklog days of available days", True)}</tr></thead>
             <tbody id="fixBody">{fix_trs}</tbody>
           </table>
         </div>
@@ -711,8 +809,11 @@ def render_page(
           <table>
             <thead>
               <tr>
-                <th>Key</th><th>Summary</th><th>Status</th><th>Who worked it</th>
-                <th class="num">August hours</th>
+                {th("Key", "Bug issue key")}
+                {th("Summary", "Jira summary")}
+                {th("Status", "Jira status")}
+                {th("Who worked it", "People with August worklog or comment")}
+                {th("August hours", "Σ August worklog hours on this bug", True)}
               </tr>
             </thead>
             <tbody id="bugBody">{bug_detail}</tbody>
@@ -723,7 +824,7 @@ def render_page(
 
       <section class="block" id="daily">
         <h2>5. Daily logged time</h2>
-        <p class="note">Cell values are hours that day. Row total is <strong>logged of available</strong> for the month. Blank = no Jira log. <strong>L</strong> / <strong>½L</strong> = leave (available 0 or 4h). Saturday gold, Sunday rose, Fri 28 PH green, leave purple.</p>
+        <p class="note">Cell values are hours that day. Row total is <strong>logged of available</strong> for the month. Blank = no Jira log. <strong>L</strong> / <strong>½L</strong> = leave (available 0 or 4h). Saturday gold, Sunday rose, Fri 28 PH green, leave purple.<small class="formula">cell hours = worklog seconds that date ÷ 3600; colour bands 0–2, 2–4, 4–6, 6–8, 8+</small></p>
         <div class="legend">
           <span>Scale:&nbsp;</span>
           <span class="heat h1" style="padding:2px 8px">0–2h</span>
@@ -739,7 +840,7 @@ def render_page(
         <div class="controls">{assignee_field}</div>
         <div class="wrap heatmap">
           <table>
-            <thead><tr><th>Person</th>{daily_head}<th class="num">Logged of available</th></tr></thead>
+            <thead><tr>{th("Person", "Canonical name")}{daily_head}{th("Logged of available", "month logged days of available days", True)}</tr></thead>
             <tbody id="heatBody">{daily_body}</tbody>
           </table>
         </div>
@@ -755,13 +856,13 @@ def render_page(
           <table>
             <thead>
               <tr>
-                <th>Person</th>
-                <th class="num">Expected</th>
-                <th class="num">Attended</th>
-                <th class="num">Missed</th>
-                <th class="num">On leave joined</th>
-                <th class="num">Attendance</th>
-                <th class="num">Avg duration</th>
+                {th("Person", "Canonical name")}
+                {th("Expected", "recorded morning scrums minus leave covering the call", True)}
+                {th("Attended", "expected calls joined", True)}
+                {th("Missed", "expected − attended", True)}
+                {th("On leave joined", "joined while on leave (not a miss)", True)}
+                {th("Attendance", "100 × attended ÷ expected", True)}
+                {th("Avg duration", "mean join duration on calls joined", True)}
               </tr>
             </thead>
             <tbody id="scrumBody">{scrum_trs}</tbody>
@@ -779,7 +880,7 @@ def render_page(
         <div class="controls">{assignee_field}</div>
         <div class="wrap heatmap">
           <table id="scrumTicks">
-            <thead><tr><th>Person</th>{scrum_tick_head}</tr></thead>
+            <thead><tr>{th("Person", "Canonical name")}{scrum_tick_head}</tr></thead>
             <tbody id="scrumTickBody">{scrum_tick_body}</tbody>
           </table>
         </div>
