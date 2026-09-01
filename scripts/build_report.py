@@ -728,14 +728,20 @@ def day_available_seconds(
 
 
 UNFINISHED_JIRA_STATUSES = frozenset({"to do", "in progress", "in review"})
+# Call-notes planned ticket lists only (unfinished / finished). Mix hours still shown.
+NOTES_SKIP_PLANNED_TICKET_LISTS = frozenset({"Nagaraju", "Rashmi"})
 
 
 def is_unfinished_jira_status(status: str | None) -> bool:
     return " ".join((status or "").lower().split()) in UNFINISHED_JIRA_STATUSES
 
 
-def unfinished_planned_for_person(tickets: list[dict], name: str) -> list[dict]:
-    """Sheet-assigned tickets (and listed subtasks) still To Do / In Progress / In Review."""
+def planned_ticket_list_for_person(
+    tickets: list[dict], name: str, *, unfinished: bool
+) -> list[dict]:
+    """Sheet-assigned tickets (and listed subtasks), filtered by open vs finished Jira status."""
+    if name in NOTES_SKIP_PLANNED_TICKET_LISTS:
+        return []
     out: list[dict] = []
     seen: set[str] = set()
     for t in tickets:
@@ -746,7 +752,8 @@ def unfinished_planned_for_person(tickets: list[dict], name: str) -> list[dict]:
             continue
         if (t.get("kind") or "") not in ("sheet", "subtask"):
             continue
-        if not is_unfinished_jira_status(t.get("jira_status")):
+        is_open = is_unfinished_jira_status(t.get("jira_status"))
+        if is_open != unfinished:
             continue
         seen.add(jira)
         out.append(
@@ -757,6 +764,16 @@ def unfinished_planned_for_person(tickets: list[dict], name: str) -> list[dict]:
             }
         )
     return out
+
+
+def unfinished_planned_for_person(tickets: list[dict], name: str) -> list[dict]:
+    """Sheet-assigned tickets (and listed subtasks) still To Do / In Progress / In Review."""
+    return planned_ticket_list_for_person(tickets, name, unfinished=True)
+
+
+def finished_planned_for_person(tickets: list[dict], name: str) -> list[dict]:
+    """Sheet-assigned tickets (and listed subtasks) no longer in To Do / In Progress / In Review."""
+    return planned_ticket_list_for_person(tickets, name, unfinished=False)
 
 
 def missed_log_days_for_person(
@@ -1929,12 +1946,46 @@ def write_html(data: dict, daily, people, dates) -> None:
             "sheet": sum(
                 1
                 for t in data["tickets"]
-                if t.get("jira") and canon_name(t.get("assignee")) == name
+                if t.get("kind") == "sheet"
+                and t.get("jira")
+                and canon_name(t.get("assignee")) == name
+            ),
+            "sheet_pd_tickets": sum(
+                1
+                for t in data["tickets"]
+                if t.get("kind") == "sheet"
+                and t.get("jira")
+                and canon_name(t.get("assignee")) == name
+                and t.get("estimated_days") is not None
+            ),
+            "sheet_na_tickets": sum(
+                1
+                for t in data["tickets"]
+                if t.get("kind") == "sheet"
+                and t.get("jira")
+                and canon_name(t.get("assignee")) == name
+                and t.get("estimated_days") is None
+            ),
+            "planned_pd_hours_html": html_vs(
+                p.get("actual_estimated_planned_seconds") or 0, expected_s
+            ),
+            "planned_na_hours_html": html_vs(
+                max(
+                    0,
+                    int(p.get("actual_planned_seconds") or 0)
+                    - int(p.get("actual_estimated_planned_seconds") or 0),
+                ),
+                expected_s,
             ),
             "offsheet": sum(
                 1
                 for t in offsheet
-                if name in (t.get("touched_by") or [])
+                if name in (t.get("logged_by") or [])
+            ),
+            "offsheet_logged": sum(
+                1
+                for t in offsheet
+                if name in (t.get("logged_by") or [])
             ),
             "bug_hours_html": html_vs(p["bug_fix_seconds"], expected_s),
             "task_hours_html": html_vs(p["task_seconds"], expected_s),
@@ -1948,7 +1999,9 @@ def write_html(data: dict, daily, people, dates) -> None:
             ),
             "scrum_missed": int(p.get("scrum_missed") or 0),
             "scrum_avg": p.get("scrum_avg_duration") or "—",
+            "skip_planned_tickets": name in NOTES_SKIP_PLANNED_TICKET_LISTS,
             "unfinished": unfinished_planned_for_person(data.get("tickets") or [], name),
+            "finished": finished_planned_for_person(data.get("tickets") or [], name),
             "missed_log_days": missed_log_days_for_person(
                 name, dates, daily, leave_lookup
             ),

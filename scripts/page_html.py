@@ -670,8 +670,23 @@ NOTES_JS = r"""
       host.innerHTML = "<div class='wrap notes-table-wrap'><table class='notes-why-table'><thead><tr>"
         + head + "</tr></thead><tbody>" + body + "</tbody></table></div>";
     }
+    function renderNotesListTable(hostId, rows, columns, emptyMsg) {
+      const host = document.getElementById(hostId);
+      if (!host) return;
+      if (!rows || !rows.length) {
+        host.innerHTML = "<p class='note'>" + emptyMsg + "</p>";
+        return;
+      }
+      const head = columns.map((c) => "<th>" + c.label + "</th>").join("");
+      const body = rows.map((row) => {
+        const cells = columns.map((c) => "<td>" + c.cell(row) + "</td>").join("");
+        return "<tr>" + cells + "</tr>";
+      }).join("");
+      host.innerHTML = "<div class='wrap notes-table-wrap'><table class='notes-list-table'><thead><tr>"
+        + head + "</tr></thead><tbody>" + body + "</tbody></table></div>";
+    }
     function fillNotesTables(name) {
-      const hosts = ["notesUnfinished", "notesMissedLog", "notesMissedScrum"];
+      const hosts = ["notesUnfinished", "notesFinished", "notesMissedLog", "notesMissedScrum"];
       if (!name) {
         hosts.forEach((id) => {
           const el = document.getElementById(id);
@@ -681,19 +696,28 @@ NOTES_JS = r"""
       }
       const stats = PERSON_STATS[name] || {};
       const entry = mergePersonNotes((notesState.people || {})[name]);
+      const skipTickets = !!stats.skip_planned_tickets;
+      const skipMsg = "Skipped for QA.";
+      const ticketCols = [
+        { label: "Jira", cell: (r) => "<a href='https://elocity.atlassian.net/browse/" + escapeHtml(r.jira) + "'>" + escapeHtml(r.jira) + "</a>" },
+        { label: "Feature / summary", cell: (r) => escapeHtml(r.feature) },
+        { label: "Status", cell: (r) => "<span class='pill status " + statusPillClass(r.status) + "'>" + escapeHtml(r.status || "—") + "</span>" }
+      ];
       renderNotesWhyTable(
         "notesUnfinished",
-        (stats.unfinished || []).map((t) => ({ key: t.jira, jira: t.jira, feature: t.feature, status: t.status })),
-        [
-          { label: "Jira", cell: (r) => "<a href='https://elocity.atlassian.net/browse/" + escapeHtml(r.jira) + "'>" + escapeHtml(r.jira) + "</a>" },
-          { label: "Feature / summary", cell: (r) => escapeHtml(r.feature) },
-          { label: "Status", cell: (r) => "<span class='pill status " + statusPillClass(r.status) + "'>" + escapeHtml(r.status || "—") + "</span>" }
-        ],
+        skipTickets ? [] : (stats.unfinished || []).map((t) => ({ key: t.jira, jira: t.jira, feature: t.feature, status: t.status })),
+        ticketCols,
         "unfinished",
         entry.unfinished,
-        "None of this person's sprint-planned tickets are still in To Do, In Progress, or In Review.",
+        skipTickets ? skipMsg : "None of this person's sprint-planned tickets are still in To Do, In Progress, or In Review.",
         "Why it did not finish…",
         "Why it didn't finish"
+      );
+      renderNotesListTable(
+        "notesFinished",
+        skipTickets ? [] : (stats.finished || []).map((t) => ({ jira: t.jira, feature: t.feature, status: t.status })),
+        ticketCols,
+        skipTickets ? skipMsg : "None of this person's sprint-planned tickets finished this sprint (all still To Do, In Progress, or In Review, or none planned)."
       );
       renderNotesWhyTable(
         "notesMissedLog",
@@ -742,8 +766,11 @@ NOTES_JS = r"""
             ["Sprint planned PD", stats.plan],
             ["Sprint planned time", stats.on_html],
             ["Mid-sprint time", stats.off_html],
-            ["Sprint-planned tickets (sheet assignee)", String(stats.sheet)],
-            ["Mid-sprint Jira tickets touched", String(stats.offsheet)]
+            ["Sprint-planned tickets with PD", String(stats.sheet_pd_tickets != null ? stats.sheet_pd_tickets : "—")],
+            ["Sprint-planned tickets with NA / no PD", String(stats.sheet_na_tickets != null ? stats.sheet_na_tickets : "—")],
+            ["Hours on PD planned tickets", stats.planned_pd_hours_html || "—"],
+            ["Hours on NA planned tickets", stats.planned_na_hours_html || "—"],
+            ["Mid-sprint Jira tickets logged", String(stats.offsheet_logged != null ? stats.offsheet_logged : stats.offsheet)]
           ]
         },
         {
@@ -821,6 +848,67 @@ NOTES_JS = r"""
       }
       refreshCallNotes(currentPerson());
     }).catch(() => {});
+    function setNotesStatus(msg) {
+      const el = document.getElementById("notesStatus");
+      if (el) el.textContent = msg || "";
+    }
+    function pullNotesFromGithub() {
+      const confirmMsg = "Replace notes on this computer with the copy from GitHub? Unsaved local-only edits will be lost.";
+      if (!window.confirm(confirmMsg)) return;
+      const btn = document.getElementById("pullNotesGithub");
+      if (btn) btn.disabled = true;
+      const url = "person-notes.json?t=" + Date.now();
+      const fail = (msg) => { setNotesStatus(msg); };
+      const fileHint = "Open the GitHub Pages URL, not a local file.";
+      if (location.protocol === "file:") {
+        fail("Could not pull notes: this page is a local file. " + fileHint);
+        if (btn) btn.disabled = false;
+        return;
+      }
+      fetch(url, { cache: "no-store" }).then((res) => {
+        if (res.status === 404) {
+          throw new Error("NOTES_404");
+        }
+        if (!res.ok) {
+          throw new Error("HTTP " + res.status);
+        }
+        return res.text().then((text) => {
+          let remote;
+          try {
+            remote = JSON.parse(text);
+          } catch (e) {
+            throw new Error("NOTES_JSON");
+          }
+          if (!remote || typeof remote !== "object" || !remote.people || typeof remote.people !== "object") {
+            throw new Error("NOTES_SHAPE");
+          }
+          return remote;
+        });
+      }).then((remote) => {
+        notesState = normalizeNotesPeople(JSON.parse(JSON.stringify(remote)));
+        localStorage.setItem(NOTES_STORE, JSON.stringify(notesState));
+        PUBLISHED_NOTES.sprint = notesState.sprint;
+        PUBLISHED_NOTES.updated = notesState.updated;
+        PUBLISHED_NOTES.people = JSON.parse(JSON.stringify(notesState.people));
+        refreshCallNotes(currentPerson());
+        setNotesStatus("Pulled from GitHub just now");
+      }).catch((err) => {
+        const code = err && err.message;
+        if (code === "NOTES_404") {
+          fail("Could not pull notes: person-notes.json was not found (404). " + fileHint);
+        } else if (code === "NOTES_JSON") {
+          fail("Could not pull notes from GitHub: the file is not valid JSON.");
+        } else if (code === "NOTES_SHAPE") {
+          fail("Could not pull notes from GitHub: the file has no people object.");
+        } else {
+          fail("Could not pull notes from GitHub" + (code ? " (" + code + ")." : "."));
+        }
+      }).finally(() => {
+        if (btn) btn.disabled = false;
+      });
+    }
+    const pullNotesBtn = document.getElementById("pullNotesGithub");
+    if (pullNotesBtn) pullNotesBtn.addEventListener("click", pullNotesFromGithub);
     function exportNotesCsv(name) {
       const headers = ["person"].concat(NOTE_FIELDS).concat(NOTE_MAP_FIELDS);
       const names = name ? [name] : Object.keys(PERSON_STATS || {}).sort();
@@ -1208,7 +1296,10 @@ def render_page(
           <li><strong>Type</strong> what they said. It saves on this computer as you type.</li>
           <li><strong>When the call is done</strong>, tell me here: <em>commit and push call notes</em>. I write them into the repo and push so the published page shows the same notes to everyone.</li>
         </ol>
-        <p class="note" id="notesStatus"></p>
+        <div class="notes-toolbar">
+          <button type="button" class="notes-pull-btn" id="pullNotesGithub">Pull notes from GitHub</button>
+          <p class="note" id="notesStatus"></p>
+        </div>
         <div class="card team-only" id="notesTeam">
           <h2>Team</h2>
           <p class="note">Click a name to open their sheet. After notes are published, this is the glance view for everyone.</p>
@@ -1242,6 +1333,13 @@ def render_page(
               <p class="note">Tickets from the August 26 plan still in To Do, In Progress, or In Review. Note why they did not finish this sprint.</p>
             </div>
             <div id="notesUnfinished"></div>
+          </div>
+          <div class="notes-panel">
+            <div class="notes-panel-head">
+              <h3 class="notes-sub">Finished sprint-planned tickets</h3>
+              <p class="note">Tickets from the August 26 plan (and listed subtasks) that left To Do / In Progress / In Review — Done, Ready for Testing, Closed, and similar.</p>
+            </div>
+            <div id="notesFinished"></div>
           </div>
           <div class="notes-panel">
             <div class="notes-panel-head">
@@ -1385,11 +1483,11 @@ def render_page(
       if (onChip) onChip.innerHTML = "Sprint planned " + stats.on_html;
       if (offChip) offChip.innerHTML = "Mid-sprint " + stats.off_html;
       setText("sheetPersonNote", stats.sheet
-        ? (stats.sheet + " sprint-planned ticket" + (stats.sheet === 1 ? "" : "s") + " assigned to this person on the August 26 sheet (subtasks of those tickets included).")
+        ? (stats.sheet + " sprint-planned ticket" + (stats.sheet === 1 ? "" : "s") + " assigned to this person on the August 26 sheet.")
         : "No sprint-planned tickets assigned to this person on the sheet.");
       setText("offsheetPersonNote", stats.offsheet
-        ? (stats.offsheet + " mid-sprint Jira ticket" + (stats.offsheet === 1 ? "" : "s") + " this person logged time on or commented on.")
-        : "No mid-sprint Jira tickets this person logged or commented on.");
+        ? (stats.offsheet + " mid-sprint Jira ticket" + (stats.offsheet === 1 ? "" : "s") + " this person logged time on.")
+        : "No mid-sprint Jira tickets this person logged time on.");
       setText("accPersonNote", "Same-scope only: August days on this person’s sprint-planned Jira tickets that have a numeric PD ÷ their sprint-plan PD. NA/open plan Jira tickets and mid-sprint time are not estimate misses.");
       setText("bugPersonNote", stats.bugs
         ? (stats.bugs + " unique bug" + (stats.bugs === 1 ? "" : "s") + " this person logged time on or commented on in August.")
