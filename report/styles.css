@@ -91,6 +91,28 @@ nav.toc .nav-hint {
   margin: 0 0 12px;
   padding: 0 10px;
 }
+.assignee-bar {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin: 0 0 18px;
+  padding: 10px 12px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.assignee-bar .field { margin: 0; }
+.assignee-bar-hint {
+  font-size: 12px;
+  color: var(--muted);
+  max-width: 62ch;
+}
+.assignee-field select { min-width: 200px; }
 body.person-mode .team-only { display: none; }
 body.person-mode .split { grid-template-columns: 1fr; }
 .empty-msg {
@@ -497,7 +519,7 @@ footer.foot {
   .content { padding: 24px 18px 48px; }
 }
 @media print {
-  nav.toc, .controls, .export-bar { display: none; }
+  nav.toc, .controls, .export-bar, .assignee-bar { display: none; }
   .layout { display: block; }
   .wrap { max-height: none; overflow: visible; }
 }

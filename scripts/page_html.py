@@ -483,6 +483,13 @@ def render_page(
     person_stats_json,
     journal,
 ) -> str:
+    assignee_field = (
+        '<label class="field assignee-field">Assignee '
+        '<select class="js-assignee-filter" aria-label="Filter by assignee">'
+        '<option value="">All (team)</option>'
+        f"{person_opts}"
+        "</select></label>"
+    )
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -498,13 +505,13 @@ def render_page(
   <div class="layout">
     <nav class="toc">
       <div class="brand">Sprint retro<small>August 2026 · HIEV</small></div>
-      <label class="nav-person">Person report
-        <select id="reportPerson">
-          <option value="">Team overview</option>
+      <label class="nav-person">Assignee
+        <select id="reportPerson" class="js-assignee-filter">
+          <option value="">All (team)</option>
           {person_opts}
         </select>
       </label>
-      <span class="nav-hint" id="personViewHint">Team overview</span>
+      <span class="nav-hint" id="personViewHint">All (team)</span>
       <a href="#overview">Overview</a>
       <a href="#people">People</a>
       <a href="#sheet">Sheet tickets</a>
@@ -518,7 +525,7 @@ def render_page(
     <div class="content">
       <header class="hero" id="overview">
         <h1>August 2026 sprint retrospective</h1>
-        <p class="lead" id="heroLead">Sheet plan from Deepak’s August 26 workbook, plus every HIEV task and bug the team logged time or comments on during 1–31 Aug 2026. Conversion is fixed: <strong>8 hours = 1 person-day</strong>. Pick a name in the sidebar (or click a name in a table) to open that person’s full report.</p>
+        <p class="lead" id="heroLead">Sheet plan from Deepak’s August 26 workbook, plus every HIEV task and bug the team logged time or comments on during 1–31 Aug 2026. Conversion is fixed: <strong>8 hours = 1 person-day</strong>. Use the <strong>Assignee</strong> filter (sticky bar, sidebar, or any table) to show one person, or <strong>All (team)</strong> for the full set. Click a name in a table for the same filter.</p>
         <div class="meta-row">
           <span class="chip">Period 1–31 Aug 2026</span>
           <span class="chip">8h = 1d</span>
@@ -530,9 +537,13 @@ def render_page(
         </div>
         <div class="export-bar">
           <button type="button" class="export-btn" id="exportCsvZip">Export CSV</button>
-          <span class="export-hint" id="exportHint">Downloads a zip of UTF-8 CSVs for the full team. Person view exports that person only.</span>
+          <span class="export-hint" id="exportHint">Downloads a zip of UTF-8 CSVs for the full team. An assignee filter exports that person only.</span>
         </div>
       </header>
+      <div class="assignee-bar" role="search">
+        {assignee_field}
+        <span class="assignee-bar-hint">Filters tables, heatmaps, bar charts, and the work log. Synced with the sidebar and <code>?person=</code>.</span>
+      </div>
 
       <div class="kpis team-only">
         <div class="kpi"><strong>{total_plan:.0f} PD</strong><span>Numeric sheet estimates</span></div>
@@ -568,6 +579,7 @@ def render_page(
         <div class="card">
           <h2>Logged of available</h2>
           <p class="note">Bar fills toward that person’s available time. Label is <em>logged of available</em> (days, then hours).</p>
+          <div class="controls">{assignee_field}</div>
           <div class="bars">{people_mix}</div>
         </div>
       </div>
@@ -575,6 +587,7 @@ def render_page(
       <section class="block" id="people">
         <h2>1. Planned vs actual</h2>
         <p class="note">Every time figure is <strong>logged of available</strong>: days first, hours underneath. Available = weekdays − Fri 28 PH − that person’s leave (8h = 1d). Util = logged ÷ available. Mix is sheet vs off-sheet share of logged time.</p>
+        <div class="controls">{assignee_field}</div>
         <div class="legend"><span><i class="swatch sheet"></i>On sheet</span><span><i class="swatch other"></i>Off sheet</span></div>
         <div class="wrap">
           <table>
@@ -603,6 +616,7 @@ def render_page(
         <p class="note team-only">Rows from the August 26 sheet. Accuracy is August days on that key ÷ sheet PD. Search by feature, assignee, or key.</p>
         <p class="note person-only" id="sheetPersonNote" hidden></p>
         <div class="controls">
+          {assignee_field}
           <label class="field">Search <input type="search" id="sheetSearch" placeholder="Filter sheet tickets…" /></label>
         </div>
         <div class="wrap tall">
@@ -624,6 +638,7 @@ def render_page(
         <p class="note team-only">{offsheet_count} keys had August worklogs or comments but were not on the plan. Included in person totals, heatmap, and the journal (marked <em>other</em>).</p>
         <p class="note person-only" id="offsheetPersonNote" hidden></p>
         <div class="controls">
+          {assignee_field}
           <label class="field">Type
             <select id="offTypeFilter">
               <option value="">All types</option>
@@ -650,6 +665,7 @@ def render_page(
         <h2>2. Estimation accuracy</h2>
         <p class="note team-only">Same-scope only. Ticket = days on that key ÷ sheet PD. Person = days on that person’s planned keys ÷ their sheet PD. Off-sheet time is not an estimate miss. Bar is scaled so 2.0 fills the track. Green ≤1.1, amber ≤1.5, red above.</p>
         <p class="note person-only" id="accPersonNote" hidden></p>
+        <div class="controls">{assignee_field}</div>
         <div class="wrap">
           <table>
             <thead>
@@ -676,6 +692,7 @@ def render_page(
           <div class="card">
             <h2>Bugs worked in August</h2>
             <p class="note">Bars are unique bug keys each person logged time on or commented on in August.</p>
+            <div class="controls">{assignee_field}</div>
             <div class="bars">{bug_bars}</div>
             <p class="empty-msg" data-empty-for-bars="1" hidden>No August bug worklogs or comments for this person.</p>
           </div>
@@ -683,6 +700,7 @@ def render_page(
             <h2>Fix hours</h2>
             <p class="note team-only">Bugs {fh_bug}. Tasks {fh_task}. Other {fh_other}.</p>
             <p class="note person-only" id="fhPersonNote" hidden></p>
+            <div class="controls">{assignee_field}</div>
             <div class="wrap" style="max-height:280px;border:0;padding:0">
               <table>
                 <thead><tr><th>Person</th><th class="num">Bug of available</th><th class="num">Task of available</th></tr></thead>
@@ -692,6 +710,7 @@ def render_page(
           </div>
         </div>
         <h3 class="note" style="margin-top:18px">Bug list</h3>
+        <div class="controls">{assignee_field}</div>
         <div class="wrap">
           <table>
             <thead>
@@ -721,18 +740,21 @@ def render_page(
           <span class="heat holiday" style="padding:2px 8px; background:#8fce7a; color:#1d4a12">Public holiday</span>
           <span class="heat leave" style="padding:2px 8px; background:#d4c4f0; color:#3b2670">Leave</span>
         </div>
+        <div class="controls">{assignee_field}</div>
         <div class="wrap heatmap">
           <table>
             <thead><tr><th>Person</th>{daily_head}<th class="num">Logged of available</th></tr></thead>
             <tbody id="heatBody">{daily_body}</tbody>
           </table>
         </div>
+        <p class="empty-msg" data-empty-for="heatBody" hidden>No heatmap row for this person.</p>
       </section>
 
       <section class="block" id="scrum">
         <h2>6. Scrum call attendance</h2>
         <p class="note team-only">{scrum_note}</p>
         <p class="note person-only" id="scrumPersonNote" hidden></p>
+        <div class="controls">{assignee_field}</div>
         <div class="wrap">
           <table>
             <thead>
@@ -758,17 +780,20 @@ def render_page(
           <span class="heat scrum-leave" style="padding:2px 8px">L leave</span>
           <span class="heat scrum-leave-attended" style="padding:2px 8px">A on leave</span>
         </div>
+        <div class="controls">{assignee_field}</div>
         <div class="wrap heatmap">
           <table id="scrumTicks">
             <thead><tr><th>Person</th>{scrum_tick_head}</tr></thead>
             <tbody id="scrumTickBody">{scrum_tick_body}</tbody>
           </table>
         </div>
+        <p class="empty-msg" data-empty-for="scrumTickBody" hidden>No scrum call-day row for this person.</p>
       </section>
 
       <section class="block" id="journal">
         <h2>Daily worklogs and comments</h2>
-        <p class="note">Expand a day to see ticket keys, time spent, and comments. <em>sheet</em> = August 26 plan; <em>other</em> = off-sheet. The sidebar person control filters this journal with the rest of the report.</p>
+        <p class="note">Expand a day to see ticket keys, time spent, and comments. <em>sheet</em> = August 26 plan; <em>other</em> = off-sheet. The assignee filter applies here with the rest of the report.</p>
+        <div class="controls">{assignee_field}</div>
         <div id="journal">{journal}</div>
         <p class="empty-msg" id="journalEmpty" hidden>No August worklogs or comments for this person.</p>
       </section>
@@ -856,17 +881,23 @@ def render_page(
         ? (stats.scrum_html + " expected scrums" + (stats.scrum_missed ? (", " + stats.scrum_missed + " missed") : "") + ". Avg duration " + (stats.scrum_avg || "—") + ".")
         : "No expected scrum calls for this person.");
     }}
-    function applyPersonView(name) {{
+    function syncAssigneeFilters(name) {{
+      document.querySelectorAll(".js-assignee-filter").forEach((sel) => {{
+        if (sel.value !== name) sel.value = name;
+      }});
+    }}
+    function applyPersonView(name, opts) {{
       name = name || "";
+      opts = opts || {{}};
       document.body.classList.toggle("person-mode", !!name);
       const hint = document.getElementById("personViewHint");
-      if (hint) hint.textContent = name ? "Personal report" : "Team overview";
+      if (hint) hint.textContent = name ? name : "All (team)";
       const h1 = document.querySelector(".hero h1");
       if (h1) h1.textContent = name ? name + " · August 2026" : TITLE_TEAM;
       const lead = document.getElementById("heroLead");
       if (lead) {{
         lead.innerHTML = name
-          ? "This view is <strong>" + name + "</strong> only — their logged of available, leave, util, sheet and off-sheet tickets they touched, bugs they worked, scrum attendance, heatmap, and work log. Team totals are hidden. 8h = 1d. <button type='button' class='name-link' id='backToTeam'>Back to team overview</button>."
+          ? "Filtered to <strong>" + name + "</strong> — tables, heatmaps, bars, and the work log show this assignee only. Team totals are hidden. 8h = 1d. <button type='button' class='name-link' id='backToTeam'>Back to All (team)</button>."
           : LEAD_TEAM;
         const back = document.getElementById("backToTeam");
         if (back) back.addEventListener("click", () => applyPersonView(""));
@@ -878,8 +909,7 @@ def render_page(
         }}
       }});
       fillPersonCopy(name);
-      const sel = document.getElementById("reportPerson");
-      if (sel && sel.value !== name) sel.value = name;
+      syncAssigneeFilters(name);
       const url = new URL(location.href);
       if (name) url.searchParams.set("person", name);
       else url.searchParams.delete("person");
@@ -891,9 +921,9 @@ def render_page(
       if (exportHint) {{
         exportHint.textContent = name
           ? "Downloads a zip of UTF-8 CSVs for " + name + " only."
-          : "Downloads a zip of UTF-8 CSVs for the full team. Person view exports that person only.";
+          : "Downloads a zip of UTF-8 CSVs for the full team. An assignee filter exports that person only.";
       }}
-      if (name) window.scrollTo(0, 0);
+      if (opts.scroll && name) window.scrollTo(0, 0);
     }}
     function filterRows(inputId, bodyId) {{
       const q = (document.getElementById(inputId).value || "").toLowerCase();
@@ -917,14 +947,13 @@ def render_page(
     if (offSearch) offSearch.addEventListener("input", () => filterRows("offSearch", "offsheetBody"));
     const sheetSearch = document.getElementById("sheetSearch");
     if (sheetSearch) sheetSearch.addEventListener("input", () => filterRows("sheetSearch", "sheetBody"));
-    const reportPerson = document.getElementById("reportPerson");
-    if (reportPerson) {{
-      reportPerson.addEventListener("change", () => applyPersonView(reportPerson.value));
-    }}
+    document.querySelectorAll(".js-assignee-filter").forEach((sel) => {{
+      sel.addEventListener("change", () => applyPersonView(sel.value));
+    }});
     document.body.addEventListener("click", (e) => {{
       const btn = e.target.closest("[data-open-person]");
       if (!btn) return;
-      applyPersonView(btn.getAttribute("data-open-person"));
+      applyPersonView(btn.getAttribute("data-open-person"), {{ scroll: true }});
     }});
     window.addEventListener("popstate", () => applyPersonView(personFromUrl()));
     applyPersonView(personFromUrl());
