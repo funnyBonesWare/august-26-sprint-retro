@@ -18,7 +18,7 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 - **Heatmap bands (hours that day):** (0, 2), [2, 4), [4, 6), [6, 8), ≥ 8.
 
 - Actuals are Jira worklogs started 1–31 Aug 2026 (8h = 1d).
-- Estimation accuracy uses only matching scope: ticket = August days on that Jira ticket ÷ sprint-plan PD; person = August days on that person's sprint-planned Jira tickets that have a numeric PD ÷ their sprint-plan PD. Jira tickets on the plan with NA/open estimates (e.g. HIEV-6941) count as sprint-planned time, not as an estimate miss or over-run.
+- Estimation accuracy uses only matching scope: ticket = August days on that Jira ticket and its subtasks ÷ sprint-plan PD; person = August days on that person's sprint-planned Jira tickets that have a numeric PD (including subtasks of those tickets) ÷ their sprint-plan PD. Jira tickets on the plan with NA/open estimates (e.g. HIEV-6941) count as sprint-planned time, not as an estimate miss or over-run. Person view of sprint-planned tickets is the August 26 sheet assignee, plus Jira subtasks of those tickets — not everyone who commented.
 - August hours use worklog `started` when Jira returned the log. For the 9 tickets with more than 20 worklogs, missing logs are filled from issue changelog timespent deltas (date = when the log was submitted). Those fills were checked against issue timespent (HIEV-6785 changelog page misses 0.7h of pre-May history, not August).
 - Bugs worked = distinct HIEV issuetype Bug Jira tickets with at least one August worklog or August comment. A person is credited for a unique bug Jira ticket if they logged time or commented on it in August — not the ticket assignee at create time.
 - Fix hours = August worklogs on Bug tickets vs Task/Sub-task tickets (sprint planned and mid-sprint).
@@ -31,34 +31,48 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 | Person | Planned (PD) | Leave (d) | Logged of available | Util | Sprint planned of avail | Mid-sprint of avail | Est. accuracy |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | Deepak | 15.0 | 0.5 | 20.8 of 19.5d (166h of 156h) | 1.06 | 8.0 of 19.5d (64h of 156h) | 12.8 of 19.5d (102h of 156h) | 0.02 |
-| Priyanshu | 20.0 | 0.0 | 20.1 of 20.0d (161h of 160h) | 1.01 | 3.8 of 20.0d (30h of 160h) | 16.4 of 20.0d (131h of 160h) | 0.19 |
-| Sahil Kumar | — | 0.0 | 20.0 of 20.0d (160h of 160h) | 1.00 | 1.4 of 20.0d (12h of 160h) | 18.6 of 20.0d (149h of 160h) | — |
+| Priyanshu | 20.0 | 0.0 | 20.1 of 20.0d (161h of 160h) | 1.01 | 12.5 of 20.0d (100h of 160h) | 7.6 of 20.0d (61h of 160h) | 0.62 |
+| Sahil Kumar | — | 0.0 | 20.0 of 20.0d (160h of 160h) | 1.00 | 12.2 of 20.0d (98h of 160h) | 7.8 of 20.0d (62h of 160h) | — |
 | Dhanush | 7.0 | 2.0 | 18.1 of 18.0d (145h of 144h) | 1.01 | 6.0 of 18.0d (48h of 144h) | 12.1 of 18.0d (97h of 144h) | 0.43 |
-| Marish | 3.0 | 1.0 | 17.9 of 19.0d (144h of 152h) | 0.94 | 2.6 of 19.0d (20h of 152h) | 15.4 of 19.0d (123h of 152h) | 0.85 |
+| Marish | 3.0 | 1.0 | 17.9 of 19.0d (144h of 152h) | 0.94 | 2.8 of 19.0d (22h of 152h) | 15.1 of 19.0d (121h of 152h) | 0.94 |
 | Tarun | 7.0 | 0.0 | 17.2 of 20.0d (138h of 160h) | 0.86 | 11.6 of 20.0d (93h of 160h) | 5.6 of 20.0d (45h of 160h) | 1.66 |
-| Sudeep | 30.0 | 1.0 | 17.1 of 19.0d (137h of 152h) | 0.90 | 0.0 of 19.0d (0h of 152h) | 17.1 of 19.0d (137h of 152h) | 0.00 |
+| Sudeep | 30.0 | 1.0 | 17.1 of 19.0d (137h of 152h) | 0.90 | 1.9 of 19.0d (15h of 152h) | 15.2 of 19.0d (122h of 152h) | 0.06 |
 | Nagaraju | — | 1.0 | 16.8 of 19.0d (134h of 152h) | 0.88 | 0.0 of 19.0d (0h of 152h) | 16.8 of 19.0d (134h of 152h) | — |
 | Sahil Siddiqui | 4.0 | 4.0 | 15.1 of 16.0d (121h of 128h) | 0.94 | 9.4 of 16.0d (75h of 128h) | 5.7 of 16.0d (45h of 128h) | 0.38 |
 | Dharshini | 13.0 | 2.0 | 13.5 of 18.0d (108h of 144h) | 0.75 | 7.1 of 18.0d (56h of 144h) | 6.5 of 18.0d (52h of 144h) | 0.54 |
 | Twisha | 12.0 | 2.0 | 13.3 of 18.0d (107h of 144h) | 0.74 | 6.6 of 18.0d (53h of 144h) | 6.7 of 18.0d (54h of 144h) | 0.55 |
-| Shambu | 15.0 | 1.0 | 13.1 of 19.0d (105h of 152h) | 0.69 | 4.4 of 19.0d (35h of 152h) | 8.7 of 19.0d (70h of 152h) | 0.29 |
-| Srikant | 19.0 | 3.0 | 11.9 of 17.0d (95h of 136h) | 0.70 | 2.2 of 17.0d (18h of 136h) | 9.6 of 17.0d (77h of 136h) | 0.11 |
+| Shambu | 15.0 | 1.0 | 13.1 of 19.0d (105h of 152h) | 0.69 | 4.4 of 19.0d (36h of 152h) | 8.7 of 19.0d (69h of 152h) | 0.30 |
+| Srikant | 19.0 | 3.0 | 11.9 of 17.0d (95h of 136h) | 0.70 | 4.1 of 17.0d (33h of 136h) | 7.8 of 17.0d (62h of 136h) | 0.21 |
 | Surya | 14.0 | 0.0 | 11.4 of 20.0d (92h of 160h) | 0.57 | 7.8 of 20.0d (62h of 160h) | 3.6 of 20.0d (29h of 160h) | 0.56 |
 | Manjunath | 4.0 | 4.0 | 11.1 of 16.0d (88h of 128h) | 0.69 | 10.4 of 16.0d (83h of 128h) | 0.7 of 16.0d (5h of 128h) | 0.03 |
 | Rashmi | — | 5.0 | 9.2 of 15.0d (74h of 120h) | 0.61 | 0.0 of 15.0d (0h of 120h) | 9.2 of 15.0d (74h of 120h) | — |
 | Rushika | 5.0 | 0.0 | 8.8 of 20.0d (70h of 160h) | 0.44 | 5.0 of 20.0d (40h of 160h) | 3.8 of 20.0d (30h of 160h) | 1.00 |
-| Vinay | 5.0 | 1.0 | 6.0 of 19.0d (48h of 152h) | 0.31 | 3.5 of 19.0d (28h of 152h) | 2.5 of 19.0d (20h of 152h) | 0.00 |
+| Vinay | 5.0 | 1.0 | 6.0 of 19.0d (48h of 152h) | 0.31 | 3.8 of 19.0d (30h of 152h) | 2.2 of 19.0d (18h of 152h) | 0.05 |
 
 ### Ticket-level
 
 | Jira | Feature | Assignee | Plan (PD) | Logged of assignee available | Accuracy | Status |
 |---|---|---|---:|---:|---:|---|
-| [HIEV-6372](https://elocity.atlassian.net/browse/HIEV-6372) | Abstraction of data layer (ES) | Sudeep | 30 | 0.0 of 19.0d (0h of 152h) | 0.00 | To Do |
-| [HIEV-6945](https://elocity.atlassian.net/browse/HIEV-6945) | Plan, delegate and implement unit test cases across backend repos | Vinay | 5 | 0.0 of 19.0d (0h of 152h) | 0.00 | In Review |
+| [HIEV-6372](https://elocity.atlassian.net/browse/HIEV-6372) | Abstraction of data layer (ES) | Sudeep | 30 | 1.0 of 19.0d (8h of 152h) | 0.03 | To Do |
+| [HIEV-7422](https://elocity.atlassian.net/browse/HIEV-7422) | Subtask of HIEV-6372 · Abstract data layer in session-utility, analytics, payment services | Sudeep | — | 1.0 of 19.0d (8h of 152h) | — | In Progress |
+| [HIEV-6945](https://elocity.atlassian.net/browse/HIEV-6945) | Plan, delegate and implement unit test cases across backend repos | Vinay | 5 | 1.2 of 19.0d (10h of 152h) | 0.24 | In Review |
+| [HIEV-6988](https://elocity.atlassian.net/browse/HIEV-6988) | Subtask of HIEV-6945 · Session utility Unit test | Vinay | — | 0.2 of 19.0d (2h of 152h) | — | Done |
+| [HIEV-6989](https://elocity.atlassian.net/browse/HIEV-6989) | Subtask of HIEV-6945 · Payment service unit tests | Vinay | — | 1.0 of 19.0d (8h of 152h) | — | Done |
 | [HIEV-7406](https://elocity.atlassian.net/browse/HIEV-7406) | Alectra Support | Vinay | — | 3.5 of 19.0d (28h of 152h) | — | In Progress |
 | [HIEV-6824](https://elocity.atlassian.net/browse/HIEV-6824) | Project Based Agent Skill File Generation | Deepak | 15 | 0.0 of 19.5d (0h of 156h) | 0.00 | To Do |
 | [HIEV-6938](https://elocity.atlassian.net/browse/HIEV-6938) | EVLM Project Activities | Deepak | — | 6.8 of 19.5d (54h of 156h) | — | In Progress |
-| [HIEV-6939](https://elocity.atlassian.net/browse/HIEV-6939) | EVLM Project Activities | Sahil Kumar | — | 1.4 of 20.0d (12h of 160h) | — | To Do |
+| [HIEV-6939](https://elocity.atlassian.net/browse/HIEV-6939) | EVLM Project Activities | Sahil Kumar | — | 12.2 of 20.0d (98h of 160h) | — | To Do |
+| [HIEV-7205](https://elocity.atlassian.net/browse/HIEV-7205) | Subtask of HIEV-6939 · Unit Tests + Integration Tests | Sahil Kumar | — | 0.4 of 20.0d (3h of 160h) | — | To Do |
+| [HIEV-7220](https://elocity.atlassian.net/browse/HIEV-7220) | Subtask of HIEV-6939 · Sandbox for hot path testing | Sahil Kumar | — | 0.1 of 20.0d (1h of 160h) | — | Done |
+| [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329) | Subtask of HIEV-6939 · Smartcar implementation in CPMS | Sahil Kumar | — | 3.0 of 20.0d (24h of 160h) | — | Done |
+| [HIEV-7426](https://elocity.atlassian.net/browse/HIEV-7426) | Subtask of HIEV-6939 · CPMS integration with EVLM | Sahil Kumar | — | 1.2 of 20.0d (10h of 160h) | — | Done |
+| [HIEV-7470](https://elocity.atlassian.net/browse/HIEV-7470) | Subtask of HIEV-6939 · Implement MFA step-up for privileged Ops actions (REQ-SEC-002) | Sahil Kumar | — | 0.7 of 20.0d (6h of 160h) | — | Done |
+| [HIEV-7471](https://elocity.atlassian.net/browse/HIEV-7471) | Subtask of HIEV-6939 · Admin AMS proxy — roles + users CRUD (REQ-SEC-007) | Sahil Kumar | — | 0.8 of 20.0d (6h of 160h) | — | In Progress |
+| [HIEV-7482](https://elocity.atlassian.net/browse/HIEV-7482) | Subtask of HIEV-6939 · Reserve SU for service account only (XX_XXX tenant, XXXX product, all-product permissions) | Sahil Kumar | — | 0.6 of 20.0d (4h of 160h) | — | In Progress |
+| [HIEV-7542](https://elocity.atlassian.net/browse/HIEV-7542) | Subtask of HIEV-6939 · EVLM tenancy isolation | Sahil Kumar | — | 1.4 of 20.0d (12h of 160h) | — | Done |
+| [HIEV-7545](https://elocity.atlassian.net/browse/HIEV-7545) | Subtask of HIEV-6939 · Vehicles roster: CPMS live status, SoH KPIs, and UX-parity later slice | Sahil Kumar | — | 1.4 of 20.0d (12h of 160h) | — | Done |
+| [HIEV-7554](https://elocity.atlassian.net/browse/HIEV-7554) | Subtask of HIEV-6939 · Vehicles roster: EVLM-only P1 ops list + persisted display name | Sahil Kumar | — | 0.4 of 20.0d (4h of 160h) | — | Done |
+| [HIEV-7581](https://elocity.atlassian.net/browse/HIEV-7581) | Subtask of HIEV-6939 · Phase 1 Ops Web manual E2E testing | Sahil Kumar | — | 0.8 of 20.0d (6h of 160h) | — | To Do |
 | [HIEV-6940](https://elocity.atlassian.net/browse/HIEV-6940) | EVLM Project Activities | Manjunath | — | 0.1 of 16.0d (1h of 128h) | — | To Do |
 | [HIEV-7354](https://elocity.atlassian.net/browse/HIEV-7354) | Enable submetering on Station Management advanced configuration | Manjunath | 4 | 0.1 of 16.0d (1h of 128h) | 0.03 | To Do |
 | [HIEV-7147](https://elocity.atlassian.net/browse/HIEV-7147) | New Fleet Management web and mobile screens activity and API support | Manjunath | — | 10.2 of 16.0d (82h of 128h) | — | In Progress |
@@ -71,6 +85,7 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 | [HIEV-7350](https://elocity.atlassian.net/browse/HIEV-7350) | Add refund action for session refund (e-wallet datagrid) | Twisha | 2 | 2.0 of 18.0d (16h of 144h) | 1.00 | In Review |
 | [HIEV-7360](https://elocity.atlassian.net/browse/HIEV-7360) | Auto resume on power loss (CPMS flow) | Shambu | 10 | 0.0 of 19.0d (0h of 152h) | 0.00 | To Do |
 | [HIEV-7358](https://elocity.atlassian.net/browse/HIEV-7358) | Enhance Unique Drivers graph | Twisha | 3 | 1.1 of 18.0d (9h of 144h) | 0.37 | In Review |
+| [HIEV-7357](https://elocity.atlassian.net/browse/HIEV-7357) | Subtask of HIEV-7358 · Enhance Unique drivers graph | Twisha | — | 0.0 of 18.0d (0h of 144h) | — | To Do |
 | [HIEV-7344](https://elocity.atlassian.net/browse/HIEV-7344) | New search framework for web app — phase 1 | Twisha | 7 | 3.8 of 18.0d (30h of 144h) | 0.54 | In Review |
 | [HIEV-7148](https://elocity.atlassian.net/browse/HIEV-7148) | New Fleet Management web app changes | Surya | 5 | 1.0 of 20.0d (8h of 160h) | 0.20 | In Progress |
 | [HIEV-7362](https://elocity.atlassian.net/browse/HIEV-7362) | Alectra UI screens — SP3 web app UI | Surya | 2 | 2.6 of 20.0d (21h of 160h) | 1.31 | To Do |
@@ -81,7 +96,8 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 | [HIEV-6941](https://elocity.atlassian.net/browse/HIEV-6941) | EVLM web app frontend API integration | Sahil Siddiqui | — | 7.9 of 16.0d (63h of 128h) | — | In Progress |
 | [HIEV-7348](https://elocity.atlassian.net/browse/HIEV-7348) | Implement web app API payload and data encryption | Sahil Siddiqui | 3 | 0.9 of 16.0d (7h of 128h) | 0.29 | To Do |
 | [HIEV-7359](https://elocity.atlassian.net/browse/HIEV-7359) | Enhance Unique Drivers graph | Sahil Siddiqui | 1 | 0.5 of 16.0d (4h of 128h) | 0.50 | To Do |
-| [HIEV-7364](https://elocity.atlassian.net/browse/HIEV-7364) | Export popup rework and common success/error framework for report download | Dharshini | 4 | 3.1 of 18.0d (24h of 144h) | 0.77 | Ready for Testing |
+| [HIEV-7364](https://elocity.atlassian.net/browse/HIEV-7364) | Export popup rework and common success/error framework for report download | Dharshini | 4 | 3.3 of 18.0d (26h of 144h) | 0.83 | Ready for Testing |
+| [HIEV-7455](https://elocity.atlassian.net/browse/HIEV-7455) | Subtask of HIEV-7364 · UI/UX - Export Popup related re work and a common frameowrk to show success/error when downloading report | Dharshini | — | 0.2 of 18.0d (2h of 144h) | — | Done |
 | [HIEV-7345](https://elocity.atlassian.net/browse/HIEV-7345) | New search framework for web app — phase 1 | Dharshini | 7 | 1.2 of 18.0d (10h of 144h) | 0.18 | In Progress |
 | [HIEV-7150](https://elocity.atlassian.net/browse/HIEV-7150) | New Fleet Management mobile app changes | Dhanush | 2 | 0.8 of 18.0d (6h of 144h) | 0.38 | To Do |
 | [HIEV-7306](https://elocity.atlassian.net/browse/HIEV-7306) | Alectra UI screens | Dhanush | 5 | 1.9 of 18.0d (15h of 144h) | 0.38 | To Do |
@@ -92,8 +108,15 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 | [HIEV-7365](https://elocity.atlassian.net/browse/HIEV-7365) | Terraform Phase 2 | Srikant | 8 | 0.0 of 17.0d (0h of 136h) | 0.00 | To Do |
 | [HIEV-7366](https://elocity.atlassian.net/browse/HIEV-7366) | Developer onboarding (tech team) | Srikant | 3 | 0.0 of 17.0d (0h of 136h) | 0.00 | To Do |
 | [HIEV-7367](https://elocity.atlassian.net/browse/HIEV-7367) | Infra creation and OpenSearch migration (Adani) | Srikant | 3 | 0.0 of 17.0d (0h of 136h) | 0.00 | To Do |
-| [HIEV-7368](https://elocity.atlassian.net/browse/HIEV-7368) | Site-wise infra doc (Lower / Canada / Adani / Alfanar) | Priyanshu | 8 | 0.2 of 20.0d (2h of 160h) | 0.03 | Done |
-| [HIEV-7369](https://elocity.atlassian.net/browse/HIEV-7369) | Prod (Adani / Alfanar) security tightening | Priyanshu | 6 | 0.0 of 20.0d (0h of 160h) | 0.00 | Done |
+| [HIEV-7368](https://elocity.atlassian.net/browse/HIEV-7368) | Site-wise infra doc (Lower / Canada / Adani / Alfanar) | Priyanshu | 8 | 6.6 of 20.0d (53h of 160h) | 0.83 | Done |
+| [HIEV-7392](https://elocity.atlassian.net/browse/HIEV-7392) | Subtask of HIEV-7368 · INFRA / Documentation of lower-env infra | Priyanshu | — | 2.0 of 20.0d (16h of 160h) | — | Done |
+| [HIEV-7393](https://elocity.atlassian.net/browse/HIEV-7393) | Subtask of HIEV-7368 · INFRA / Documentation of canada infra | Priyanshu | — | 1.9 of 20.0d (15h of 160h) | — | Done |
+| [HIEV-7394](https://elocity.atlassian.net/browse/HIEV-7394) | Subtask of HIEV-7368 · INFRA / Documentation of Adani-env infra | Priyanshu | — | 1.0 of 20.0d (8h of 160h) | — | Done |
+| [HIEV-7395](https://elocity.atlassian.net/browse/HIEV-7395) | Subtask of HIEV-7368 · INFRA / Documentation of Alfanar-env infra | Priyanshu | — | 1.0 of 20.0d (8h of 160h) | — | Done |
+| [HIEV-7441](https://elocity.atlassian.net/browse/HIEV-7441) | Subtask of HIEV-7368 · Infra Doc review lower-env | Priyanshu | — | 0.5 of 20.0d (4h of 160h) | — | Done |
+| [HIEV-7369](https://elocity.atlassian.net/browse/HIEV-7369) | Prod (Adani / Alfanar) security tightening | Priyanshu | 6 | 4.2 of 20.0d (34h of 160h) | 0.71 | Done |
+| [HIEV-7507](https://elocity.atlassian.net/browse/HIEV-7507) | Subtask of HIEV-7369 · INFRA / Adani-Prod Security Tightening | Priyanshu | — | 1.8 of 20.0d (14h of 160h) | — | Done |
+| [HIEV-7508](https://elocity.atlassian.net/browse/HIEV-7508) | Subtask of HIEV-7369 · INFRA / Alfanar-Prod Security Tightening | Priyanshu | — | 2.5 of 20.0d (20h of 160h) | — | Done |
 | [HIEV-6929](https://elocity.atlassian.net/browse/HIEV-6929) | No root user containers | Priyanshu | — | 0.0 of 20.0d (0h of 160h) | — | Done |
 | [HIEV-7370](https://elocity.atlassian.net/browse/HIEV-7370) | Kafka lower-stage migration to self-managed | Priyanshu | 3 | 0.9 of 20.0d (7h of 160h) | 0.29 | In Progress |
 | [HIEV-7371](https://elocity.atlassian.net/browse/HIEV-7371) | User onboarding to OCI via Entra ID (Azure) | Priyanshu | 3 | 2.8 of 20.0d (22h of 160h) | 0.92 | Done |
@@ -102,7 +125,7 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 
 ### Tasks and bugs added mid-sprint
 
-334 HIEV Jira tickets with August worklogs or comments that were not part of sprint planning (added mid-sprint). Time and comments here are included in person totals, daily hours, and the journal.
+311 HIEV Jira tickets with August worklogs or comments that were not part of sprint planning (added mid-sprint). Time and comments here are included in person totals, daily hours, and the journal.
 
 | Jira | Type | Summary | Logged by | Logged of available | Comments | Status |
 |---|---|---|---|---:|---:|---|
@@ -116,40 +139,28 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 | [HIEV-7497](https://elocity.atlassian.net/browse/HIEV-7497) | Observation | Alectra Mobile App Design | Marish | 3.5 of 19.0d (28h of 152h) | 4 | In Review |
 | [HIEV-7574](https://elocity.atlassian.net/browse/HIEV-7574) | Task | INFRA / GITLAB migration | Priyanshu | 3.5 of 20.0d (28h of 160h) | 7 | In Progress |
 | [HIEV-7193](https://elocity.atlassian.net/browse/HIEV-7193) | Epic | QA - Adhoc activities | Nagaraju | 3.0 of 19.0d (24h of 152h) | 0 | In Progress |
-| [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329) | Sub-task | Smartcar implementation in CPMS | Sahil Kumar | 3.0 of 20.0d (24h of 160h) | 5 | Done |
 | [HIEV-7445](https://elocity.atlassian.net/browse/HIEV-7445) | Task | Enhance User Manual to latest version(Mobile) | Tarun | 2.9 of 20.0d (23h of 160h) | 7 | In Review |
 | [HIEV-7536](https://elocity.atlassian.net/browse/HIEV-7536) | Task | idle  time report | Rushika | 2.8 of 20.0d (22h of 160h) | 5 | In Progress |
 | [HIEV-7591](https://elocity.atlassian.net/browse/HIEV-7591) | Task | Operator-Issued e-Wallet Credits | Tarun | 2.8 of 20.0d (22h of 160h) | 2 | In Progress |
 | [HIEV-6722](https://elocity.atlassian.net/browse/HIEV-6722) | Task | Audit and implement non-root users for containers | Deepak, Srikant | 2.6 of 17.0d (21h of 136h) | 4 | In Progress |
-| [HIEV-7508](https://elocity.atlassian.net/browse/HIEV-7508) | Sub-task | INFRA / Alfanar-Prod Security Tightening | Priyanshu, Srikant | 2.5 of 20.0d (20h of 160h) | 4 | Done |
 | [HIEV-7424](https://elocity.atlassian.net/browse/HIEV-7424) | Task | Support Activities | Sahil Kumar | 2.4 of 20.0d (19h of 160h) | 9 | To Do |
 | [HIEV-7073](https://elocity.atlassian.net/browse/HIEV-7073) | Task | AdHoc Task | Dhanush | 2.2 of 18.0d (18h of 144h) | 9 | In Progress |
 | [HIEV-7600](https://elocity.atlassian.net/browse/HIEV-7600) | Observation | Operator-Issued e-Wallet Credits Web | Marish | 2.1 of 19.0d (17h of 152h) | 1 | In Progress |
-| [HIEV-7392](https://elocity.atlassian.net/browse/HIEV-7392) | Sub-task | INFRA / Documentation of lower-env infra | Priyanshu | 2.0 of 20.0d (16h of 160h) | 2 | Done |
-| [HIEV-7393](https://elocity.atlassian.net/browse/HIEV-7393) | Sub-task | INFRA / Documentation of canada infra | Priyanshu, Srikant | 1.9 of 20.0d (15h of 160h) | 5 | Done |
 | [HIEV-7588](https://elocity.atlassian.net/browse/HIEV-7588) | Observation | EVLM UI Enhancements | Marish | 1.9 of 19.0d (15h of 152h) | 2 | In Progress |
-| [HIEV-7507](https://elocity.atlassian.net/browse/HIEV-7507) | Sub-task | INFRA / Adani-Prod Security Tightening | Priyanshu, Srikant | 1.8 of 20.0d (14h of 160h) | 2 | Done |
 | [HIEV-7440](https://elocity.atlassian.net/browse/HIEV-7440) | Task | Developer code Implementation flow for Customer Module | Dharshini, Sahil Siddiqui | 1.7 of 16.0d (13h of 128h) | 5 | In Review |
 | [HIEV-7566](https://elocity.atlassian.net/browse/HIEV-7566) | Observation | UIUX Design Review | Marish | 1.6 of 19.0d (13h of 152h) | 2 | In Progress |
 | [HIEV-7446](https://elocity.atlassian.net/browse/HIEV-7446) | Bug | Staging / HIEV Canada / Android / In-App Campaign / maxDisplayCount is not enforced for Welcome campaign | Dhanush, Nagaraju | 1.4 of 18.0d (12h of 144h) | 15 | Done |
-| [HIEV-7542](https://elocity.atlassian.net/browse/HIEV-7542) | Sub-task | EVLM tenancy isolation | Sahil Kumar | 1.4 of 20.0d (12h of 160h) | 2 | Done |
-| [HIEV-7545](https://elocity.atlassian.net/browse/HIEV-7545) | Sub-task | Vehicles roster: CPMS live status, SoH KPIs, and UX-parity later slice | Sahil Kumar | 1.4 of 20.0d (12h of 160h) | 3 | Done |
 | [HIEV-6785](https://elocity.atlassian.net/browse/HIEV-6785) | Task | Ad hoc work and Discussions with the Team Members on project activities  | Sahil Siddiqui | 1.4 of 16.0d (11h of 128h) | 15 | To Do |
 | [HIEV-6383](https://elocity.atlassian.net/browse/HIEV-6383) | Epic | Frontend / Finish Integration and Handover of New Profile Page | Rashmi | 1.4 of 15.0d (11h of 120h) | 2 | Testing |
 | [HIEV-6384](https://elocity.atlassian.net/browse/HIEV-6384) | Epic | Frontend / Guest Charging To be brought to the Cpms Web Repo | Rashmi | 1.4 of 19.0d (11h of 152h) | 2 | In Review |
 | [HIEV-7172](https://elocity.atlassian.net/browse/HIEV-7172) | Bug | Stage / Portal / At times, the previous or existing transaction details are sometimes not reflected in the side panel of station management  | Shambu | 1.4 of 19.0d (11h of 152h) | 1 | To Do |
 | [HIEV-7378](https://elocity.atlassian.net/browse/HIEV-7378) | Task | Feature PRD writing and planing | Deepak | 1.4 of 19.5d (11h of 156h) | 5 | Done |
 | [HIEV-6914](https://elocity.atlassian.net/browse/HIEV-6914) | Epic | Adhoc Task | Rashmi | 1.2 of 15.0d (10h of 120h) | 2 | To Do |
-| [HIEV-7426](https://elocity.atlassian.net/browse/HIEV-7426) | Sub-task | CPMS integration with EVLM | Sahil Kumar | 1.2 of 20.0d (10h of 160h) | 4 | Done |
 | [HIEV-7503](https://elocity.atlassian.net/browse/HIEV-7503) | Bug | Staging / EVSE Model / Created model is not displayed in list/search despite successful creation and duplicate-name validation | Nagaraju, Sahil Siddiqui, Twisha | 1.2 of 16.0d (10h of 128h) | 8 | Done |
 | [HIEV-7439](https://elocity.atlassian.net/browse/HIEV-7439) | Bug | STG/ Hiev Canada/ Portal/ Location Management>>My profile>> Updated Location Not Displayed in Activity Log After Editing Tariff | Dharshini, Rashmi, Sudeep | 1.2 of 19.0d (10h of 152h) | 4 | Done |
 | [HIEV-7152](https://elocity.atlassian.net/browse/HIEV-7152) | Task | Adhoc tasks | Dharshini | 1.1 of 18.0d (9h of 144h) | 2 | In Progress |
 | [HIEV-7458](https://elocity.atlassian.net/browse/HIEV-7458) | Bug | Staging / Mobile / New Login / Country picker shows all countries first then filters; loader flashes on country code | Dhanush, Rashmi | 1.1 of 15.0d (8h of 120h) | 9 | Testing |
 | [HIEV-7449](https://elocity.atlassian.net/browse/HIEV-7449) | Bug | STG/ Hiev Canada/ Portal/Tariff launch activity is not displayed in Activity Logs | Rashmi, Sudeep | 1.0 of 19.0d (8h of 152h) | 3 | Done |
-| [HIEV-6989](https://elocity.atlassian.net/browse/HIEV-6989) | Task | Payment service unit tests | Sudeep, Vinay | 1.0 of 19.0d (8h of 152h) | 2 | Done |
-| [HIEV-7394](https://elocity.atlassian.net/browse/HIEV-7394) | Sub-task | INFRA / Documentation of Adani-env infra | Priyanshu, Srikant | 1.0 of 20.0d (8h of 160h) | 4 | Done |
-| [HIEV-7395](https://elocity.atlassian.net/browse/HIEV-7395) | Sub-task | INFRA / Documentation of Alfanar-env infra | Priyanshu, Srikant | 1.0 of 20.0d (8h of 160h) | 4 | Done |
-| [HIEV-7422](https://elocity.atlassian.net/browse/HIEV-7422) | Task | Abstract data layer in session-utility, analytics, payment services | Sudeep | 1.0 of 19.0d (8h of 152h) | 2 | In Progress |
 | [HIEV-7442](https://elocity.atlassian.net/browse/HIEV-7442) | Task | Security reporting agent review and research | Deepak | 1.0 of 19.5d (8h of 156h) | 3 | Done |
 | [HIEV-7496](https://elocity.atlassian.net/browse/HIEV-7496) | Task | ChargeM / Production OTA blocked after 9.5.0 crash; Sunday-closed fix shipped via Play Store / App Store | Dhanush | 1.0 of 18.0d (8h of 144h) | 1 | Done |
 | [HIEV-7537](https://elocity.atlassian.net/browse/HIEV-7537) | Task | Active Charging Report | Rushika | 1.0 of 20.0d (8h of 160h) | 3 | To Do |
@@ -168,20 +179,16 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 | [HIEV-6636](https://elocity.atlassian.net/browse/HIEV-6636) | Task | Regression Fix Verification for Login, Map, QR Scan, Reservation, and Filter Flows | Rashmi | 0.8 of 18.0d (6h of 144h) | 2 | Done |
 | [HIEV-7031](https://elocity.atlassian.net/browse/HIEV-7031) | Task | 401 and 403 error checks and validation. in some places instead of 403 error, 401 error is being displayed which is not accurate. | Deepak, Twisha | 0.8 of 19.5d (6h of 156h) | 2 | Done |
 | [HIEV-7340](https://elocity.atlassian.net/browse/HIEV-7340) | Task | Unit testing KT | Shambu | 0.8 of 19.0d (6h of 152h) | 0 | Done |
-| [HIEV-7471](https://elocity.atlassian.net/browse/HIEV-7471) | Sub-task | Admin AMS proxy — roles + users CRUD (REQ-SEC-007) | Sahil Kumar | 0.8 of 20.0d (6h of 160h) | 3 | In Progress |
 | [HIEV-7575](https://elocity.atlassian.net/browse/HIEV-7575) | Task | INFRA / lower-env runner instance storage clean | Priyanshu | 0.8 of 20.0d (6h of 160h) | 2 | Done |
-| [HIEV-7581](https://elocity.atlassian.net/browse/HIEV-7581) | Sub-task | Phase 1 Ops Web manual E2E testing | Sahil Kumar | 0.8 of 20.0d (6h of 160h) | 3 | To Do |
 | [HIEV-7597](https://elocity.atlassian.net/browse/HIEV-7597) | Bug | Force delete export jobs after 7 days from completion | Shambu | 0.8 of 19.0d (6h of 152h) | 2 | In Progress |
 | [HIEV-7388](https://elocity.atlassian.net/browse/HIEV-7388) | Task | Location filter support in reports | Dharshini, Sahil Siddiqui | 0.7 of 19.0d (6h of 152h) | 6 | Done |
 | [HIEV-7032](https://elocity.atlassian.net/browse/HIEV-7032) | Bug | Canada Prod / Prod / Alerts & Notifications > Using the alerts time filter, select “Payment Successful” option > Click on ‘Apply’ button > There are 0 corresponding search results which is incorrect as there are 77 paid session for the same time period | Rashmi, Twisha, Vinay | 0.7 of 18.0d (6h of 144h) | 8 | Done |
 | [HIEV-6684](https://elocity.atlassian.net/browse/HIEV-6684) | Epic | Business related metadata/details should accept landline numbers too | Rashmi | 0.7 of 16.0d (6h of 128h) | 1 | Done |
-| [HIEV-7470](https://elocity.atlassian.net/browse/HIEV-7470) | Sub-task | Implement MFA step-up for privileged Ops actions (REQ-SEC-002) | Sahil Kumar | 0.7 of 20.0d (6h of 160h) | 3 | Done |
 | [HIEV-5836](https://elocity.atlassian.net/browse/HIEV-5836) | Epic | Mobile App / In App Campaign  | Dhanush | 0.6 of 19.0d (5h of 152h) | 8 | To Do |
 | [HIEV-7477](https://elocity.atlassian.net/browse/HIEV-7477) | Suggestion | Provide additional entry points to initiate a reservation | Dhanush, Nagaraju, Rashmi | 0.6 of 18.0d (5h of 144h) | 5 | Done |
 | [HIEV-7485](https://elocity.atlassian.net/browse/HIEV-7485) | Task | Session Termination Flowchart | Sudeep | 0.6 of 19.0d (5h of 152h) | 2 | Done |
 | [HIEV-7587](https://elocity.atlassian.net/browse/HIEV-7587) | Sub-task | gitlab pending activities  | Srikant | 0.6 of 17.0d (5h of 136h) | 1 | Done |
 | [HIEV-7414](https://elocity.atlassian.net/browse/HIEV-7414) | Sub-task | Smart car mobile app feature firebase wrapping and ios pipeline re fix again | Dhanush, Sahil Siddiqui | 0.6 of 18.0d (4h of 144h) | 5 | Done |
-| [HIEV-7482](https://elocity.atlassian.net/browse/HIEV-7482) | Sub-task | Reserve SU for service account only (XX_XXX tenant, XXXX product, all-product permissions) | Sahil Kumar | 0.6 of 20.0d (4h of 160h) | 2 | In Progress |
 | [HIEV-7326](https://elocity.atlassian.net/browse/HIEV-7326) | Bug | Stage / Portal / My Profile > Activity Logs > Currently, the Changes and Notes fields often display "NA", which results in redundant information.  | Dharshini, Sahil Siddiqui, Sudeep | 0.6 of 19.0d (4h of 152h) | 8 | Ready for Testing |
 | [HIEV-7216](https://elocity.atlassian.net/browse/HIEV-7216) | Bug | STG/ Hiev Canada / Portal / Assets-> Diagnostic>>Diagnostic report CRON job and recovery job failed to run  | Rashmi, Shambu | 0.5 of 19.0d (4h of 152h) | 3 | Done |
 | [HIEV-7416](https://elocity.atlassian.net/browse/HIEV-7416) | Bug | STG/ Hiev Canada/ Portal/ Station Remains in Maintenance Mode After Maintenance Is Removed, Blocking New Charging Sessions | Rashmi, Twisha | 0.5 of 20.0d (4h of 160h) | 1 | In Progress |
@@ -190,7 +197,6 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 | [HIEV-7244](https://elocity.atlassian.net/browse/HIEV-7244) | Bug | UAT / Hiev Canada / Android / Reservations / Cancelled reservations and cancelled queue's are displayed in the Upcoming tab without any status indication where customers cannot distinguish an active reservation from a cancelled one without opening it. | Nagaraju, Twisha | 0.5 of 18.0d (4h of 144h) | 3 | Done |
 | [HIEV-6373](https://elocity.atlassian.net/browse/HIEV-6373) | Epic | Backend / Support & Adhoc Activities | Sahil Kumar | 0.5 of 20.0d (4h of 160h) | 1 | To Do |
 | [HIEV-7429](https://elocity.atlassian.net/browse/HIEV-7429) | Sub-task | Doc Review and MR review  | Srikant | 0.5 of 17.0d (4h of 136h) | 1 | Done |
-| [HIEV-7441](https://elocity.atlassian.net/browse/HIEV-7441) | Sub-task | Infra Doc review lower-env | Srikant | 0.5 of 17.0d (4h of 136h) | 2 | Done |
 | [HIEV-7573](https://elocity.atlassian.net/browse/HIEV-7573) | Task | INFRA / CLOUD COST Comparison(canada VS adani) | Priyanshu | 0.5 of 20.0d (4h of 160h) | 1 | Done |
 | [HIEV-7589](https://elocity.atlassian.net/browse/HIEV-7589) | Task | Guest Charging - Refund Support and immediate release of cardhold when transaction id doesnt get recorded | Sudeep | 0.5 of 19.0d (4h of 152h) | 1 | In Progress |
 | [HIEV-7564](https://elocity.atlassian.net/browse/HIEV-7564) | Bug | STG/ Portal/ Hiev Canada/ Customer -> E-wallet>> Session Refunded and Wallet Refunded are not available as separate options in the Event Type dropdown | Dharshini, Rashmi, Twisha | 0.5 of 16.0d (4h of 128h) | 3 | In Review |
@@ -198,14 +204,12 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 | [HIEV-6441](https://elocity.atlassian.net/browse/HIEV-6441) | Task | Web App / New abnormal event added - Abnormal session termination | Rashmi | 0.4 of 15.0d (4h of 120h) | 1 | Testing |
 | [HIEV-7472](https://elocity.atlassian.net/browse/HIEV-7472) | Task | Universal Energies / Production Release 6.4.0 (Android released / iOS In Review) — tag universal-energies-prod-2026-07-17 | Dhanush | 0.4 of 18.0d (4h of 144h) | 1 | Done |
 | [HIEV-7541](https://elocity.atlassian.net/browse/HIEV-7541) | Task | QA Validation / Utility Tariff – Functional, Validation, Cost Calculation & Reports Testing | Nagaraju | 0.4 of 19.0d (4h of 152h) | 1 | Done |
-| [HIEV-7554](https://elocity.atlassian.net/browse/HIEV-7554) | Sub-task | Vehicles roster: EVLM-only P1 ops list + persisted display name | Sahil Kumar | 0.4 of 20.0d (4h of 160h) | 1 | Done |
 | [HIEV-7584](https://elocity.atlassian.net/browse/HIEV-7584) | Suggestion | Staging / Load Management / UI Enhancement / Add Connector Icon to Load Group Overview Connector Cards | Nagaraju, Surya | 0.4 of 19.0d (4h of 152h) | 2 | Ready for Testing |
 | [HIEV-7546](https://elocity.atlassian.net/browse/HIEV-7546) | Bug | UAT/ Portal Hiev Canada/ Guest Charging >> Incorrect “Payment is being processed” Loader Message Displayed After Charging Session Starts | Dharshini, Rashmi, Sahil Siddiqui, Sudeep | 0.4 of 15.0d (3h of 120h) | 9 | Ready for Testing |
 | [HIEV-7475](https://elocity.atlassian.net/browse/HIEV-7475) | Bug | Staging / Android / Time is displayed in 24-hour format instead of 12-hour format with AM/PM | Dhanush, Nagaraju, Rashmi | 0.4 of 18.0d (3h of 144h) | 2 | Done |
 | [HIEV-7563](https://elocity.atlassian.net/browse/HIEV-7563) | Bug | Staging / Load Management / Decommissioned station continues to be displayed in Load Group Overview | Nagaraju, Sahil Kumar | 0.4 of 20.0d (3h of 160h) | 2 | Done |
 | [HIEV-7243](https://elocity.atlassian.net/browse/HIEV-7243) | Bug | UAT / Hiev Canada / Android / Reservation / Reserved time slots remain selectable and validation occurs only after reservation confirmation | Twisha, Vinay | 0.4 of 18.0d (3h of 144h) | 5 | Done |
 | [HIEV-7396](https://elocity.atlassian.net/browse/HIEV-7396) | Task | QA Validation – In-App Campaign / Campaign Display Flow | Nagaraju | 0.4 of 19.0d (3h of 152h) | 3 | Done |
-| [HIEV-7205](https://elocity.atlassian.net/browse/HIEV-7205) | Sub-task | Unit Tests + Integration Tests | Sahil Kumar | 0.4 of 20.0d (3h of 160h) | 1 | To Do |
 | [HIEV-7385](https://elocity.atlassian.net/browse/HIEV-7385) | Bug | Movem Prod / Displayed Location as Closed on Location Detail screen on Sundays. | Dhanush, Nagaraju, Vinay | 0.4 of 18.0d (3h of 144h) | 5 | Done |
 | [HIEV-7436](https://elocity.atlassian.net/browse/HIEV-7436) | Task | use last meter value timestamp or session start date for stop timestamp in force terminate logic | Sudeep | 0.4 of 19.0d (3h of 152h) | 1 | Done |
 | [HIEV-7457](https://elocity.atlassian.net/browse/HIEV-7457) | Task | week2 cloud  cost report  | Priyanshu | 0.4 of 20.0d (3h of 160h) | 1 | Done |
@@ -240,7 +244,6 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 | [HIEV-7389](https://elocity.atlassian.net/browse/HIEV-7389) | Task | INFRA / OCI Cloud cost analysis | Priyanshu | 0.2 of 20.0d (2h of 160h) | 2 | Done |
 | [HIEV-7427](https://elocity.atlassian.net/browse/HIEV-7427) | Sub-task | AI Companion demo review — open questions & findings (Confluence) | Sahil Siddiqui | 0.2 of 16.0d (2h of 128h) | 1 | Done |
 | [HIEV-7430](https://elocity.atlassian.net/browse/HIEV-7430) | Task | mapping more defined and accurate names in the frontend for "EventType" parameter. | Dharshini, Rashmi, Sahil Siddiqui | 0.2 of 15.0d (2h of 120h) | 4 | Testing |
-| [HIEV-7455](https://elocity.atlassian.net/browse/HIEV-7455) | Sub-task | UI/UX - Export Popup related re work and a common frameowrk to show success/error when downloading report | Marish | 0.2 of 19.0d (2h of 152h) | 1 | Done |
 | [HIEV-7555](https://elocity.atlassian.net/browse/HIEV-7555) | Task | INFRA / SSL CERT AUTOMATION SCRIPT | Priyanshu | 0.2 of 20.0d (2h of 160h) | 1 | Done |
 | [HIEV-7593](https://elocity.atlassian.net/browse/HIEV-7593) | Task | INFRA / REMOTE ACCESS | Priyanshu | 0.2 of 20.0d (2h of 160h) | 2 | Done |
 | [HIEV-7599](https://elocity.atlassian.net/browse/HIEV-7599) | Sub-task | Code review MR !788 — Station Management + Load Management fixes | Sahil Siddiqui | 0.2 of 16.0d (2h of 128h) | 4 | Done |
@@ -261,7 +264,6 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 | [HIEV-7342](https://elocity.atlassian.net/browse/HIEV-7342) | Bug | Stage / Portal / GHG reporting / "Greenhouse Gas Used" data bars is not rendered while "Cumulative" data is displayed | Dharshini, Sahil Siddiqui | 0.2 of 18.0d (2h of 144h) | 7 | Done |
 | [HIEV-7538](https://elocity.atlassian.net/browse/HIEV-7538) | Bug | Staging / Utility Tariff / Reports / Energy Cost chart displays inconsistent Y-axis spacing after zooming | Dharshini, Nagaraju, Sahil Siddiqui | 0.2 of 18.0d (2h of 144h) | 8 | Done |
 | [HIEV-7565](https://elocity.atlassian.net/browse/HIEV-7565) | Suggestion | Staging / Load Management / Hide Unstable Sessions and Variance Events columns from Load Summary and Export | Nagaraju, Surya | 0.2 of 19.0d (2h of 152h) | 1 | Ready for Testing |
-| [HIEV-6988](https://elocity.atlassian.net/browse/HIEV-6988) | Task | Session utility Unit test | Shambu, Vinay | 0.2 of 19.0d (2h of 152h) | 4 | Done |
 | [HIEV-7166](https://elocity.atlassian.net/browse/HIEV-7166) | Bug | Stage / Portal / Reservation>Successfully add a reservation for the present day>Update the date range to ‘Today’> 0 results are reflected in the data grid even though one reservation has just been added  | Dharshini, Nagaraju, Sahil Siddiqui | 0.2 of 18.0d (2h of 144h) | 5 | Done |
 | [HIEV-7204](https://elocity.atlassian.net/browse/HIEV-7204) | Bug | Stage / Portal / Overall >Select ‘Today’> None of the sections reflect any data. It’s all 0 even though several sessions have been completed today > Data until yesterday is visible on Overall > Today button and calendar option to be removed | Rashmi, Sahil Siddiqui, Surya | 0.2 of 16.0d (2h of 128h) | 2 | Done |
 | [HIEV-7312](https://elocity.atlassian.net/browse/HIEV-7312) | Bug | Portal / Stage / Station Management / Maintenance slot is deleted after editing and saving without changes | Surya | 0.2 of 19.0d (2h of 152h) | 1 | Ready for Testing |
@@ -285,7 +287,6 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 | [HIEV-7527](https://elocity.atlassian.net/browse/HIEV-7527) | Bug | Staging / Load Management / Browser refresh redirects from Load Group details to Load Group list | Nagaraju, Surya | 0.1 of 20.0d (1h of 160h) | 2 | Done |
 | [HIEV-7559](https://elocity.atlassian.net/browse/HIEV-7559) | Bug | STG/ Android/ Hiev Canada/ Wallet>>Unable to add money in wallet "PaymentIntent Client Secret Mismatch" | Dhanush, Rashmi, Shambu | 0.1 of 19.0d (1h of 152h) | 3 | Done |
 | [HIEV-6885](https://elocity.atlassian.net/browse/HIEV-6885) | Bug | Canada Prod - Periodically logging out issues | Manjunath | 0.1 of 16.0d (1h of 128h) | 0 | To Do |
-| [HIEV-7220](https://elocity.atlassian.net/browse/HIEV-7220) | Sub-task | Sandbox for hot path testing | Sahil Kumar | 0.1 of 20.0d (1h of 160h) | 1 | Done |
 | [HIEV-7240](https://elocity.atlassian.net/browse/HIEV-7240) | Bug | UAT / Hiev Canada / Android / Queue / Unable to create a new queue reservation despite another valid time slot being available | Twisha | 0.1 of 18.0d (1h of 144h) | 3 | Done |
 | [HIEV-7279](https://elocity.atlassian.net/browse/HIEV-7279) | Bug | Guest Charging | Sahil Siddiqui | 0.1 of 18.0d (1h of 144h) | 5 | Done |
 | [HIEV-7288](https://elocity.atlassian.net/browse/HIEV-7288) | Bug | UAT / Guest Charging / Android Chrome / Station Details / Multiple swipe gestures are required to vertically scroll the Station Details page | Dharshini, Nagaraju | 0.1 of 19.0d (1h of 152h) | 4 | Done |
@@ -439,7 +440,6 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 | [HIEV-7335](https://elocity.atlassian.net/browse/HIEV-7335) | Bug | Stage / Portal / GHG reporting / Inconsistent Y-axis intervals and grid line spacing after first zoom in Greenhouse Gas report fullscreen view | Sahil Siddiqui | 0.0 of 18.0d (0h of 144h) | 4 | Done |
 | [HIEV-7336](https://elocity.atlassian.net/browse/HIEV-7336) | Bug | Stage / Portal / GHG reporting / Right Y-axis displays fewer values than the left Y-axis, after zooming in Greenhouse Gas report | Sahil Siddiqui | 0.0 of 18.0d (0h of 144h) | 4 | Done |
 | [HIEV-7337](https://elocity.atlassian.net/browse/HIEV-7337) | Bug | Stage / Portal / GHG reporting / Top horizontal grid line is missing a corresponding right Y-axis value after zooming out in Greenhouse Gas report fullscreen view | Sahil Siddiqui | 0.0 of 18.0d (0h of 144h) | 4 | Done |
-| [HIEV-7357](https://elocity.atlassian.net/browse/HIEV-7357) | Epic | Enhance Unique drivers graph | Deepak | 0.0 of 19.5d (0h of 156h) | 1 | To Do |
 
 ## 2. Estimation accuracy
 
@@ -448,20 +448,20 @@ Same-scope only: **ticket** = August days on that Jira ticket ÷ sprint-plan PD.
 | Person | Plan (PD) | Actual on planned Jira tickets | Logged of available | Accuracy |
 |---|---:|---:|---:|---:|
 | Deepak | 15.0 | 0.2d (2h) | 20.8 of 19.5d (166h of 156h) | 0.02 |
-| Priyanshu | 20.0 | 3.8d (30h) | 20.1 of 20.0d (161h of 160h) | 0.19 |
+| Priyanshu | 20.0 | 12.5d (100h) | 20.1 of 20.0d (161h of 160h) | 0.62 |
 | Dhanush | 7.0 | 3.0d (24h) | 18.1 of 18.0d (145h of 144h) | 0.43 |
-| Marish | 3.0 | 2.6d (20h) | 17.9 of 19.0d (144h of 152h) | 0.85 |
+| Marish | 3.0 | 2.8d (22h) | 17.9 of 19.0d (144h of 152h) | 0.94 |
 | Tarun | 7.0 | 11.6d (93h) | 17.2 of 20.0d (138h of 160h) | 1.66 |
-| Sudeep | 30.0 | 0.0d (0h) | 17.1 of 19.0d (137h of 152h) | 0.00 |
+| Sudeep | 30.0 | 1.9d (15h) | 17.1 of 19.0d (137h of 152h) | 0.06 |
 | Sahil Siddiqui | 4.0 | 1.5d (12h) | 15.1 of 16.0d (121h of 128h) | 0.38 |
 | Dharshini | 13.0 | 7.1d (56h) | 13.5 of 18.0d (108h of 144h) | 0.54 |
 | Twisha | 12.0 | 6.6d (53h) | 13.3 of 18.0d (107h of 144h) | 0.55 |
-| Shambu | 15.0 | 4.4d (35h) | 13.1 of 19.0d (105h of 152h) | 0.29 |
-| Srikant | 19.0 | 2.1d (17h) | 11.9 of 17.0d (95h of 136h) | 0.11 |
+| Shambu | 15.0 | 4.4d (36h) | 13.1 of 19.0d (105h of 152h) | 0.30 |
+| Srikant | 19.0 | 4.0d (32h) | 11.9 of 17.0d (95h of 136h) | 0.21 |
 | Surya | 14.0 | 7.8d (62h) | 11.4 of 20.0d (92h of 160h) | 0.56 |
 | Manjunath | 4.0 | 0.1d (1h) | 11.1 of 16.0d (88h of 128h) | 0.03 |
 | Rushika | 5.0 | 5.0d (40h) | 8.8 of 20.0d (70h of 160h) | 1.00 |
-| Vinay | 5.0 | 0.0d (0h) | 6.0 of 19.0d (48h of 152h) | 0.00 |
+| Vinay | 5.0 | 0.2d (2h) | 6.0 of 19.0d (48h of 152h) | 0.05 |
 
 ## 3. Bugs worked in August
 
@@ -1373,7 +1373,7 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-10** — logged 1.1d (9h) of 1.0d (8h) available, 1 comments
 
-- Worklog 2h on [HIEV-7455](https://elocity.atlassian.net/browse/HIEV-7455) (Sub-task, mid-sprint)
+- Worklog 2h on [HIEV-7455](https://elocity.atlassian.net/browse/HIEV-7455) (Sub-task, planned)
 - Worklog 7h on [HIEV-7221](https://elocity.atlassian.net/browse/HIEV-7221) (Observation, mid-sprint)
 - Comment on [HIEV-7221](https://elocity.atlassian.net/browse/HIEV-7221): Completed Approve, reject , hold entry dialog screen design
 
@@ -1842,8 +1842,8 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-04** — logged 1.0d (8h) of 1.0d (8h) available, 2 comments
 
-- Worklog 2h on [HIEV-7392](https://elocity.atlassian.net/browse/HIEV-7392) (Sub-task, mid-sprint)
-- Worklog 2h on [HIEV-7392](https://elocity.atlassian.net/browse/HIEV-7392) (Sub-task, mid-sprint)
+- Worklog 2h on [HIEV-7392](https://elocity.atlassian.net/browse/HIEV-7392) (Sub-task, planned)
+- Worklog 2h on [HIEV-7392](https://elocity.atlassian.net/browse/HIEV-7392) (Sub-task, planned)
 - Worklog 2h on [HIEV-7389](https://elocity.atlassian.net/browse/HIEV-7389) (Task, mid-sprint)
 - Worklog 2h on [HIEV-7368](https://elocity.atlassian.net/browse/HIEV-7368) (Task, planned)
 - Comment on [HIEV-7389](https://elocity.atlassian.net/browse/HIEV-7389): analysis and created the report regarding the invoice generated by oracle cloud
@@ -1851,15 +1851,15 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-05** — logged 1.0d (8h) of 1.0d (8h) available, 3 comments
 
-- Worklog 1d on [HIEV-7392](https://elocity.atlassian.net/browse/HIEV-7392) (Sub-task, mid-sprint)
+- Worklog 1d on [HIEV-7392](https://elocity.atlassian.net/browse/HIEV-7392) (Sub-task, planned)
 - Comment on [HIEV-7392](https://elocity.atlassian.net/browse/HIEV-7392): started working on the detailed documentation of existing infrastructure.
 - Comment on [HIEV-7392](https://elocity.atlassian.net/browse/HIEV-7392): link :- Changes completed: Refreshed lower-env inventory for OCI Toronto region and AWS us-east-1. Added deeper OCI resource coverage including block volumes, boot volumes, object storage buckets, certificates, vaults, and OKE resources. Added AWS coverage for Lambda, ECR, CloudFormation, launch templates, Route53, ACM, S3, and related resources. Added OCI OpenSearch cluster details after validating from OCI console and targeted CLI lookup. OCI OpenSearch clusters added.
 - Comment on [HIEV-7389](https://elocity.atlassian.net/browse/HIEV-7389): OCI CLOUD COST july-2026 = $3,311.22 (USD) june-2026 = $3,251.57 (USD) may-2026 = $3,782.64 (USD) apr-2026 = $4,836.54 (USD) march- 2026 = $5,059.50 (USD) feb-2026 = $3,541.87 (USD)
 
 **2026-08-06** — logged 1.0d (8h) of 1.0d (8h) available, 1 comments
 
-- Worklog 4h on [HIEV-7393](https://elocity.atlassian.net/browse/HIEV-7393) (Sub-task, mid-sprint)
-- Worklog 4h on [HIEV-7392](https://elocity.atlassian.net/browse/HIEV-7392) (Sub-task, mid-sprint)
+- Worklog 4h on [HIEV-7393](https://elocity.atlassian.net/browse/HIEV-7393) (Sub-task, planned)
+- Worklog 4h on [HIEV-7392](https://elocity.atlassian.net/browse/HIEV-7392) (Sub-task, planned)
 - Comment on [HIEV-7393](https://elocity.atlassian.net/browse/HIEV-7393): • Updated the canada-prod AWS cloud inventory documentation. Changes completed: Created/refreshed canada-prod inventory for AWS ca-central-1. Added structured Confluence-ready sections by service. Covered VPCs, subnets, route tables, internet/NAT gateways, security groups, Elastic IPs, EC2, EBS, load balancers, target groups, RDS, MSK, EKS, Auto Scaling groups, launch templates, SNS, ACM, Route53, and S3. Added OpenSearch coverage and documented the active OpenSearch domain.
 
 **2026-08-07** — logged 0.1d (1h) of 1.0d (8h) available, 1 comments
@@ -1869,15 +1869,15 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-09** — logged 1.5d (12h) of 0.0d (0h) available, 0 comments
 
-- Worklog 2h on [HIEV-7395](https://elocity.atlassian.net/browse/HIEV-7395) (Sub-task, mid-sprint)
-- Worklog 2h on [HIEV-7394](https://elocity.atlassian.net/browse/HIEV-7394) (Sub-task, mid-sprint)
-- Worklog 1d on [HIEV-7393](https://elocity.atlassian.net/browse/HIEV-7393) (Sub-task, mid-sprint)
+- Worklog 2h on [HIEV-7395](https://elocity.atlassian.net/browse/HIEV-7395) (Sub-task, planned)
+- Worklog 2h on [HIEV-7394](https://elocity.atlassian.net/browse/HIEV-7394) (Sub-task, planned)
+- Worklog 1d on [HIEV-7393](https://elocity.atlassian.net/browse/HIEV-7393) (Sub-task, planned)
 
 **2026-08-10** — logged 0.9d (7h) of 1.0d (8h) available, 5 comments
 
 - Worklog 3h on [HIEV-7457](https://elocity.atlassian.net/browse/HIEV-7457) (Task, mid-sprint)
-- Worklog 2h on [HIEV-7395](https://elocity.atlassian.net/browse/HIEV-7395) (Sub-task, mid-sprint)
-- Worklog 2h on [HIEV-7394](https://elocity.atlassian.net/browse/HIEV-7394) (Sub-task, mid-sprint)
+- Worklog 2h on [HIEV-7395](https://elocity.atlassian.net/browse/HIEV-7395) (Sub-task, planned)
+- Worklog 2h on [HIEV-7394](https://elocity.atlassian.net/browse/HIEV-7394) (Sub-task, planned)
 - Comment on [HIEV-7457](https://elocity.atlassian.net/browse/HIEV-7457): adani aws - 157.3 adani oci - 118.2 alfanar oci - 214.6 india aws - 3.13 india oci - 0.07 canada aws - 540.61 lower-env oci - 322.61 lower -env aws - 53.48 prod compartment - 13.31
 - Comment on [HIEV-7395](https://elocity.atlassian.net/browse/HIEV-7395): Alfanar prod: OCI-only inventory updated OCI region: me-jeddah-1 OCI compartment: alfanar Route table, security list, and NSG rule details included Latest report generated and updated
 - Comment on [HIEV-7394](https://elocity.atlassian.net/browse/HIEV-7394): Adani prod: Combined AWS + OCI inventory created AWS region: ap-south-1 OCI region: ap-mumbai-1 OCI compartment: adani Route table, security list, NSG, AWS route, and AWS security group rule details included Latest report generated and updated
@@ -1886,8 +1886,8 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-11** — logged 1.0d (8h) of 1.0d (8h) available, 0 comments
 
-- Worklog 2h on [HIEV-7395](https://elocity.atlassian.net/browse/HIEV-7395) (Sub-task, mid-sprint)
-- Worklog 2h on [HIEV-7394](https://elocity.atlassian.net/browse/HIEV-7394) (Sub-task, mid-sprint)
+- Worklog 2h on [HIEV-7395](https://elocity.atlassian.net/browse/HIEV-7395) (Sub-task, planned)
+- Worklog 2h on [HIEV-7394](https://elocity.atlassian.net/browse/HIEV-7394) (Sub-task, planned)
 - Worklog 4h on [HIEV-7371](https://elocity.atlassian.net/browse/HIEV-7371) (Task, planned)
 
 **2026-08-12** — logged 1.5d (12h) of 1.0d (8h) available, 4 comments
@@ -1910,13 +1910,13 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-16** — logged 1.0d (8h) of 0.0d (0h) available, 0 comments
 
-- Worklog 4h on [HIEV-7508](https://elocity.atlassian.net/browse/HIEV-7508) (Sub-task, mid-sprint)
-- Worklog 4h on [HIEV-7507](https://elocity.atlassian.net/browse/HIEV-7507) (Sub-task, mid-sprint)
+- Worklog 4h on [HIEV-7508](https://elocity.atlassian.net/browse/HIEV-7508) (Sub-task, planned)
+- Worklog 4h on [HIEV-7507](https://elocity.atlassian.net/browse/HIEV-7507) (Sub-task, planned)
 
 **2026-08-17** — logged 1.1d (9h) of 1.0d (8h) available, 4 comments
 
 - Worklog 3h on [HIEV-7522](https://elocity.atlassian.net/browse/HIEV-7522) (Task, mid-sprint)
-- Worklog 6h on [HIEV-7507](https://elocity.atlassian.net/browse/HIEV-7507) (Sub-task, mid-sprint)
+- Worklog 6h on [HIEV-7507](https://elocity.atlassian.net/browse/HIEV-7507) (Sub-task, planned)
 - Comment on [HIEV-7522](https://elocity.atlassian.net/browse/HIEV-7522): adani(aws) - 199.52 adani(oci) - 130.29 alfanar(oci) - 227.8 india(aws) - 5.15 india(oci) - 0.07 canada(aws) - 542.79 lower-env(aws) - 55.98 lower-env(oci) - 335.05 prod_compartment - 15.63
 - Comment on [HIEV-7508](https://elocity.atlassian.net/browse/HIEV-7508): Reviewed alfanra prod OCI jeddah security posture and updated the security tightening runbook with detailed service-wise review steps and proposed tightening sequence. No OCI changes were applied; this was documentation and planning only.
 - Comment on [HIEV-7507](https://elocity.atlassian.net/browse/HIEV-7507): Reviewed Adani prod OCI Mumbai security posture and updated the security tightening runbook with detailed service-wise review steps, AWS connectivity observations from OCI side, and proposed tightening sequence. No OCI changes were applied; this was documentation and planning only.
@@ -1924,18 +1924,18 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-18** — logged 1.2d (10h) of 1.0d (8h) available, 1 comments
 
-- Worklog 1d on [HIEV-7508](https://elocity.atlassian.net/browse/HIEV-7508) (Sub-task, mid-sprint)
-- Worklog 2h on [HIEV-7507](https://elocity.atlassian.net/browse/HIEV-7507) (Sub-task, mid-sprint)
+- Worklog 1d on [HIEV-7508](https://elocity.atlassian.net/browse/HIEV-7508) (Sub-task, planned)
+- Worklog 2h on [HIEV-7507](https://elocity.atlassian.net/browse/HIEV-7507) (Sub-task, planned)
 - Comment on [HIEV-7508](https://elocity.atlassian.net/browse/HIEV-7508): Work completed: Enabled VCN flow logs for alfanar-prod-private-subnet. Created capture filter for accepted/rejected private subnet traffic. Confirmed flow logs are ingesting records successfully. Verified initial private subnet traffic records are visible in OCI Logging. Documented flow log OCIDs, retention, and observation plan in the security status report. Reviewed remaining SFTP/FTP exposure and identified that source client IPs must be confirmed before narrowing rules. Flow log details: Reg
 
 **2026-08-19** — logged 0.8d (6h) of 1.0d (8h) available, 0 comments
 
 - Worklog 2h on [HIEV-7555](https://elocity.atlassian.net/browse/HIEV-7555) (Task, mid-sprint)
-- Worklog 4h on [HIEV-7508](https://elocity.atlassian.net/browse/HIEV-7508) (Sub-task, mid-sprint)
+- Worklog 4h on [HIEV-7508](https://elocity.atlassian.net/browse/HIEV-7508) (Sub-task, planned)
 
 **2026-08-20** — logged 0.8d (6h) of 1.0d (8h) available, 2 comments
 
-- Worklog 2h on [HIEV-7508](https://elocity.atlassian.net/browse/HIEV-7508) (Sub-task, mid-sprint)
+- Worklog 2h on [HIEV-7508](https://elocity.atlassian.net/browse/HIEV-7508) (Sub-task, planned)
 - Worklog 4h on [HIEV-7370](https://elocity.atlassian.net/browse/HIEV-7370) (Task, planned)
 - Comment on [HIEV-7555](https://elocity.atlassian.net/browse/HIEV-7555): Implemented automated Let’s Encrypt wildcard certificate renewal for lower/dev *.evnet.xyz and integrated it with OCI Certificate Service. Summary: Configured renewal on dev VPN instance elocity-development-vpn-instance ( 10.50.33.29 ). Installed and configured certbot with Cloudflare DNS-01 validation. Created scoped Cloudflare API token for evnet.xyz with: Zone:DNS:Edit Zone:Zone:Read Client IP restricted to 192.18.159.179 Installed OCI CLI in isolated root venv at /opt/oci-cli-venv/bin/oci . 
 - Comment on [HIEV-7508](https://elocity.atlassian.net/browse/HIEV-7508): Reviewed 24+ hours of VCN flow logs for alfanar-prod-private-subnet. Findings: No 10.104.* or 10.0.* traffic observed. No rejected traffic observed. Kafka 9092 traffic is only from internal 10.102.0.0/16 sources, mainly OKE worker nodes. Public-looking sources in logs appear to be return traffic from outbound connections, not required inbound exposure. Recommendation: Safe to remove the private security-list rule 0.0.0.0/0 -> all marked “Kafka broker access”. Keep 10.102.0.0/16 -> all unchanged 
@@ -2281,14 +2281,14 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-03** — logged 1.1d (9h) of 1.0d (8h) available, 1 comments
 
-- Worklog 5h on [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329) (Sub-task, mid-sprint) — Completed the implementation
+- Worklog 5h on [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329) (Sub-task, planned) — Completed the implementation
 - Worklog 2h on [HIEV-6939](https://elocity.atlassian.net/browse/HIEV-6939) (Task, planned) — Creation of tracking report for EVLM
 - Worklog 2.00h on [HIEV-6373](https://elocity.atlassian.net/browse/HIEV-6373) (Epic, mid-sprint)
 - Comment on [HIEV-7216](https://elocity.atlassian.net/browse/HIEV-7216): The changes are merged and deployed in stg right now.
 
 **2026-08-04** — logged 0.9d (7h) of 1.0d (8h) available, 3 comments
 
-- Worklog 5h on [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329) (Sub-task, mid-sprint)
+- Worklog 5h on [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329) (Sub-task, planned)
 - Worklog 2.00h on [HIEV-6373](https://elocity.atlassian.net/browse/HIEV-6373) (Epic, mid-sprint)
 - Comment on [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329): Started with the testing and completed few flows in local testing. Spent most of the time in initial integration setup and integration issues. Local testing is completed and I need to do end to end testing with the mobile app but I was unable to build the app due to build failure.
 - Comment on [HIEV-7121](https://elocity.atlassian.net/browse/HIEV-7121): The changes are reviewed and deployed to stg for testing. attach the MR here itself from next time for easier access.
@@ -2296,14 +2296,14 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-05** — logged 0.9d (7h) of 1.0d (8h) available, 1 comments
 
-- Worklog 7h on [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329) (Sub-task, mid-sprint)
+- Worklog 7h on [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329) (Sub-task, planned)
 - Comment on [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329): Worked on following: 1. Smartcar webhook MR ( !1019 ) — Simplified feature/smartcar-webhook-vehicle-state-ingestion vs apr26-release , ran multi-agent review, fixed usedFallback correctness, added regression tests 2. Smartcar Connect config — Env-gated auto webhook subscribe/unsubscribe; fixed 401 subscribe auth (legacy vs API client); consolidated env into JSON configs; then moved config to tenant AWS Secrets Manager + Redis cache ( .env Smartcar values removed) Debugging / clarifications Simul
 
 **2026-08-06** — logged 1.0d (8h) of 1.0d (8h) available, 4 comments
 
 - Worklog 1h on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425) (Task, mid-sprint)
 - Worklog 4h on [HIEV-7424](https://elocity.atlassian.net/browse/HIEV-7424) (Task, mid-sprint)
-- Worklog 3h on [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329) (Sub-task, mid-sprint)
+- Worklog 3h on [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329) (Sub-task, planned)
 - Comment on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425): Gitlab CE self managed discussion Discussed GitLab SaaS → self-managed cutover risks for our repos. Socket issue MR review and discussion Reviewed and discussed the socket-related MR / issue (findings + next steps aligned with Shambu )
 - Comment on [HIEV-7424](https://elocity.atlassian.net/browse/HIEV-7424): Multi-repo review of CPO utility tariff train — all REQUEST CHANGES : data-migration !271 — DDL appended to shipped upgrade_v17 (already-migrated envs never get tables); uniqueness/RLS gaps analytics !133 — money-path bugs ( search_after non-unique, fail-open tier seed, swallowed bucket errors) cpms !1013 — needs rebase; live crons vs commented tariff jobs; no tests; dead shouldAutoRenew ; missing TOU/tier validation Suggested merge order after fixes: data-migration → cpms → analytics. Also upda
 - Comment on [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329): Smartcar app build and integration setup Mobile app rebuild/setup for Smartcar Connect ( SMARTCAR_CLIENT_ID is build-time, not Firebase). Local Connect + webhook path exercised; clarified Connect vehicles ≠ dashboard simulator vehicles (must select the same sim vehicle during Connect). Config moved to tenant AWS Secrets Manager (JSON blobs) with env-gated webhookAutoSubscribe . Battery capacity “incapable” on connect is handled (75 kWh fallback) — does not block save. Smartcar remaining flows te
@@ -2321,7 +2321,7 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 - Worklog 2h 30m on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425) (Task, mid-sprint)
 - Worklog 1h on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425) (Task, mid-sprint)
-- Worklog 2h on [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329) (Sub-task, mid-sprint)
+- Worklog 2h on [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329) (Sub-task, planned)
 - Comment on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425): MR review notes on CPMS !1025 : Reset location–tariff mapping after session creation (remove recreation-only mapping). Add a field on single + terminated session ES docs to mark manual recreation. Discuss: tariff ±15m cleanup → later zero cost; backup may miss refunded ES fields if taken before refund update. .keyword mapping differs by env — follow up with Vinay for long-term fix. Republish Accepted SetChargingProfile via cpms_external_setchargingprofile_1 + ocpp_external_chargingprofileset_1 (
 - Comment on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425): Implementation Doc Review Use https://gitlab.com/elocity1/backend/gateway-preauth/ repository for exposing the APIs and pre-auth-check API to decrypt the token rather than another envoy.
 - Comment on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425): Minor technical discussions with team
@@ -2329,9 +2329,9 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-11** — logged 1.2d (10h) of 1.0d (8h) available, 5 comments
 
-- Worklog 3h on [HIEV-7426](https://elocity.atlassian.net/browse/HIEV-7426) (Sub-task, mid-sprint) — EVLM ↔ CPMS telematics/EVSE API parity
+- Worklog 3h on [HIEV-7426](https://elocity.atlassian.net/browse/HIEV-7426) (Sub-task, planned) — EVLM ↔ CPMS telematics/EVSE API parity
 - Worklog 3h on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425) (Task, mid-sprint) — Adhoc: activeQueue, addressLine2, gateway-preauth review, Fleet Management Review
-- Worklog 2h on [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329) (Sub-task, mid-sprint) — Smartcar webhook fleet alignment + vehicle status API
+- Worklog 2h on [HIEV-7329](https://elocity.atlassian.net/browse/HIEV-7329) (Sub-task, planned) — Smartcar webhook fleet alignment + vehicle status API
 - Worklog 1h 30m on [HIEV-6939](https://elocity.atlassian.net/browse/HIEV-6939) (Task, planned) — EVLM handover docs + SEC subtasks
 - Comment on [HIEV-7468](https://elocity.atlassian.net/browse/HIEV-7468): Its a frontend issue. assigned it to you.
 - Comment on [HIEV-7426](https://elocity.atlassian.net/browse/HIEV-7426): Hardened EVLM CPMS client for telematics/EVSE parity ( getIsCharging soft-verify, AMS customer id parse fail-closed) Treated Smartcar Pending as accepted-into-pipeline; success only on terminal Accepted Wired EVSE listing via /evses/v2 DROPDOWN for integration paths Branch: feat/cpms-telematics-evse-api-parity (EVLM); CPMS side on feature/smartcar-webhook-vehicle-state-ingestion
@@ -2341,8 +2341,8 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-12** — logged 1.1d (8h) of 1.0d (8h) available, 5 comments
 
-- Worklog 3h 30m on [HIEV-7471](https://elocity.atlassian.net/browse/HIEV-7471) (Sub-task, mid-sprint) — AMS product RBAC + EVLM admin roles/users proxy
-- Worklog 2h on [HIEV-7426](https://elocity.atlassian.net/browse/HIEV-7426) (Sub-task, mid-sprint) — CPMS live sandbox Mode A/B testing design
+- Worklog 3h 30m on [HIEV-7471](https://elocity.atlassian.net/browse/HIEV-7471) (Sub-task, planned) — AMS product RBAC + EVLM admin roles/users proxy
+- Worklog 2h on [HIEV-7426](https://elocity.atlassian.net/browse/HIEV-7426) (Sub-task, planned) — CPMS live sandbox Mode A/B testing design
 - Worklog 2h on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425) (Task, mid-sprint) — Edge-decrypt gateway-preauth / helm MR review
 - Worklog 1h on [HIEV-7424](https://elocity.atlassian.net/browse/HIEV-7424) (Task, mid-sprint) — EVLM Backend Confluence docs + bi-weekly refresh skill
 - Comment on [HIEV-7471](https://elocity.atlassian.net/browse/HIEV-7471): Follow-on to product-aware RBAC: SU reserved for service_account in XX_XXX only.
@@ -2353,8 +2353,8 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-13** — logged 1.0d (8h) of 1.0d (8h) available, 4 comments
 
-- Worklog 3h 30m on [HIEV-7482](https://elocity.atlassian.net/browse/HIEV-7482) (Sub-task, mid-sprint) — Reserve SU for M2M service account
-- Worklog 2h 30m on [HIEV-7471](https://elocity.atlassian.net/browse/HIEV-7471) (Sub-task, mid-sprint) — Product RBAC review leftovers and MRs
+- Worklog 3h 30m on [HIEV-7482](https://elocity.atlassian.net/browse/HIEV-7482) (Sub-task, planned) — Reserve SU for M2M service account
+- Worklog 2h 30m on [HIEV-7471](https://elocity.atlassian.net/browse/HIEV-7471) (Sub-task, planned) — Product RBAC review leftovers and MRs
 - Worklog 1h 30m on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425) (Task, mid-sprint) — Sudeep assist, Kafka ES mapping, technical discussions
 - Worklog 30m on [HIEV-7424](https://elocity.atlassian.net/browse/HIEV-7424) (Task, mid-sprint) — EVLM bi-weekly Confluence/tracker refresh
 - Comment on [HIEV-7482](https://elocity.atlassian.net/browse/HIEV-7482): Implemented SU reservation for the AMS M2M service account only: XX_XXX tenant, catch-all product XXXX , union of all-product permissions on service_account@elocity.com AMS HTTP APIs fail closed on role SU ( 400 SU_RESERVED_FOR_SERVICE_ACCOUNT ); login/refresh fail-closed except that exact service-account identity; Azure login rejects if any mapped group is SU Edited v18 in place (remap human SU→AD, RIA strip, Azure INNER JOIN, XX_XXX user_role); CSV bulk keeps HTTP 201 with per-row remarks Mult
@@ -2364,8 +2364,8 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-14** — logged 1.0d (8h) of 1.0d (8h) available, 4 comments
 
-- Worklog 1h on [HIEV-7482](https://elocity.atlassian.net/browse/HIEV-7482) (Sub-task, mid-sprint) — FE admin roles/users doc sync + 7482 worktree cleanup
-- Worklog 4h on [HIEV-7426](https://elocity.atlassian.net/browse/HIEV-7426) (Sub-task, mid-sprint) — Sandbox Mode B live CPMS + LM isolation
+- Worklog 1h on [HIEV-7482](https://elocity.atlassian.net/browse/HIEV-7482) (Sub-task, planned) — FE admin roles/users doc sync + 7482 worktree cleanup
+- Worklog 4h on [HIEV-7426](https://elocity.atlassian.net/browse/HIEV-7426) (Sub-task, planned) — Sandbox Mode B live CPMS + LM isolation
 - Worklog 3h on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425) (Task, mid-sprint) — Search framework discussion, Nagaraju LM testing, EIPRE SMTP, Leads sync, MR reviews
 - Comment on [HIEV-7488](https://elocity.atlassian.net/browse/HIEV-7488): I have merged the changes. Pull it to relevant branch and deploy and then assign to Raju and let me know, i will put it to ready for testing.
 - Comment on [HIEV-7482](https://elocity.atlassian.net/browse/HIEV-7482): Validated and updated evlm/docs/frontend/admin-roles-users-api.md against AMS/EVLM: role create/update uses generic 400s; SU_RESERVED_FOR_SERVICE_ACCOUNT is JSON user-assign only; CSV is AMS-only (201 + per-row remark); POST /users is 201; XXXX / SU login/refresh is fail-closed except the M2M service account Cleared leftover HIEV-7482 worktrees after yesterday’s merge onto the 7471 branches
@@ -2375,8 +2375,8 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 **2026-08-17** — logged 1.1d (8h) of 1.0d (8h) available, 7 comments
 
 - Worklog 1h on [HIEV-7529](https://elocity.atlassian.net/browse/HIEV-7529) (Bug, mid-sprint) — Manual rebalance single-connector diagnose + fix
-- Worklog 2h on [HIEV-7470](https://elocity.atlassian.net/browse/HIEV-7470) (Sub-task, mid-sprint) — MFA step-up verify + AMS_CLIENT wiring
-- Worklog 1h on [HIEV-7426](https://elocity.atlassian.net/browse/HIEV-7426) (Sub-task, mid-sprint) — DR restore-by-pathway + sandbox Mode B CI
+- Worklog 2h on [HIEV-7470](https://elocity.atlassian.net/browse/HIEV-7470) (Sub-task, planned) — MFA step-up verify + AMS_CLIENT wiring
+- Worklog 1h on [HIEV-7426](https://elocity.atlassian.net/browse/HIEV-7426) (Sub-task, planned) — DR restore-by-pathway + sandbox Mode B CI
 - Worklog 1h on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425) (Task, mid-sprint) — Session recreation discussion + MR reviews
 - Worklog 1h 30m on [HIEV-7424](https://elocity.atlassian.net/browse/HIEV-7424) (Task, mid-sprint) — Load management support + Smartcar simulator Connect
 - Worklog 2h on [HIEV-6939](https://elocity.atlassian.net/browse/HIEV-6939) (Task, planned) — EVLM remediations 3–7, multi-tenancy plan, remaining items
@@ -2390,7 +2390,7 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-18** — logged 1.0d (8h) of 1.0d (8h) available, 3 comments
 
-- Worklog 6h 30m on [HIEV-7542](https://elocity.atlassian.net/browse/HIEV-7542) (Sub-task, mid-sprint) — Fail-closed tenant isolation, remediations merge, local migrate/dev, P1 FRDs
+- Worklog 6h 30m on [HIEV-7542](https://elocity.atlassian.net/browse/HIEV-7542) (Sub-task, planned) — Fail-closed tenant isolation, remediations merge, local migrate/dev, P1 FRDs
 - Worklog 1h 30m on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425) (Task, mid-sprint) — CPMS MR !1032 review comments and discussions
 - Comment on [HIEV-7542](https://elocity.atlassian.net/browse/HIEV-7542): Implemented fail-closed HTTP tenant isolation: JWT tenant_id , tenant_id on primary tables (derived tables skipped), globally unique tx_id / ams_customer_id / CPMS ids, distinct error codes, existing rows backfilled as CA_ELO Reviewed the working-tree tenancy changes, applied high/medium/low fixes, and opened MR !27 ( feat/tenant-isolation → master ) Fast-forwarded remediations 3–7 onto local master (sandbox IP limiter, admin permission allowlist, outbox lease, DR Kafka-before-execute, abort sna
 - Comment on [HIEV-7529](https://elocity.atlassian.net/browse/HIEV-7529): This change is deployed to stg.
@@ -2398,9 +2398,9 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-19** — logged 1.0d (8h) of 1.0d (8h) available, 5 comments
 
-- Worklog 3h 30m on [HIEV-7554](https://elocity.atlassian.net/browse/HIEV-7554) (Sub-task, mid-sprint) — P1 vehicles roster (EVLM-only)
-- Worklog 1h 30m on [HIEV-7545](https://elocity.atlassian.net/browse/HIEV-7545) (Sub-task, mid-sprint) — Telematics API / vehicleGroupId design
-- Worklog 1h 30m on [HIEV-7470](https://elocity.atlassian.net/browse/HIEV-7470) (Sub-task, mid-sprint) — Staging MFA API collection run
+- Worklog 3h 30m on [HIEV-7554](https://elocity.atlassian.net/browse/HIEV-7554) (Sub-task, planned) — P1 vehicles roster (EVLM-only)
+- Worklog 1h 30m on [HIEV-7545](https://elocity.atlassian.net/browse/HIEV-7545) (Sub-task, planned) — Telematics API / vehicleGroupId design
+- Worklog 1h 30m on [HIEV-7470](https://elocity.atlassian.net/browse/HIEV-7470) (Sub-task, planned) — Staging MFA API collection run
 - Worklog 30m on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425) (Task, mid-sprint) — Pin Timescale image for EVLM smoke CI
 - Worklog 1h on [HIEV-7424](https://elocity.atlassian.net/browse/HIEV-7424) (Task, mid-sprint) — CPMS telematics rename MR review
 - Comment on [HIEV-7554](https://elocity.atlassian.net/browse/HIEV-7554): Scoped P1 Vehicles as EVLM-only: Total vehicles KPI from the EVLM vehicle table, All-only chips, persist CPMS/Smartcar name on enroll (no live CPMS on list load). Shipped ops roster locally on evlm master (not pushed): GET /evlm/v1/ops/vehicles/metrics , list ( q / make / connector), and :vehicleId detail rail; migration 0011_vehicle_name . Commits: feat(enrollment) 36f40b1 , test(enrollment) c4d7537 , docs(enrollment) 8aac75e . Domain unit suite 631 passing. Filed later work under this parent: 
@@ -2412,8 +2412,8 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 **2026-08-20** — logged 1.5d (12h) of 1.0d (8h) available, 7 comments
 
 - Worklog 2h 30m on [HIEV-7563](https://elocity.atlassian.net/browse/HIEV-7563) (Bug, mid-sprint) — Decommission + LM cleanup implement + MR review fixes
-- Worklog 3h 30m on [HIEV-7545](https://elocity.atlassian.net/browse/HIEV-7545) (Sub-task, mid-sprint) — Telematics enrolled roster implement + review fixes + paired MRs
-- Worklog 4h on [HIEV-7542](https://elocity.atlassian.net/browse/HIEV-7542) (Sub-task, mid-sprint)
+- Worklog 3h 30m on [HIEV-7545](https://elocity.atlassian.net/browse/HIEV-7545) (Sub-task, planned) — Telematics enrolled roster implement + review fixes + paired MRs
+- Worklog 4h on [HIEV-7542](https://elocity.atlassian.net/browse/HIEV-7542) (Sub-task, planned)
 - Worklog 15m on [HIEV-7539](https://elocity.atlassian.net/browse/HIEV-7539) (Bug, mid-sprint) — Code review + merge + staging deploy
 - Worklog 30m on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425) (Task, mid-sprint) — EVLM Confluence refresh + tracker MoM/risks
 - Worklog 1h 30m on [HIEV-7424](https://elocity.atlassian.net/browse/HIEV-7424) (Task, mid-sprint) — MR !1032 review + HIEV-7560 scope/recommendation
@@ -2427,9 +2427,9 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-21** — logged 1.1d (8h) of 1.0d (8h) available, 5 comments
 
-- Worklog 3h 30m on [HIEV-7545](https://elocity.atlassian.net/browse/HIEV-7545) (Sub-task, mid-sprint) — Telematics enrolled roster + ops vehicles API handoff
-- Worklog 1h on [HIEV-7542](https://elocity.atlassian.net/browse/HIEV-7542) (Sub-task, mid-sprint) — Tenant-only segregation close-out
-- Worklog 2h on [HIEV-7470](https://elocity.atlassian.net/browse/HIEV-7470) (Sub-task, mid-sprint) — MFA staging bypass default + privileged mutate guards
+- Worklog 3h 30m on [HIEV-7545](https://elocity.atlassian.net/browse/HIEV-7545) (Sub-task, planned) — Telematics enrolled roster + ops vehicles API handoff
+- Worklog 1h on [HIEV-7542](https://elocity.atlassian.net/browse/HIEV-7542) (Sub-task, planned) — Tenant-only segregation close-out
+- Worklog 2h on [HIEV-7470](https://elocity.atlassian.net/browse/HIEV-7470) (Sub-task, planned) — MFA staging bypass default + privileged mutate guards
 - Worklog 1h 30m on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425) (Task, mid-sprint) — Notify durability, re-review, risks triage, onboard fixes
 - Worklog 30m on [HIEV-7424](https://elocity.atlassian.net/browse/HIEV-7424) (Task, mid-sprint) — CPMS MR !1036 metadata cache review
 - Comment on [HIEV-7545](https://elocity.atlassian.net/browse/HIEV-7545): Shipped enrolled-roster telematics compose: CPMS Redis SET scope ( enrolledOnly / excludeVehicles + tenantId header) paired with EVLM /telematics/* client retarget and ops vehicles metrics/list/detail composition Fixed Nest build by exporting VehicleOpsStatus from @evlm/contracts ; EVLM MR merged to master Clarified frontend handoff: master-detail UX cut, SoH detail-only (em dash), status filter deferred; committed local doc update on ops-vehicles-roster-api.md MR !1035 (CPMS, open → aug26-relea
@@ -2440,11 +2440,11 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-24** — logged 1.2d (10h) of 1.0d (8h) available, 4 comments
 
-- Worklog 1h on [HIEV-7581](https://elocity.atlassian.net/browse/HIEV-7581) (Sub-task, mid-sprint) — Phase 1 Ops Web E2E plan + canvas
-- Worklog 3h on [HIEV-7545](https://elocity.atlassian.net/browse/HIEV-7545) (Sub-task, mid-sprint)
+- Worklog 1h on [HIEV-7581](https://elocity.atlassian.net/browse/HIEV-7581) (Sub-task, planned) — Phase 1 Ops Web E2E plan + canvas
+- Worklog 3h on [HIEV-7545](https://elocity.atlassian.net/browse/HIEV-7545) (Sub-task, planned)
 - Worklog 2h on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425) (Task, mid-sprint) — CI speed, Confluence refresh, GitLab remotes
-- Worklog 1h on [HIEV-7220](https://elocity.atlassian.net/browse/HIEV-7220) (Sub-task, mid-sprint) — Sandbox Mode B live CPMS + DR participant prune
-- Worklog 3h on [HIEV-7205](https://elocity.atlassian.net/browse/HIEV-7205) (Sub-task, mid-sprint) — Unit coverage 75% + Nest decorator TS fix
+- Worklog 1h on [HIEV-7220](https://elocity.atlassian.net/browse/HIEV-7220) (Sub-task, planned) — Sandbox Mode B live CPMS + DR participant prune
+- Worklog 3h on [HIEV-7205](https://elocity.atlassian.net/browse/HIEV-7205) (Sub-task, planned) — Unit coverage 75% + Nest decorator TS fix
 - Comment on [HIEV-7581](https://elocity.atlassian.net/browse/HIEV-7581): Scoped as the long-lived ticket for the full Phase 1 Ops Web manual testing lifecycle (not a one-day adhoc) Today: drafted the Phase 1 Ops Web manual E2E plan and an exhaustive local canvas (flows, cases, session log) for staging run-throughs Next: execute the plan against the deployed webapp and log findings on this ticket through close-out Related: HIEV-7205
 - Comment on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425): Planned and applied EVLM CI speed changes (uncommitted): parallel test jobs via needs: [] , publish only on master after build+test, drop DinD for host socket + BuildKit cache-from, no Nest build in test jobs, Bun 1.3.11 + Docker cache mounts Ran bi-weekly tracker + Confluence refresh (tracker 554e4a2 ): Requirements & Delivery Status , Known Limitations , Capabilities , EVLM Backend Migrated local git remotes from gitlab.com/elocity1 to self-managed gitlab.evnet.xyz , cleared leftover SaaS keyc
 - Comment on [HIEV-7220](https://elocity.atlassian.net/browse/HIEV-7220): Continued sandbox live-CPMS work on worktree feat/cpms-telematics-evse-api-parity : kept Mode A fixture path unchanged and added Mode B mapping (live transformer, enrolled customer, dedicated chargePointId) Seeded Mode B with live customer 2786 / vehicle e34b029f-… / EVSE EVLM08860485 and removed other Mode B seed customers Fixed DR create so Mode B enrolls only allowlisted customers (UI was filtering participants but load-management still targeted everyone on the transformer) Traced CPMS dispat
@@ -2452,7 +2452,7 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-25** — logged 0.7d (6h) of 1.0d (8h) available, 3 comments
 
-- Worklog 2h on [HIEV-7581](https://elocity.atlassian.net/browse/HIEV-7581) (Sub-task, mid-sprint) — MoM + Test Plan page in evlm-tracker
+- Worklog 2h on [HIEV-7581](https://elocity.atlassian.net/browse/HIEV-7581) (Sub-task, planned) — MoM + Test Plan page in evlm-tracker
 - Worklog 3h 30m on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425) (Task, mid-sprint) — CI/Bun/remotes, offline-connector LM, gateway-preauth deploy help
 - Comment on [HIEV-7584](https://elocity.atlassian.net/browse/HIEV-7584): @ Sahil Siddiqui Backend change is in — GET .../evse-groups/:id/overview now returns connectorType on each connectorCards item (same value as charger details: connector.evseModelConnector.connectorType.ui_name ). Please use connectorType from the overview response to show the connector icon on the Load Group Overview cards. Commit: feat(load-management): add connectorType to EVSE group overview #HIEV-7584 on apr26-release .
 - Comment on [HIEV-7581](https://elocity.atlassian.net/browse/HIEV-7581): Wrote MoM from the Deepak call and extracted focused testing items for Phase 1 Ops Web E2E Added a new Test Plan page in evlm-tracker (priorities, assignees: Sahil Kumar / Sahil Siddiqui / Deepak / Dinesh / Dhanush) UI edits persist via localStorage with a sync-to-local-JSON action ( data/testPlan.json ) Commit: added test plan in the tracker
@@ -2460,7 +2460,7 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-26** — logged 1.1d (8h) of 1.0d (8h) available, 2 comments
 
-- Worklog 3h on [HIEV-7581](https://elocity.atlassian.net/browse/HIEV-7581) (Sub-task, mid-sprint) — CA_THY cold-start E2E plan + MOB API scope
+- Worklog 3h on [HIEV-7581](https://elocity.atlassian.net/browse/HIEV-7581) (Sub-task, planned) — CA_THY cold-start E2E plan + MOB API scope
 - Worklog 5h 30m on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425) (Task, mid-sprint) — Prettier standardize 10 MRs + portal S3 docs
 - Comment on [HIEV-7581](https://elocity.atlassian.net/browse/HIEV-7581): Rewrote Phase 1 Ops Web E2E plan + canvas for tenant CA_THY / sahil+ca_thy@elocitytech.com as a dual cold-start (empty EVLM + AMS/CPMS bootstrap), dropping TX-1071 / prior-seed assumptions Ordered runbook: Login → Dashboard → Create TX (UI) → historical readings (API) → AMS/CPMS BOOT (API) → onboard → vehicles → DR → incentives → reports; empty lists treated as Pass Pointed live Ops Web at EVLM stg S3 site ; added MOB-1…MOB-9 customer JWT API consistency checks vs Ops data (mobile app UI still N
 - Comment on [HIEV-7425](https://elocity.atlassian.net/browse/HIEV-7425): Standardized Prettier (spaces) across elocity1/backend repos: updated .prettierrc , ran format + eslint autofix, smoke-ran builds, then opened MRs to aug26-release Created missing aug26-release branches (from apr26-release / master) and retargeted MRs; assigned @sahil / reviewer @deepak MRs: ams !388 , cpms !1039 , payment !199 , analytics !136 , session-utility !134 , ocpp !113 , email !36 , pns !24 , sms !26 , evlm !29 Updated EVLM portal docs + Confluence for GitLab Pages → S3 hosts (stg/demo
@@ -2873,7 +2873,7 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 **2026-08-04** — logged 0.8d (6h) of 1.0d (8h) available, 3 comments
 
 - Worklog 3h on [HIEV-7121](https://elocity.atlassian.net/browse/HIEV-7121) (Bug, mid-sprint)
-- Worklog 30m on [HIEV-6988](https://elocity.atlassian.net/browse/HIEV-6988) (Task, mid-sprint)
+- Worklog 30m on [HIEV-6988](https://elocity.atlassian.net/browse/HIEV-6988) (Task, planned)
 - Worklog 3h on [HIEV-6607](https://elocity.atlassian.net/browse/HIEV-6607) (Bug, mid-sprint)
 - Comment on [HIEV-7121](https://elocity.atlassian.net/browse/HIEV-7121): The issue was creating a mocked request context. We didn't clear the DB connection after request-scoped export jobs ran, so we now manually clear connections when a job finishes (success or failure).
 - Comment on [HIEV-6988](https://elocity.atlassian.net/browse/HIEV-6988): done
@@ -3022,7 +3022,7 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-07** — logged 1.2d (10h) of 1.0d (8h) available, 3 comments
 
-- Worklog 2h on [HIEV-7441](https://elocity.atlassian.net/browse/HIEV-7441) (Sub-task, mid-sprint) — Infr Doc review of lower-env
+- Worklog 2h on [HIEV-7441](https://elocity.atlassian.net/browse/HIEV-7441) (Sub-task, planned) — Infr Doc review of lower-env
 - Worklog 2h on [HIEV-7238](https://elocity.atlassian.net/browse/HIEV-7238) (Task, mid-sprint) — Reviewed few user access and identity management use cases
 - Worklog 6h on [HIEV-6925](https://elocity.atlassian.net/browse/HIEV-6925) (Task, planned) — Worked on lower-env setup and updating with new APM implementation.
 - Comment on [HIEV-7429](https://elocity.atlassian.net/browse/HIEV-7429): MR review of and infra Doc review and discussion of flow
@@ -3031,7 +3031,7 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-10** — logged 0.8d (6h) of 1.0d (8h) available, 2 comments
 
-- Worklog 2h on [HIEV-7441](https://elocity.atlassian.net/browse/HIEV-7441) (Sub-task, mid-sprint) — Infra doc review
+- Worklog 2h on [HIEV-7441](https://elocity.atlassian.net/browse/HIEV-7441) (Sub-task, planned) — Infra doc review
 - Worklog 4h on [HIEV-6925](https://elocity.atlassian.net/browse/HIEV-6925) (Task, planned) — helm implementation and teams workflow design.
 - Comment on [HIEV-7441](https://elocity.atlassian.net/browse/HIEV-7441): Infr Doc review of lower-env
 - Comment on [HIEV-7238](https://elocity.atlassian.net/browse/HIEV-7238): Reviewed few user access and identity management use cases
@@ -3039,9 +3039,9 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 **2026-08-11** — logged 0.7d (6h) of 1.0d (8h) available, 2 comments
 
 - Worklog 1h on [HIEV-7473](https://elocity.atlassian.net/browse/HIEV-7473) (Sub-task, mid-sprint) — Reviewing and reading of deployment and api gateway deployment doc
-- Worklog 1h on [HIEV-7395](https://elocity.atlassian.net/browse/HIEV-7395) (Sub-task, mid-sprint) — Doc review
-- Worklog 1h on [HIEV-7394](https://elocity.atlassian.net/browse/HIEV-7394) (Sub-task, mid-sprint) — Doc Review
-- Worklog 2h on [HIEV-7393](https://elocity.atlassian.net/browse/HIEV-7393) (Sub-task, mid-sprint) — Doc review
+- Worklog 1h on [HIEV-7395](https://elocity.atlassian.net/browse/HIEV-7395) (Sub-task, planned) — Doc review
+- Worklog 1h on [HIEV-7394](https://elocity.atlassian.net/browse/HIEV-7394) (Sub-task, planned) — Doc Review
+- Worklog 2h on [HIEV-7393](https://elocity.atlassian.net/browse/HIEV-7393) (Sub-task, planned) — Doc review
 - Worklog 30m on [HIEV-7372](https://elocity.atlassian.net/browse/HIEV-7372) (Task, planned) — reviewing KT items.
 - Comment on [HIEV-7441](https://elocity.atlassian.net/browse/HIEV-7441): Infra Doc review of lower-env
 - Comment on [HIEV-6925](https://elocity.atlassian.net/browse/HIEV-6925): Updated the helm charts and images related to common dashboard and worked on the MS teams workflow for alerts.
@@ -3049,9 +3049,9 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 **2026-08-12** — logged 0.8d (6h) of 1.0d (8h) available, 5 comments
 
 - Worklog 3h on [HIEV-7484](https://elocity.atlassian.net/browse/HIEV-7484) (Sub-task, mid-sprint) — Implementation discussion of OCI onboarding using entraID
-- Worklog 1h on [HIEV-7395](https://elocity.atlassian.net/browse/HIEV-7395) (Sub-task, mid-sprint)
-- Worklog 1h on [HIEV-7394](https://elocity.atlassian.net/browse/HIEV-7394) (Sub-task, mid-sprint)
-- Worklog 1h on [HIEV-7393](https://elocity.atlassian.net/browse/HIEV-7393) (Sub-task, mid-sprint)
+- Worklog 1h on [HIEV-7395](https://elocity.atlassian.net/browse/HIEV-7395) (Sub-task, planned)
+- Worklog 1h on [HIEV-7394](https://elocity.atlassian.net/browse/HIEV-7394) (Sub-task, planned)
+- Worklog 1h on [HIEV-7393](https://elocity.atlassian.net/browse/HIEV-7393) (Sub-task, planned)
 - Comment on [HIEV-7473](https://elocity.atlassian.net/browse/HIEV-7473): Reviewing and reading of deployment and api gateway deployment doc
 - Comment on [HIEV-7395](https://elocity.atlassian.net/browse/HIEV-7395): Doc review Document Link:-
 - Comment on [HIEV-7394](https://elocity.atlassian.net/browse/HIEV-7394): Doc Review of Document Link:-
@@ -3086,8 +3086,8 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-24** — logged 0.6d (5h) of 1.0d (8h) available, 1 comments
 
-- Worklog 2h on [HIEV-7508](https://elocity.atlassian.net/browse/HIEV-7508) (Sub-task, mid-sprint)
-- Worklog 2h on [HIEV-7507](https://elocity.atlassian.net/browse/HIEV-7507) (Sub-task, mid-sprint)
+- Worklog 2h on [HIEV-7508](https://elocity.atlassian.net/browse/HIEV-7508) (Sub-task, planned)
+- Worklog 2h on [HIEV-7507](https://elocity.atlassian.net/browse/HIEV-7507) (Sub-task, planned)
 - Worklog 1h on [HIEV-7371](https://elocity.atlassian.net/browse/HIEV-7371) (Task, planned)
 - Comment on [HIEV-7238](https://elocity.atlassian.net/browse/HIEV-7238): Migration of gitlab from seas to self managed completed
 
@@ -3159,7 +3159,7 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 
 **2026-08-09** — logged 0.9d (7h) of 0.0d (0h) available, 1 comments
 
-- Worklog 7h on [HIEV-6989](https://elocity.atlassian.net/browse/HIEV-6989) (Task, mid-sprint)
+- Worklog 7h on [HIEV-6989](https://elocity.atlassian.net/browse/HIEV-6989) (Task, planned)
 - Comment on [HIEV-6989](https://elocity.atlassian.net/browse/HIEV-6989): resolved all review comments
 
 **2026-08-10** — logged 1.0d (8h) of 1.0d (8h) available, 1 comments
@@ -3243,7 +3243,7 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 **2026-08-31** — logged 1.0d (8h) of 1.0d (8h) available, 4 comments
 
 - Worklog 5m on [HIEV-7493](https://elocity.atlassian.net/browse/HIEV-7493) (Bug, mid-sprint)
-- Worklog 1d on [HIEV-7422](https://elocity.atlassian.net/browse/HIEV-7422) (Task, mid-sprint)
+- Worklog 1d on [HIEV-7422](https://elocity.atlassian.net/browse/HIEV-7422) (Task, planned)
 - Comment on [HIEV-7493](https://elocity.atlassian.net/browse/HIEV-7493): this is reviewed and merged
 - Comment on [HIEV-7422](https://elocity.atlassian.net/browse/HIEV-7422): Went through the implement guide for this task and also studied the data abstraction layer already implemented in cpms repo
 - Comment on [HIEV-7422](https://elocity.atlassian.net/browse/HIEV-7422): started the implementation of DAL in payment service first
@@ -3680,7 +3680,7 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 **2026-08-04** — logged 0.6d (5h) of 1.0d (8h) available, 2 comments
 
 - Worklog 45m on [HIEV-7385](https://elocity.atlassian.net/browse/HIEV-7385) (Bug, mid-sprint)
-- Worklog 1h on [HIEV-6988](https://elocity.atlassian.net/browse/HIEV-6988) (Task, mid-sprint)
+- Worklog 1h on [HIEV-6988](https://elocity.atlassian.net/browse/HIEV-6988) (Task, planned)
 - Worklog 3h on [HIEV-6649](https://elocity.atlassian.net/browse/HIEV-6649) (Task, mid-sprint)
 - Comment on [HIEV-6988](https://elocity.atlassian.net/browse/HIEV-6988): a test is failing, please check and we can approve it
 - Comment on [HIEV-6649](https://elocity.atlassian.net/browse/HIEV-6649): optimisation and other edge case handling
@@ -3732,7 +3732,7 @@ Daily ticks (P = present, M = missed, L = leave, A = attended on leave):
 - Worklog 15m on [HIEV-7275](https://elocity.atlassian.net/browse/HIEV-7275) (Bug, mid-sprint)
 - Worklog 30m on [HIEV-7242](https://elocity.atlassian.net/browse/HIEV-7242) (Bug, mid-sprint)
 - Worklog 10m on [HIEV-7032](https://elocity.atlassian.net/browse/HIEV-7032) (Bug, mid-sprint)
-- Worklog 1h on [HIEV-6989](https://elocity.atlassian.net/browse/HIEV-6989) (Task, mid-sprint)
+- Worklog 1h on [HIEV-6989](https://elocity.atlassian.net/browse/HIEV-6989) (Task, planned)
 - Worklog 4h on [HIEV-6649](https://elocity.atlassian.net/browse/HIEV-6649) (Task, mid-sprint)
 - Comment on [HIEV-7406](https://elocity.atlassian.net/browse/HIEV-7406): shared API contract to Dhanush on Thursday(13th Aug)
 - Comment on [HIEV-7406](https://elocity.atlassian.net/browse/HIEV-7406): implemented OCPP side changes (DataTransfer msgs)

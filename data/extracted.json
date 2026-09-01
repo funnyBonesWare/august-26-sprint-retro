@@ -6,7 +6,7 @@
   "hours_per_day": 8.0,
   "notes": [
     "Actuals are Jira worklogs started 1\u201331 Aug 2026 (8h = 1d).",
-    "Estimation accuracy uses only matching scope: ticket = August days on that Jira ticket \u00f7 sprint-plan PD; person = August days on that person's sprint-planned Jira tickets that have a numeric PD \u00f7 their sprint-plan PD. Jira tickets on the plan with NA/open estimates (e.g. HIEV-6941) count as sprint-planned time, not as an estimate miss or over-run.",
+    "Estimation accuracy uses only matching scope: ticket = August days on that Jira ticket and its subtasks \u00f7 sprint-plan PD; person = August days on that person's sprint-planned Jira tickets that have a numeric PD (including subtasks of those tickets) \u00f7 their sprint-plan PD. Jira tickets on the plan with NA/open estimates (e.g. HIEV-6941) count as sprint-planned time, not as an estimate miss or over-run. Person view of sprint-planned tickets is the August 26 sheet assignee, plus Jira subtasks of those tickets \u2014 not everyone who commented.",
     "August hours use worklog `started` when Jira returned the log. For the 9 tickets with more than 20 worklogs, missing logs are filled from issue changelog timespent deltas (date = when the log was submitted). Those fills were checked against issue timespent (HIEV-6785 changelog page misses 0.7h of pre-May history, not August).",
     "Bugs worked = distinct HIEV issuetype Bug Jira tickets with at least one August worklog or August comment. A person is credited for a unique bug Jira ticket if they logged time or commented on it in August \u2014 not the ticket assignee at create time.",
     "Fix hours = August worklogs on Bug tickets vs Task/Sub-task tickets (sprint planned and mid-sprint).",
@@ -276,14 +276,42 @@
       "effort": "30",
       "due": "2026-09-16",
       "jira": "HIEV-6372",
+      "kind": "sheet",
       "estimated_days": 30.0,
-      "actual_seconds": 0,
-      "actual_hours": 0.0,
-      "actual_days": 0.0,
-      "accuracy": 0.0,
+      "actual_seconds": 28800,
+      "actual_hours": 8.0,
+      "actual_days": 1.0,
+      "accuracy": 0.03,
       "accuracy_band": "on-plan",
       "jira_status": "To Do",
-      "logged_by": [],
+      "logged_by": [
+        "Sudeep"
+      ],
+      "touched_by": [
+        "Sudeep"
+      ]
+    },
+    {
+      "group": "Backend",
+      "feature": "Subtask of HIEV-6372 \u00b7 Abstract data layer in session-utility, analytics, payment services",
+      "team": "Backend",
+      "assignee": "Sudeep",
+      "owner": "Vinay",
+      "parent": "HIEV-6372",
+      "effort": "",
+      "due": "2026-09-16",
+      "jira": "HIEV-7422",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 28800,
+      "actual_hours": 8.0,
+      "actual_days": 1.0,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "In Progress",
+      "logged_by": [
+        "Sudeep"
+      ],
       "touched_by": [
         "Sudeep"
       ]
@@ -298,14 +326,71 @@
       "effort": "5",
       "due": "2026-08-07",
       "jira": "HIEV-6945",
+      "kind": "sheet",
       "estimated_days": 5.0,
-      "actual_seconds": 0,
-      "actual_hours": 0.0,
-      "actual_days": 0.0,
-      "accuracy": 0.0,
+      "actual_seconds": 34200,
+      "actual_hours": 9.5,
+      "actual_days": 1.19,
+      "accuracy": 0.24,
       "accuracy_band": "on-plan",
       "jira_status": "In Review",
-      "logged_by": [],
+      "logged_by": [
+        "Shambu",
+        "Sudeep",
+        "Vinay"
+      ],
+      "touched_by": [
+        "Vinay"
+      ]
+    },
+    {
+      "group": "Backend",
+      "feature": "Subtask of HIEV-6945 \u00b7 Session utility Unit test",
+      "team": "Backend",
+      "assignee": "Vinay",
+      "owner": "Vinay",
+      "parent": "HIEV-6945",
+      "effort": "",
+      "due": "2026-08-07",
+      "jira": "HIEV-6988",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 5400,
+      "actual_hours": 1.5,
+      "actual_days": 0.19,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Shambu",
+        "Vinay"
+      ],
+      "touched_by": [
+        "Vinay"
+      ]
+    },
+    {
+      "group": "Backend",
+      "feature": "Subtask of HIEV-6945 \u00b7 Payment service unit tests",
+      "team": "Backend",
+      "assignee": "Vinay",
+      "owner": "Vinay",
+      "parent": "HIEV-6945",
+      "effort": "",
+      "due": "2026-08-07",
+      "jira": "HIEV-6989",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 28800,
+      "actual_hours": 8.0,
+      "actual_days": 1.0,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Sudeep",
+        "Vinay"
+      ],
       "touched_by": [
         "Vinay"
       ]
@@ -320,6 +405,7 @@
       "effort": "NA",
       "due": "2026-08-31",
       "jira": "HIEV-7406",
+      "kind": "sheet",
       "estimated_days": null,
       "actual_seconds": 100800,
       "actual_hours": 28.0,
@@ -344,6 +430,7 @@
       "effort": "15",
       "due": "2026-09-30",
       "jira": "HIEV-6824",
+      "kind": "sheet",
       "estimated_days": 15.0,
       "actual_seconds": 0,
       "actual_hours": 0.0,
@@ -366,6 +453,7 @@
       "effort": "NA",
       "due": "NA",
       "jira": "HIEV-6938",
+      "kind": "sheet",
       "estimated_days": null,
       "actual_seconds": 194400,
       "actual_hours": 54.0,
@@ -390,10 +478,286 @@
       "effort": "NA",
       "due": "NA",
       "jira": "HIEV-6939",
+      "kind": "sheet",
+      "estimated_days": null,
+      "actual_seconds": 352800,
+      "actual_hours": 98.0,
+      "actual_days": 12.25,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "To Do",
+      "logged_by": [
+        "Sahil Kumar"
+      ],
+      "touched_by": [
+        "Sahil Kumar"
+      ]
+    },
+    {
+      "group": "Backend",
+      "feature": "Subtask of HIEV-6939 \u00b7 Unit Tests + Integration Tests",
+      "team": "Backend",
+      "assignee": "Sahil Kumar",
+      "owner": "Deepak",
+      "parent": "HIEV-6939",
+      "effort": "",
+      "due": "NA",
+      "jira": "HIEV-7205",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 10800,
+      "actual_hours": 3.0,
+      "actual_days": 0.38,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "To Do",
+      "logged_by": [
+        "Sahil Kumar"
+      ],
+      "touched_by": [
+        "Sahil Kumar"
+      ]
+    },
+    {
+      "group": "Backend",
+      "feature": "Subtask of HIEV-6939 \u00b7 Sandbox for hot path testing",
+      "team": "Backend",
+      "assignee": "Sahil Kumar",
+      "owner": "Deepak",
+      "parent": "HIEV-6939",
+      "effort": "",
+      "due": "NA",
+      "jira": "HIEV-7220",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 3600,
+      "actual_hours": 1.0,
+      "actual_days": 0.12,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Sahil Kumar"
+      ],
+      "touched_by": [
+        "Sahil Kumar"
+      ]
+    },
+    {
+      "group": "Backend",
+      "feature": "Subtask of HIEV-6939 \u00b7 Smartcar implementation in CPMS",
+      "team": "Backend",
+      "assignee": "Sahil Kumar",
+      "owner": "Deepak",
+      "parent": "HIEV-6939",
+      "effort": "",
+      "due": "NA",
+      "jira": "HIEV-7329",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 86400,
+      "actual_hours": 24.0,
+      "actual_days": 3.0,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Sahil Kumar"
+      ],
+      "touched_by": [
+        "Sahil Kumar"
+      ]
+    },
+    {
+      "group": "Backend",
+      "feature": "Subtask of HIEV-6939 \u00b7 CPMS integration with EVLM",
+      "team": "Backend",
+      "assignee": "Sahil Kumar",
+      "owner": "Deepak",
+      "parent": "HIEV-6939",
+      "effort": "",
+      "due": "NA",
+      "jira": "HIEV-7426",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 36000,
+      "actual_hours": 10.0,
+      "actual_days": 1.25,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Sahil Kumar"
+      ],
+      "touched_by": [
+        "Sahil Kumar"
+      ]
+    },
+    {
+      "group": "Backend",
+      "feature": "Subtask of HIEV-6939 \u00b7 Implement MFA step-up for privileged Ops actions (REQ-SEC-002)",
+      "team": "Backend",
+      "assignee": "Sahil Kumar",
+      "owner": "Deepak",
+      "parent": "HIEV-6939",
+      "effort": "",
+      "due": "NA",
+      "jira": "HIEV-7470",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 19800,
+      "actual_hours": 5.5,
+      "actual_days": 0.69,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Sahil Kumar"
+      ],
+      "touched_by": [
+        "Sahil Kumar"
+      ]
+    },
+    {
+      "group": "Backend",
+      "feature": "Subtask of HIEV-6939 \u00b7 Admin AMS proxy \u2014 roles + users CRUD (REQ-SEC-007)",
+      "team": "Backend",
+      "assignee": "Sahil Kumar",
+      "owner": "Deepak",
+      "parent": "HIEV-6939",
+      "effort": "",
+      "due": "NA",
+      "jira": "HIEV-7471",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 21600,
+      "actual_hours": 6.0,
+      "actual_days": 0.75,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "In Progress",
+      "logged_by": [
+        "Sahil Kumar"
+      ],
+      "touched_by": [
+        "Sahil Kumar"
+      ]
+    },
+    {
+      "group": "Backend",
+      "feature": "Subtask of HIEV-6939 \u00b7 Reserve SU for service account only (XX_XXX tenant, XXXX product, all-product permissions)",
+      "team": "Backend",
+      "assignee": "Sahil Kumar",
+      "owner": "Deepak",
+      "parent": "HIEV-6939",
+      "effort": "",
+      "due": "NA",
+      "jira": "HIEV-7482",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 16200,
+      "actual_hours": 4.5,
+      "actual_days": 0.56,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "In Progress",
+      "logged_by": [
+        "Sahil Kumar"
+      ],
+      "touched_by": [
+        "Sahil Kumar"
+      ]
+    },
+    {
+      "group": "Backend",
+      "feature": "Subtask of HIEV-6939 \u00b7 EVLM tenancy isolation",
+      "team": "Backend",
+      "assignee": "Sahil Kumar",
+      "owner": "Deepak",
+      "parent": "HIEV-6939",
+      "effort": "",
+      "due": "NA",
+      "jira": "HIEV-7542",
+      "kind": "subtask",
       "estimated_days": null,
       "actual_seconds": 41400,
       "actual_hours": 11.5,
       "actual_days": 1.44,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Sahil Kumar"
+      ],
+      "touched_by": [
+        "Sahil Kumar"
+      ]
+    },
+    {
+      "group": "Backend",
+      "feature": "Subtask of HIEV-6939 \u00b7 Vehicles roster: CPMS live status, SoH KPIs, and UX-parity later slice",
+      "team": "Backend",
+      "assignee": "Sahil Kumar",
+      "owner": "Deepak",
+      "parent": "HIEV-6939",
+      "effort": "",
+      "due": "NA",
+      "jira": "HIEV-7545",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 41400,
+      "actual_hours": 11.5,
+      "actual_days": 1.44,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Sahil Kumar"
+      ],
+      "touched_by": [
+        "Sahil Kumar"
+      ]
+    },
+    {
+      "group": "Backend",
+      "feature": "Subtask of HIEV-6939 \u00b7 Vehicles roster: EVLM-only P1 ops list + persisted display name",
+      "team": "Backend",
+      "assignee": "Sahil Kumar",
+      "owner": "Deepak",
+      "parent": "HIEV-6939",
+      "effort": "",
+      "due": "NA",
+      "jira": "HIEV-7554",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 12600,
+      "actual_hours": 3.5,
+      "actual_days": 0.44,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Sahil Kumar"
+      ],
+      "touched_by": [
+        "Sahil Kumar"
+      ]
+    },
+    {
+      "group": "Backend",
+      "feature": "Subtask of HIEV-6939 \u00b7 Phase 1 Ops Web manual E2E testing",
+      "team": "Backend",
+      "assignee": "Sahil Kumar",
+      "owner": "Deepak",
+      "parent": "HIEV-6939",
+      "effort": "",
+      "due": "NA",
+      "jira": "HIEV-7581",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 21600,
+      "actual_hours": 6.0,
+      "actual_days": 0.75,
       "accuracy": null,
       "accuracy_band": "n/a",
       "jira_status": "To Do",
@@ -414,6 +778,7 @@
       "effort": "NA",
       "due": "NA",
       "jira": "HIEV-6940",
+      "kind": "sheet",
       "estimated_days": null,
       "actual_seconds": 3000,
       "actual_hours": 0.83,
@@ -438,6 +803,7 @@
       "effort": "4",
       "due": "2026-08-31",
       "jira": "HIEV-7354",
+      "kind": "sheet",
       "estimated_days": 4.0,
       "actual_seconds": 3600,
       "actual_hours": 1.0,
@@ -449,7 +815,6 @@
         "Manjunath"
       ],
       "touched_by": [
-        "Deepak",
         "Manjunath"
       ]
     },
@@ -463,6 +828,7 @@
       "effort": "NA",
       "due": "NA",
       "jira": "HIEV-7147",
+      "kind": "sheet",
       "estimated_days": null,
       "actual_seconds": 293400,
       "actual_hours": 81.5,
@@ -487,6 +853,7 @@
       "effort": "1",
       "due": "2026-08-07",
       "jira": "HIEV-7146",
+      "kind": "sheet",
       "estimated_days": 1.0,
       "actual_seconds": 10800,
       "actual_hours": 3.0,
@@ -511,6 +878,7 @@
       "effort": "2",
       "due": "2026-08-07",
       "jira": "HIEV-7250",
+      "kind": "sheet",
       "estimated_days": 2.0,
       "actual_seconds": 118800,
       "actual_hours": 33.0,
@@ -535,6 +903,7 @@
       "effort": "2",
       "due": "2026-08-03",
       "jira": "HIEV-7191",
+      "kind": "sheet",
       "estimated_days": 2.0,
       "actual_seconds": 14400,
       "actual_hours": 4.0,
@@ -559,6 +928,7 @@
       "effort": "4",
       "due": "2026-08-07",
       "jira": "HIEV-7145",
+      "kind": "sheet",
       "estimated_days": 4.0,
       "actual_seconds": 43200,
       "actual_hours": 12.0,
@@ -570,7 +940,6 @@
         "Tarun"
       ],
       "touched_by": [
-        "Deepak",
         "Tarun"
       ]
     },
@@ -584,6 +953,7 @@
       "effort": "3",
       "due": "2026-08-07",
       "jira": "HIEV-7254",
+      "kind": "sheet",
       "estimated_days": 3.0,
       "actual_seconds": 291600,
       "actual_hours": 81.0,
@@ -608,6 +978,7 @@
       "effort": "5",
       "due": "2026-08-31",
       "jira": "HIEV-7347",
+      "kind": "sheet",
       "estimated_days": 5.0,
       "actual_seconds": 126000,
       "actual_hours": 35.0,
@@ -632,6 +1003,7 @@
       "effort": "2",
       "due": "2026-08-31",
       "jira": "HIEV-7350",
+      "kind": "sheet",
       "estimated_days": 2.0,
       "actual_seconds": 57600,
       "actual_hours": 16.0,
@@ -644,7 +1016,6 @@
         "Twisha"
       ],
       "touched_by": [
-        "Deepak",
         "Twisha"
       ]
     },
@@ -658,6 +1029,7 @@
       "effort": "10",
       "due": "2026-08-31",
       "jira": "HIEV-7360",
+      "kind": "sheet",
       "estimated_days": 10.0,
       "actual_seconds": 0,
       "actual_hours": 0.0,
@@ -680,6 +1052,7 @@
       "effort": "3",
       "due": "2026-08-31",
       "jira": "HIEV-7358",
+      "kind": "sheet",
       "estimated_days": 3.0,
       "actual_seconds": 32400,
       "actual_hours": 9.0,
@@ -696,6 +1069,29 @@
     },
     {
       "group": "Backend",
+      "feature": "Subtask of HIEV-7358 \u00b7 Enhance Unique drivers graph",
+      "team": "Backend",
+      "assignee": "Twisha",
+      "owner": "Deepak",
+      "parent": "HIEV-7358",
+      "effort": "",
+      "due": "2026-08-31",
+      "jira": "HIEV-7357",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 0,
+      "actual_hours": 0.0,
+      "actual_days": 0.0,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "To Do",
+      "logged_by": [],
+      "touched_by": [
+        "Twisha"
+      ]
+    },
+    {
+      "group": "Backend",
       "feature": "New search framework for web app \u2014 phase 1",
       "team": "Backend",
       "assignee": "Twisha",
@@ -704,6 +1100,7 @@
       "effort": "7",
       "due": "2026-08-31",
       "jira": "HIEV-7344",
+      "kind": "sheet",
       "estimated_days": 7.0,
       "actual_seconds": 108000,
       "actual_hours": 30.0,
@@ -728,6 +1125,7 @@
       "effort": "5",
       "due": "2026-08-15",
       "jira": "HIEV-7148",
+      "kind": "sheet",
       "estimated_days": 5.0,
       "actual_seconds": 28800,
       "actual_hours": 8.0,
@@ -752,6 +1150,7 @@
       "effort": "2",
       "due": "2026-08-15",
       "jira": "HIEV-7362",
+      "kind": "sheet",
       "estimated_days": 2.0,
       "actual_seconds": 75600,
       "actual_hours": 21.0,
@@ -763,7 +1162,6 @@
         "Surya"
       ],
       "touched_by": [
-        "Sahil Siddiqui",
         "Surya"
       ]
     },
@@ -777,6 +1175,7 @@
       "effort": "1",
       "due": "2026-08-31",
       "jira": "HIEV-7355",
+      "kind": "sheet",
       "estimated_days": 1.0,
       "actual_seconds": 0,
       "actual_hours": 0.0,
@@ -799,6 +1198,7 @@
       "effort": "1",
       "due": "2026-08-31",
       "jira": "HIEV-6944",
+      "kind": "sheet",
       "estimated_days": 1.0,
       "actual_seconds": 46800,
       "actual_hours": 13.0,
@@ -811,7 +1211,6 @@
         "Surya"
       ],
       "touched_by": [
-        "Marish",
         "Surya"
       ]
     },
@@ -825,6 +1224,7 @@
       "effort": "4",
       "due": "2026-08-31",
       "jira": "HIEV-7363",
+      "kind": "sheet",
       "estimated_days": 4.0,
       "actual_seconds": 72000,
       "actual_hours": 20.0,
@@ -849,6 +1249,7 @@
       "effort": "1",
       "due": "2026-08-31",
       "jira": "HIEV-7351",
+      "kind": "sheet",
       "estimated_days": 1.0,
       "actual_seconds": 12600,
       "actual_hours": 3.5,
@@ -873,6 +1274,7 @@
       "effort": "NA",
       "due": "2026-08-31",
       "jira": "HIEV-6941",
+      "kind": "sheet",
       "estimated_days": null,
       "actual_seconds": 228300,
       "actual_hours": 63.42,
@@ -897,6 +1299,7 @@
       "effort": "3",
       "due": "2026-08-31",
       "jira": "HIEV-7348",
+      "kind": "sheet",
       "estimated_days": 3.0,
       "actual_seconds": 25200,
       "actual_hours": 7.0,
@@ -921,6 +1324,7 @@
       "effort": "1",
       "due": "2026-08-31",
       "jira": "HIEV-7359",
+      "kind": "sheet",
       "estimated_days": 1.0,
       "actual_seconds": 14400,
       "actual_hours": 4.0,
@@ -945,20 +1349,46 @@
       "effort": "4",
       "due": "2026-08-31",
       "jira": "HIEV-7364",
+      "kind": "sheet",
       "estimated_days": 4.0,
-      "actual_seconds": 88200,
-      "actual_hours": 24.5,
-      "actual_days": 3.06,
-      "accuracy": 0.77,
+      "actual_seconds": 95400,
+      "actual_hours": 26.5,
+      "actual_days": 3.31,
+      "accuracy": 0.83,
       "accuracy_band": "on-plan",
       "jira_status": "Ready for Testing",
       "logged_by": [
         "Dharshini",
+        "Marish",
         "Sahil Siddiqui"
       ],
       "touched_by": [
-        "Dharshini",
-        "Sahil Siddiqui"
+        "Dharshini"
+      ]
+    },
+    {
+      "group": "Webapp",
+      "feature": "Subtask of HIEV-7364 \u00b7 UI/UX - Export Popup related re work and a common frameowrk to show success/error when downloading report",
+      "team": "Webapp",
+      "assignee": "Dharshini",
+      "owner": "Sahil Siddiqui",
+      "parent": "HIEV-7364",
+      "effort": "",
+      "due": "2026-08-31",
+      "jira": "HIEV-7455",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 7200,
+      "actual_hours": 2.0,
+      "actual_days": 0.25,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Marish"
+      ],
+      "touched_by": [
+        "Dharshini"
       ]
     },
     {
@@ -971,6 +1401,7 @@
       "effort": "7",
       "due": "2026-08-31",
       "jira": "HIEV-7345",
+      "kind": "sheet",
       "estimated_days": 7.0,
       "actual_seconds": 36000,
       "actual_hours": 10.0,
@@ -995,6 +1426,7 @@
       "effort": "2",
       "due": "2026-08-31",
       "jira": "HIEV-7150",
+      "kind": "sheet",
       "estimated_days": 2.0,
       "actual_seconds": 21600,
       "actual_hours": 6.0,
@@ -1006,8 +1438,7 @@
         "Dhanush"
       ],
       "touched_by": [
-        "Dhanush",
-        "Sahil Siddiqui"
+        "Dhanush"
       ]
     },
     {
@@ -1020,6 +1451,7 @@
       "effort": "5",
       "due": "2026-08-31",
       "jira": "HIEV-7306",
+      "kind": "sheet",
       "estimated_days": 5.0,
       "actual_seconds": 54000,
       "actual_hours": 15.0,
@@ -1044,6 +1476,7 @@
       "effort": "NA",
       "due": "2026-08-31",
       "jira": "HIEV-6942",
+      "kind": "sheet",
       "estimated_days": null,
       "actual_seconds": 86400,
       "actual_hours": 24.0,
@@ -1055,8 +1488,7 @@
         "Dhanush"
       ],
       "touched_by": [
-        "Dhanush",
-        "Sahil Siddiqui"
+        "Dhanush"
       ]
     },
     {
@@ -1069,6 +1501,7 @@
       "effort": "2",
       "due": "2026-08-31",
       "jira": "HIEV-7151",
+      "kind": "sheet",
       "estimated_days": 2.0,
       "actual_seconds": 93600,
       "actual_hours": 26.0,
@@ -1081,7 +1514,6 @@
         "Dharshini"
       ],
       "touched_by": [
-        "Dhanush",
         "Dharshini"
       ]
     },
@@ -1095,6 +1527,7 @@
       "effort": "",
       "due": "",
       "jira": "",
+      "kind": "sheet",
       "estimated_days": null,
       "actual_seconds": 0,
       "actual_hours": 0.0,
@@ -1117,6 +1550,7 @@
       "effort": "",
       "due": "",
       "jira": "",
+      "kind": "sheet",
       "estimated_days": null,
       "actual_seconds": 0,
       "actual_hours": 0.0,
@@ -1139,6 +1573,7 @@
       "effort": "",
       "due": "",
       "jira": "",
+      "kind": "sheet",
       "estimated_days": null,
       "actual_seconds": 0,
       "actual_hours": 0.0,
@@ -1161,6 +1596,7 @@
       "effort": "3",
       "due": "2026-08-31",
       "jira": "HIEV-6925",
+      "kind": "sheet",
       "estimated_days": 3.0,
       "actual_seconds": 57600,
       "actual_hours": 16.0,
@@ -1185,6 +1621,7 @@
       "effort": "2",
       "due": "2026-08-31",
       "jira": "HIEV-6932",
+      "kind": "sheet",
       "estimated_days": 2.0,
       "actual_seconds": 0,
       "actual_hours": 0.0,
@@ -1207,6 +1644,7 @@
       "effort": "8",
       "due": "2026-08-31",
       "jira": "HIEV-7365",
+      "kind": "sheet",
       "estimated_days": 8.0,
       "actual_seconds": 0,
       "actual_hours": 0.0,
@@ -1229,6 +1667,7 @@
       "effort": "3",
       "due": "2026-08-31",
       "jira": "HIEV-7366",
+      "kind": "sheet",
       "estimated_days": 3.0,
       "actual_seconds": 0,
       "actual_hours": 0.0,
@@ -1251,6 +1690,7 @@
       "effort": "3",
       "due": "2026-08-31",
       "jira": "HIEV-7367",
+      "kind": "sheet",
       "estimated_days": 3.0,
       "actual_seconds": 0,
       "actual_hours": 0.0,
@@ -1273,15 +1713,145 @@
       "effort": "8",
       "due": "2026-08-31",
       "jira": "HIEV-7368",
+      "kind": "sheet",
       "estimated_days": 8.0,
-      "actual_seconds": 7200,
-      "actual_hours": 2.0,
-      "actual_days": 0.25,
-      "accuracy": 0.03,
+      "actual_seconds": 190800,
+      "actual_hours": 53.0,
+      "actual_days": 6.62,
+      "accuracy": 0.83,
       "accuracy_band": "on-plan",
       "jira_status": "Done",
       "logged_by": [
+        "Priyanshu",
+        "Srikant"
+      ],
+      "touched_by": [
         "Priyanshu"
+      ]
+    },
+    {
+      "group": "Infra",
+      "feature": "Subtask of HIEV-7368 \u00b7 INFRA | Documentation of lower-env infra",
+      "team": "Devops",
+      "assignee": "Priyanshu",
+      "owner": "Srikant",
+      "parent": "HIEV-7368",
+      "effort": "",
+      "due": "2026-08-31",
+      "jira": "HIEV-7392",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 57600,
+      "actual_hours": 16.0,
+      "actual_days": 2.0,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Priyanshu"
+      ],
+      "touched_by": [
+        "Priyanshu"
+      ]
+    },
+    {
+      "group": "Infra",
+      "feature": "Subtask of HIEV-7368 \u00b7 INFRA | Documentation of canada infra",
+      "team": "Devops",
+      "assignee": "Priyanshu",
+      "owner": "Srikant",
+      "parent": "HIEV-7368",
+      "effort": "",
+      "due": "2026-08-31",
+      "jira": "HIEV-7393",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 54000,
+      "actual_hours": 15.0,
+      "actual_days": 1.88,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Priyanshu",
+        "Srikant"
+      ],
+      "touched_by": [
+        "Priyanshu"
+      ]
+    },
+    {
+      "group": "Infra",
+      "feature": "Subtask of HIEV-7368 \u00b7 INFRA | Documentation of Adani-env infra",
+      "team": "Devops",
+      "assignee": "Priyanshu",
+      "owner": "Srikant",
+      "parent": "HIEV-7368",
+      "effort": "",
+      "due": "2026-08-31",
+      "jira": "HIEV-7394",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 28800,
+      "actual_hours": 8.0,
+      "actual_days": 1.0,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Priyanshu",
+        "Srikant"
+      ],
+      "touched_by": [
+        "Priyanshu"
+      ]
+    },
+    {
+      "group": "Infra",
+      "feature": "Subtask of HIEV-7368 \u00b7 INFRA | Documentation of Alfanar-env infra",
+      "team": "Devops",
+      "assignee": "Priyanshu",
+      "owner": "Srikant",
+      "parent": "HIEV-7368",
+      "effort": "",
+      "due": "2026-08-31",
+      "jira": "HIEV-7395",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 28800,
+      "actual_hours": 8.0,
+      "actual_days": 1.0,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Priyanshu",
+        "Srikant"
+      ],
+      "touched_by": [
+        "Priyanshu"
+      ]
+    },
+    {
+      "group": "Infra",
+      "feature": "Subtask of HIEV-7368 \u00b7 Infra Doc review lower-env",
+      "team": "Devops",
+      "assignee": "Priyanshu",
+      "owner": "Srikant",
+      "parent": "HIEV-7368",
+      "effort": "",
+      "due": "2026-08-31",
+      "jira": "HIEV-7441",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 14400,
+      "actual_hours": 4.0,
+      "actual_days": 0.5,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Srikant"
       ],
       "touched_by": [
         "Priyanshu"
@@ -1297,14 +1867,70 @@
       "effort": "6",
       "due": "2026-08-31",
       "jira": "HIEV-7369",
+      "kind": "sheet",
       "estimated_days": 6.0,
-      "actual_seconds": 0,
-      "actual_hours": 0.0,
-      "actual_days": 0.0,
-      "accuracy": 0.0,
+      "actual_seconds": 122400,
+      "actual_hours": 34.0,
+      "actual_days": 4.25,
+      "accuracy": 0.71,
       "accuracy_band": "on-plan",
       "jira_status": "Done",
-      "logged_by": [],
+      "logged_by": [
+        "Priyanshu",
+        "Srikant"
+      ],
+      "touched_by": [
+        "Priyanshu"
+      ]
+    },
+    {
+      "group": "Infra",
+      "feature": "Subtask of HIEV-7369 \u00b7 INFRA | Adani-Prod Security Tightening",
+      "team": "Devops",
+      "assignee": "Priyanshu",
+      "owner": "Srikant",
+      "parent": "HIEV-7369",
+      "effort": "",
+      "due": "2026-08-31",
+      "jira": "HIEV-7507",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 50400,
+      "actual_hours": 14.0,
+      "actual_days": 1.75,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Priyanshu",
+        "Srikant"
+      ],
+      "touched_by": [
+        "Priyanshu"
+      ]
+    },
+    {
+      "group": "Infra",
+      "feature": "Subtask of HIEV-7369 \u00b7 INFRA | Alfanar-Prod Security Tightening",
+      "team": "Devops",
+      "assignee": "Priyanshu",
+      "owner": "Srikant",
+      "parent": "HIEV-7369",
+      "effort": "",
+      "due": "2026-08-31",
+      "jira": "HIEV-7508",
+      "kind": "subtask",
+      "estimated_days": null,
+      "actual_seconds": 72000,
+      "actual_hours": 20.0,
+      "actual_days": 2.5,
+      "accuracy": null,
+      "accuracy_band": "n/a",
+      "jira_status": "Done",
+      "logged_by": [
+        "Priyanshu",
+        "Srikant"
+      ],
       "touched_by": [
         "Priyanshu"
       ]
@@ -1319,6 +1945,7 @@
       "effort": "",
       "due": "2026-08-31",
       "jira": "HIEV-6929",
+      "kind": "sheet",
       "estimated_days": null,
       "actual_seconds": 0,
       "actual_hours": 0.0,
@@ -1341,6 +1968,7 @@
       "effort": "3",
       "due": "2026-08-31",
       "jira": "HIEV-7370",
+      "kind": "sheet",
       "estimated_days": 3.0,
       "actual_seconds": 25200,
       "actual_hours": 7.0,
@@ -1365,6 +1993,7 @@
       "effort": "3",
       "due": "2026-08-31",
       "jira": "HIEV-7371",
+      "kind": "sheet",
       "estimated_days": 3.0,
       "actual_seconds": 79200,
       "actual_hours": 22.0,
@@ -1377,8 +2006,7 @@
         "Srikant"
       ],
       "touched_by": [
-        "Priyanshu",
-        "Srikant"
+        "Priyanshu"
       ]
     },
     {
@@ -1391,6 +2019,7 @@
       "effort": "",
       "due": "2026-08-31",
       "jira": "HIEV-7372",
+      "kind": "sheet",
       "estimated_days": null,
       "actual_seconds": 32400,
       "actual_hours": 9.0,
@@ -1403,8 +2032,7 @@
         "Srikant"
       ],
       "touched_by": [
-        "Deepak",
-        "Srikant"
+        "Deepak"
       ]
     },
     {
@@ -1417,6 +2045,7 @@
       "effort": "3",
       "due": "2026-08-05",
       "jira": "HIEV-7327",
+      "kind": "sheet",
       "estimated_days": 3.0,
       "actual_seconds": 63000,
       "actual_hours": 17.5,
@@ -1584,21 +2213,6 @@
       ]
     },
     {
-      "key": "HIEV-7329",
-      "summary": "Smartcar implementation in CPMS",
-      "issuetype": "Sub-task",
-      "jira_status": "Done",
-      "assignee": "Sahil Kumar",
-      "actual_seconds": 86400,
-      "comment_count": 5,
-      "logged_by": [
-        "Sahil Kumar"
-      ],
-      "touched_by": [
-        "Sahil Kumar"
-      ]
-    },
-    {
       "key": "HIEV-7445",
       "summary": "Enhance User Manual to latest version(Mobile)",
       "issuetype": "Task",
@@ -1661,23 +2275,6 @@
       ]
     },
     {
-      "key": "HIEV-7508",
-      "summary": "INFRA | Alfanar-Prod Security Tightening",
-      "issuetype": "Sub-task",
-      "jira_status": "Done",
-      "assignee": "Priyanshu",
-      "actual_seconds": 72000,
-      "comment_count": 4,
-      "logged_by": [
-        "Priyanshu",
-        "Srikant"
-      ],
-      "touched_by": [
-        "Priyanshu",
-        "Srikant"
-      ]
-    },
-    {
       "key": "HIEV-7424",
       "summary": "Support Activities",
       "issuetype": "Task",
@@ -1723,38 +2320,6 @@
       ]
     },
     {
-      "key": "HIEV-7392",
-      "summary": "INFRA | Documentation of lower-env infra",
-      "issuetype": "Sub-task",
-      "jira_status": "Done",
-      "assignee": "Priyanshu",
-      "actual_seconds": 57600,
-      "comment_count": 2,
-      "logged_by": [
-        "Priyanshu"
-      ],
-      "touched_by": [
-        "Priyanshu"
-      ]
-    },
-    {
-      "key": "HIEV-7393",
-      "summary": "INFRA | Documentation of canada infra",
-      "issuetype": "Sub-task",
-      "jira_status": "Done",
-      "assignee": "Priyanshu",
-      "actual_seconds": 54000,
-      "comment_count": 5,
-      "logged_by": [
-        "Priyanshu",
-        "Srikant"
-      ],
-      "touched_by": [
-        "Priyanshu",
-        "Srikant"
-      ]
-    },
-    {
       "key": "HIEV-7588",
       "summary": "EVLM UI Enhancements",
       "issuetype": "Observation",
@@ -1767,23 +2332,6 @@
       ],
       "touched_by": [
         "Marish"
-      ]
-    },
-    {
-      "key": "HIEV-7507",
-      "summary": "INFRA | Adani-Prod Security Tightening",
-      "issuetype": "Sub-task",
-      "jira_status": "Done",
-      "assignee": "Priyanshu",
-      "actual_seconds": 50400,
-      "comment_count": 2,
-      "logged_by": [
-        "Priyanshu",
-        "Srikant"
-      ],
-      "touched_by": [
-        "Priyanshu",
-        "Srikant"
       ]
     },
     {
@@ -1834,36 +2382,6 @@
         "Dhanush",
         "Nagaraju",
         "Sahil Siddiqui"
-      ]
-    },
-    {
-      "key": "HIEV-7542",
-      "summary": "EVLM tenancy isolation",
-      "issuetype": "Sub-task",
-      "jira_status": "Done",
-      "assignee": "Sahil Kumar",
-      "actual_seconds": 41400,
-      "comment_count": 2,
-      "logged_by": [
-        "Sahil Kumar"
-      ],
-      "touched_by": [
-        "Sahil Kumar"
-      ]
-    },
-    {
-      "key": "HIEV-7545",
-      "summary": "Vehicles roster: CPMS live status, SoH KPIs, and UX-parity later slice",
-      "issuetype": "Sub-task",
-      "jira_status": "Done",
-      "assignee": "Sahil Kumar",
-      "actual_seconds": 41400,
-      "comment_count": 3,
-      "logged_by": [
-        "Sahil Kumar"
-      ],
-      "touched_by": [
-        "Sahil Kumar"
       ]
     },
     {
@@ -1957,21 +2475,6 @@
       ]
     },
     {
-      "key": "HIEV-7426",
-      "summary": "CPMS integration with EVLM",
-      "issuetype": "Sub-task",
-      "jira_status": "Done",
-      "assignee": "Sahil Kumar",
-      "actual_seconds": 36000,
-      "comment_count": 4,
-      "logged_by": [
-        "Sahil Kumar"
-      ],
-      "touched_by": [
-        "Sahil Kumar"
-      ]
-    },
-    {
       "key": "HIEV-7503",
       "summary": "Staging | EVSE Model | Created model is not displayed in list/search despite successful creation and duplicate-name validation",
       "issuetype": "Bug",
@@ -2056,72 +2559,6 @@
       ],
       "touched_by": [
         "Rashmi",
-        "Sudeep"
-      ]
-    },
-    {
-      "key": "HIEV-6989",
-      "summary": "Payment service unit tests",
-      "issuetype": "Task",
-      "jira_status": "Done",
-      "assignee": "Sudeep",
-      "actual_seconds": 28800,
-      "comment_count": 2,
-      "logged_by": [
-        "Sudeep",
-        "Vinay"
-      ],
-      "touched_by": [
-        "Sudeep",
-        "Vinay"
-      ]
-    },
-    {
-      "key": "HIEV-7394",
-      "summary": "INFRA | Documentation of Adani-env infra",
-      "issuetype": "Sub-task",
-      "jira_status": "Done",
-      "assignee": "Priyanshu",
-      "actual_seconds": 28800,
-      "comment_count": 4,
-      "logged_by": [
-        "Priyanshu",
-        "Srikant"
-      ],
-      "touched_by": [
-        "Priyanshu",
-        "Srikant"
-      ]
-    },
-    {
-      "key": "HIEV-7395",
-      "summary": "INFRA | Documentation of Alfanar-env infra",
-      "issuetype": "Sub-task",
-      "jira_status": "Done",
-      "assignee": "Priyanshu",
-      "actual_seconds": 28800,
-      "comment_count": 4,
-      "logged_by": [
-        "Priyanshu",
-        "Srikant"
-      ],
-      "touched_by": [
-        "Priyanshu",
-        "Srikant"
-      ]
-    },
-    {
-      "key": "HIEV-7422",
-      "summary": "Abstract data layer in session-utility, analytics, payment services",
-      "issuetype": "Task",
-      "jira_status": "In Progress",
-      "assignee": "Sudeep",
-      "actual_seconds": 28800,
-      "comment_count": 2,
-      "logged_by": [
-        "Sudeep"
-      ],
-      "touched_by": [
         "Sudeep"
       ]
     },
@@ -2412,21 +2849,6 @@
       ]
     },
     {
-      "key": "HIEV-7471",
-      "summary": "Admin AMS proxy \u2014 roles + users CRUD (REQ-SEC-007)",
-      "issuetype": "Sub-task",
-      "jira_status": "In Progress",
-      "assignee": "Sahil Kumar",
-      "actual_seconds": 21600,
-      "comment_count": 3,
-      "logged_by": [
-        "Sahil Kumar"
-      ],
-      "touched_by": [
-        "Sahil Kumar"
-      ]
-    },
-    {
       "key": "HIEV-7575",
       "summary": "INFRA | lower-env runner instance storage clean",
       "issuetype": "Task",
@@ -2439,21 +2861,6 @@
       ],
       "touched_by": [
         "Priyanshu"
-      ]
-    },
-    {
-      "key": "HIEV-7581",
-      "summary": "Phase 1 Ops Web manual E2E testing",
-      "issuetype": "Sub-task",
-      "jira_status": "To Do",
-      "assignee": "Sahil Kumar",
-      "actual_seconds": 21600,
-      "comment_count": 3,
-      "logged_by": [
-        "Sahil Kumar"
-      ],
-      "touched_by": [
-        "Sahil Kumar"
       ]
     },
     {
@@ -2521,21 +2928,6 @@
       ],
       "touched_by": [
         "Rashmi"
-      ]
-    },
-    {
-      "key": "HIEV-7470",
-      "summary": "Implement MFA step-up for privileged Ops actions (REQ-SEC-002)",
-      "issuetype": "Sub-task",
-      "jira_status": "Done",
-      "assignee": "Sahil Kumar",
-      "actual_seconds": 19800,
-      "comment_count": 3,
-      "logged_by": [
-        "Sahil Kumar"
-      ],
-      "touched_by": [
-        "Sahil Kumar"
       ]
     },
     {
@@ -2620,21 +3012,6 @@
       "touched_by": [
         "Dhanush",
         "Sahil Siddiqui"
-      ]
-    },
-    {
-      "key": "HIEV-7482",
-      "summary": "Reserve SU for service account only (XX_XXX tenant, XXXX product, all-product permissions)",
-      "issuetype": "Sub-task",
-      "jira_status": "In Progress",
-      "assignee": "Sahil Kumar",
-      "actual_seconds": 16200,
-      "comment_count": 2,
-      "logged_by": [
-        "Sahil Kumar"
-      ],
-      "touched_by": [
-        "Sahil Kumar"
       ]
     },
     {
@@ -2772,21 +3149,6 @@
       ]
     },
     {
-      "key": "HIEV-7441",
-      "summary": "Infra Doc review lower-env",
-      "issuetype": "Sub-task",
-      "jira_status": "Done",
-      "assignee": "Srikant",
-      "actual_seconds": 14400,
-      "comment_count": 2,
-      "logged_by": [
-        "Srikant"
-      ],
-      "touched_by": [
-        "Srikant"
-      ]
-    },
-    {
       "key": "HIEV-7573",
       "summary": "INFRA | CLOUD COST Comparison(canada VS adani)",
       "issuetype": "Task",
@@ -2896,21 +3258,6 @@
       ]
     },
     {
-      "key": "HIEV-7554",
-      "summary": "Vehicles roster: EVLM-only P1 ops list + persisted display name",
-      "issuetype": "Sub-task",
-      "jira_status": "Done",
-      "assignee": "Sahil Kumar",
-      "actual_seconds": 12600,
-      "comment_count": 1,
-      "logged_by": [
-        "Sahil Kumar"
-      ],
-      "touched_by": [
-        "Sahil Kumar"
-      ]
-    },
-    {
       "key": "HIEV-7584",
       "summary": "Staging | Load Management | UI Enhancement | Add Connector Icon to Load Group Overview Connector Cards",
       "issuetype": "Suggestion",
@@ -3016,21 +3363,6 @@
       ],
       "touched_by": [
         "Nagaraju"
-      ]
-    },
-    {
-      "key": "HIEV-7205",
-      "summary": "Unit Tests + Integration Tests",
-      "issuetype": "Sub-task",
-      "jira_status": "To Do",
-      "assignee": "Sahil Kumar",
-      "actual_seconds": 10800,
-      "comment_count": 1,
-      "logged_by": [
-        "Sahil Kumar"
-      ],
-      "touched_by": [
-        "Sahil Kumar"
       ]
     },
     {
@@ -3606,21 +3938,6 @@
       ]
     },
     {
-      "key": "HIEV-7455",
-      "summary": "UI/UX - Export Popup related re work and a common frameowrk to show success/error when downloading report",
-      "issuetype": "Sub-task",
-      "jira_status": "Done",
-      "assignee": "Marish",
-      "actual_seconds": 7200,
-      "comment_count": 1,
-      "logged_by": [
-        "Marish"
-      ],
-      "touched_by": [
-        "Marish"
-      ]
-    },
-    {
       "key": "HIEV-7555",
       "summary": "INFRA | SSL CERT AUTOMATION SCRIPT",
       "issuetype": "Task",
@@ -3962,23 +4279,6 @@
       "touched_by": [
         "Nagaraju",
         "Surya"
-      ]
-    },
-    {
-      "key": "HIEV-6988",
-      "summary": "Session utility Unit test",
-      "issuetype": "Task",
-      "jira_status": "Done",
-      "assignee": "Shambu",
-      "actual_seconds": 5400,
-      "comment_count": 4,
-      "logged_by": [
-        "Shambu",
-        "Vinay"
-      ],
-      "touched_by": [
-        "Shambu",
-        "Vinay"
       ]
     },
     {
@@ -4377,21 +4677,6 @@
       ],
       "touched_by": [
         "Manjunath"
-      ]
-    },
-    {
-      "key": "HIEV-7220",
-      "summary": "Sandbox for hot path testing",
-      "issuetype": "Sub-task",
-      "jira_status": "Done",
-      "assignee": "Sahil Kumar",
-      "actual_seconds": 3600,
-      "comment_count": 1,
-      "logged_by": [
-        "Sahil Kumar"
-      ],
-      "touched_by": [
-        "Sahil Kumar"
       ]
     },
     {
@@ -6787,28 +7072,15 @@
         "Nagaraju",
         "Sahil Siddiqui"
       ]
-    },
-    {
-      "key": "HIEV-7357",
-      "summary": "Enhance Unique drivers graph",
-      "issuetype": "Epic",
-      "jira_status": "To Do",
-      "assignee": "Deepak",
-      "actual_seconds": 0,
-      "comment_count": 1,
-      "logged_by": [],
-      "touched_by": [
-        "Sahil Siddiqui"
-      ]
     }
   ],
   "offsheet_type_counts": {
-    "Epic": 10,
+    "Epic": 9,
     "Bug": 156,
-    "Task": 61,
-    "Sub-task": 96,
+    "Task": 58,
     "Observation": 7,
-    "Suggestion": 4
+    "Suggestion": 4,
+    "Sub-task": 77
   },
   "people": [
     {
@@ -6846,17 +7118,17 @@
       "expected_seconds": 576000,
       "utilization": 1.01,
       "actual_all_seconds": 579600,
-      "actual_planned_seconds": 108000,
-      "actual_estimated_planned_seconds": 108000,
-      "actual_offsheet_seconds": 471600,
+      "actual_planned_seconds": 360000,
+      "actual_estimated_planned_seconds": 360000,
+      "actual_offsheet_seconds": 219600,
       "bug_fix_seconds": 0,
       "task_seconds": 579600,
       "accuracy_all": 1.01,
-      "accuracy_planned_tickets": 0.19,
+      "accuracy_planned_tickets": 0.62,
       "comment_count": 45,
       "worklog_count": 49,
-      "offsheet_worklog_count": 43,
-      "offsheet_comment_count": 39,
+      "offsheet_worklog_count": 24,
+      "offsheet_comment_count": 24,
       "bugs_worked": 0,
       "scrum_expected": 20,
       "scrum_attended": 18,
@@ -6873,17 +7145,17 @@
       "expected_seconds": 576000,
       "utilization": 1.0,
       "actual_all_seconds": 576900,
-      "actual_planned_seconds": 41400,
+      "actual_planned_seconds": 352800,
       "actual_estimated_planned_seconds": 0,
-      "actual_offsheet_seconds": 535500,
+      "actual_offsheet_seconds": 224100,
       "bug_fix_seconds": 13500,
       "task_seconds": 563400,
       "accuracy_all": null,
       "accuracy_planned_tickets": null,
       "comment_count": 73,
       "worklog_count": 67,
-      "offsheet_worklog_count": 63,
-      "offsheet_comment_count": 70,
+      "offsheet_worklog_count": 33,
+      "offsheet_comment_count": 42,
       "bugs_worked": 9,
       "scrum_expected": 20,
       "scrum_attended": 19,
@@ -6927,17 +7199,17 @@
       "expected_seconds": 547200,
       "utilization": 0.94,
       "actual_all_seconds": 516600,
-      "actual_planned_seconds": 73800,
-      "actual_estimated_planned_seconds": 73800,
-      "actual_offsheet_seconds": 442800,
+      "actual_planned_seconds": 81000,
+      "actual_estimated_planned_seconds": 81000,
+      "actual_offsheet_seconds": 435600,
       "bug_fix_seconds": 0,
       "task_seconds": 81000,
       "accuracy_all": 5.98,
-      "accuracy_planned_tickets": 0.85,
+      "accuracy_planned_tickets": 0.94,
       "comment_count": 20,
       "worklog_count": 21,
-      "offsheet_worklog_count": 18,
-      "offsheet_comment_count": 17,
+      "offsheet_worklog_count": 17,
+      "offsheet_comment_count": 16,
       "bugs_worked": 0,
       "scrum_expected": 19,
       "scrum_attended": 13,
@@ -6981,17 +7253,17 @@
       "expected_seconds": 547200,
       "utilization": 0.9,
       "actual_all_seconds": 492600,
-      "actual_planned_seconds": 0,
-      "actual_estimated_planned_seconds": 0,
-      "actual_offsheet_seconds": 492600,
+      "actual_planned_seconds": 54000,
+      "actual_estimated_planned_seconds": 54000,
+      "actual_offsheet_seconds": 438600,
       "bug_fix_seconds": 113100,
       "task_seconds": 379500,
       "accuracy_all": 0.57,
-      "accuracy_planned_tickets": 0.0,
+      "accuracy_planned_tickets": 0.06,
       "comment_count": 57,
       "worklog_count": 37,
-      "offsheet_worklog_count": 37,
-      "offsheet_comment_count": 57,
+      "offsheet_worklog_count": 35,
+      "offsheet_comment_count": 54,
       "bugs_worked": 13,
       "scrum_expected": 19,
       "scrum_attended": 15,
@@ -7045,7 +7317,7 @@
       "comment_count": 228,
       "worklog_count": 98,
       "offsheet_worklog_count": 79,
-      "offsheet_comment_count": 195,
+      "offsheet_comment_count": 194,
       "bugs_worked": 55,
       "scrum_expected": 16,
       "scrum_attended": 15,
@@ -7116,17 +7388,17 @@
       "expected_seconds": 547200,
       "utilization": 0.69,
       "actual_all_seconds": 377400,
-      "actual_planned_seconds": 126000,
-      "actual_estimated_planned_seconds": 126000,
-      "actual_offsheet_seconds": 251400,
+      "actual_planned_seconds": 127800,
+      "actual_estimated_planned_seconds": 127800,
+      "actual_offsheet_seconds": 249600,
       "bug_fix_seconds": 228000,
       "task_seconds": 149400,
       "accuracy_all": 0.87,
-      "accuracy_planned_tickets": 0.29,
+      "accuracy_planned_tickets": 0.3,
       "comment_count": 41,
       "worklog_count": 37,
-      "offsheet_worklog_count": 30,
-      "offsheet_comment_count": 34,
+      "offsheet_worklog_count": 29,
+      "offsheet_comment_count": 33,
       "bugs_worked": 21,
       "scrum_expected": 19,
       "scrum_attended": 16,
@@ -7143,17 +7415,17 @@
       "expected_seconds": 489600,
       "utilization": 0.7,
       "actual_all_seconds": 342000,
-      "actual_planned_seconds": 64800,
-      "actual_estimated_planned_seconds": 61200,
-      "actual_offsheet_seconds": 277200,
+      "actual_planned_seconds": 118800,
+      "actual_estimated_planned_seconds": 115200,
+      "actual_offsheet_seconds": 223200,
       "bug_fix_seconds": 0,
       "task_seconds": 342000,
       "accuracy_all": 0.63,
-      "accuracy_planned_tickets": 0.11,
+      "accuracy_planned_tickets": 0.21,
       "comment_count": 28,
       "worklog_count": 32,
-      "offsheet_worklog_count": 25,
-      "offsheet_comment_count": 23,
+      "offsheet_worklog_count": 15,
+      "offsheet_comment_count": 15,
       "bugs_worked": 0,
       "scrum_expected": 17,
       "scrum_attended": 15,
@@ -7278,17 +7550,17 @@
       "expected_seconds": 547200,
       "utilization": 0.31,
       "actual_all_seconds": 171300,
-      "actual_planned_seconds": 100800,
-      "actual_estimated_planned_seconds": 0,
-      "actual_offsheet_seconds": 70500,
+      "actual_planned_seconds": 108000,
+      "actual_estimated_planned_seconds": 7200,
+      "actual_offsheet_seconds": 63300,
       "bug_fix_seconds": 24600,
       "task_seconds": 146700,
       "accuracy_all": 1.19,
-      "accuracy_planned_tickets": 0.0,
+      "accuracy_planned_tickets": 0.05,
       "comment_count": 44,
       "worklog_count": 23,
-      "offsheet_worklog_count": 19,
-      "offsheet_comment_count": 36,
+      "offsheet_worklog_count": 17,
+      "offsheet_comment_count": 32,
       "bugs_worked": 13,
       "scrum_expected": 19,
       "scrum_attended": 17,
@@ -9518,7 +9790,7 @@
       "time_spent": "1h",
       "comment": "Phase 1 Ops Web E2E plan + canvas",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21741",
@@ -9532,7 +9804,7 @@
       "time_spent": "2h",
       "comment": "MoM + Test Plan page in evlm-tracker",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21776",
@@ -9546,7 +9818,7 @@
       "time_spent": "3h",
       "comment": "CA_THY cold-start E2E plan + MOB API scope",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21671",
@@ -10386,7 +10658,7 @@
       "time_spent": "3h 30m",
       "comment": "P1 vehicles roster (EVLM-only)",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21556",
@@ -10638,7 +10910,7 @@
       "time_spent": "1h 30m",
       "comment": "Telematics API / vehicleGroupId design",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21618",
@@ -10652,7 +10924,7 @@
       "time_spent": "3h 30m",
       "comment": "Telematics enrolled roster implement + review fixes + paired MRs",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21656",
@@ -10666,7 +10938,7 @@
       "time_spent": "3h 30m",
       "comment": "Telematics enrolled roster + ops vehicles API handoff",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21672",
@@ -10680,7 +10952,7 @@
       "time_spent": "3h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21547",
@@ -10722,7 +10994,7 @@
       "time_spent": "6h 30m",
       "comment": "Fail-closed tenant isolation, remediations merge, local migrate/dev, P1 FRDs",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21616",
@@ -10736,7 +11008,7 @@
       "time_spent": "4h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21658",
@@ -10750,7 +11022,7 @@
       "time_spent": "1h",
       "comment": "Tenant-only segregation close-out",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21524",
@@ -11884,7 +12156,7 @@
       "time_spent": "4h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21517",
@@ -11898,7 +12170,7 @@
       "time_spent": "1d",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21575",
@@ -11912,7 +12184,7 @@
       "time_spent": "4h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21633",
@@ -11926,7 +12198,7 @@
       "time_spent": "2h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21704",
@@ -11940,7 +12212,7 @@
       "time_spent": "2h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21435",
@@ -11954,7 +12226,7 @@
       "time_spent": "4h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21482",
@@ -11968,7 +12240,7 @@
       "time_spent": "6h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21511",
@@ -11982,7 +12254,7 @@
       "time_spent": "2h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21703",
@@ -11996,7 +12268,7 @@
       "time_spent": "2h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21409",
@@ -12794,7 +13066,7 @@
       "time_spent": "3h 30m",
       "comment": "Reserve SU for M2M service account",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21418",
@@ -12808,7 +13080,7 @@
       "time_spent": "1h",
       "comment": "FE admin roles/users doc sync + 7482 worktree cleanup",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21321",
@@ -13116,7 +13388,7 @@
       "time_spent": "3h 30m",
       "comment": "AMS product RBAC + EVLM admin roles/users proxy",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21379",
@@ -13130,7 +13402,7 @@
       "time_spent": "2h 30m",
       "comment": "Product RBAC review leftovers and MRs",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21490",
@@ -13144,7 +13416,7 @@
       "time_spent": "2h",
       "comment": "MFA step-up verify + AMS_CLIENT wiring",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21563",
@@ -13158,7 +13430,7 @@
       "time_spent": "1h 30m",
       "comment": "Staging MFA API collection run",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21657",
@@ -13172,7 +13444,7 @@
       "time_spent": "2h",
       "comment": "MFA staging bypass default + privileged mutate guards",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21262",
@@ -13452,7 +13724,7 @@
       "time_spent": "2h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21215",
@@ -13844,7 +14116,7 @@
       "time_spent": "2h",
       "comment": "Infr Doc review of lower-env",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21240",
@@ -13858,7 +14130,7 @@
       "time_spent": "2h",
       "comment": "Infra doc review",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21160",
@@ -14180,7 +14452,7 @@
       "time_spent": "3h",
       "comment": "EVLM \u2194 CPMS telematics/EVSE API parity",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21327",
@@ -14194,7 +14466,7 @@
       "time_spent": "2h",
       "comment": "CPMS live sandbox Mode A/B testing design",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21419",
@@ -14208,7 +14480,7 @@
       "time_spent": "4h",
       "comment": "Sandbox Mode B live CPMS + LM isolation",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21492",
@@ -14222,7 +14494,7 @@
       "time_spent": "1h",
       "comment": "DR restore-by-pathway + sandbox Mode B CI",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21073",
@@ -14656,7 +14928,7 @@
       "time_spent": "1d",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21060",
@@ -15244,7 +15516,7 @@
       "time_spent": "2h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21239",
@@ -15258,7 +15530,7 @@
       "time_spent": "2h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21288",
@@ -15272,7 +15544,7 @@
       "time_spent": "1h",
       "comment": "Doc review",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21255",
@@ -15286,7 +15558,7 @@
       "time_spent": "2h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21345",
@@ -15300,7 +15572,7 @@
       "time_spent": "1h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21181",
@@ -15314,7 +15586,7 @@
       "time_spent": "2h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21238",
@@ -15328,7 +15600,7 @@
       "time_spent": "2h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21287",
@@ -15342,7 +15614,7 @@
       "time_spent": "1h",
       "comment": "Doc Review",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21254",
@@ -15356,7 +15628,7 @@
       "time_spent": "2h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21344",
@@ -15370,7 +15642,7 @@
       "time_spent": "1h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21084",
@@ -15384,7 +15656,7 @@
       "time_spent": "4h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21180",
@@ -15398,7 +15670,7 @@
       "time_spent": "1d",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21286",
@@ -15412,7 +15684,7 @@
       "time_spent": "2h",
       "comment": "Doc review",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21343",
@@ -15426,7 +15698,7 @@
       "time_spent": "1h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "20985",
@@ -15440,7 +15712,7 @@
       "time_spent": "2h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "20986",
@@ -15454,7 +15726,7 @@
       "time_spent": "2h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21035",
@@ -15468,7 +15740,7 @@
       "time_spent": "1d",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21083",
@@ -15482,7 +15754,7 @@
       "time_spent": "4h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "20974",
@@ -17260,7 +17532,7 @@
       "time_spent": "5h",
       "comment": "Completed the implementation",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "20978",
@@ -17274,7 +17546,7 @@
       "time_spent": "5h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21032",
@@ -17288,7 +17560,7 @@
       "time_spent": "7h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21075",
@@ -17302,7 +17574,7 @@
       "time_spent": "3h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21225",
@@ -17316,7 +17588,7 @@
       "time_spent": "2h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21270",
@@ -17330,7 +17602,7 @@
       "time_spent": "2h",
       "comment": "Smartcar webhook fleet alignment + vehicle status API",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21166",
@@ -19052,7 +19324,7 @@
       "time_spent": "1h",
       "comment": "Sandbox Mode B live CPMS + DR participant prune",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21170",
@@ -19164,7 +19436,7 @@
       "time_spent": "3h",
       "comment": "Unit coverage 75% + Nest decorator TS fix",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21094",
@@ -20662,7 +20934,7 @@
       "time_spent": "7h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21446",
@@ -20676,7 +20948,7 @@
       "time_spent": "1h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "20937",
@@ -20690,7 +20962,7 @@
       "time_spent": "1h",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "20971",
@@ -20704,7 +20976,7 @@
       "time_spent": "30m",
       "comment": "",
       "source": "payload",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "21542",
@@ -22430,7 +22702,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-24",
       "body": "Scoped as the long-lived ticket for the full Phase 1 Ops Web manual testing lifecycle (not a one-day adhoc) Today: drafted the Phase 1 Ops Web manual E2E plan and an exhaustive local canvas (flows, cases, session log) for staging run-throughs Next: execute the plan against the deployed webapp and log findings on this ticket through close-out Related: HIEV-7205",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39566",
@@ -22440,7 +22712,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-25",
       "body": "Wrote MoM from the Deepak call and extracted focused testing items for Phase 1 Ops Web E2E Added a new Test Plan page in evlm-tracker (priorities, assignees: Sahil Kumar / Sahil Siddiqui / Deepak / Dinesh / Dhanush) UI edits persist via localStorage with a sync-to-local-JSON action ( data/testPlan.json ) Commit: added test plan in the tracker",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39627",
@@ -22450,7 +22722,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-26",
       "body": "Rewrote Phase 1 Ops Web E2E plan + canvas for tenant CA_THY / sahil+ca_thy@elocitytech.com as a dual cold-start (empty EVLM + AMS/CPMS bootstrap), dropping TX-1071 / prior-seed assumptions Ordered runbook: Login \u2192 Dashboard \u2192 Create TX (UI) \u2192 historical readings (API) \u2192 AMS/CPMS BOOT (API) \u2192 onboard \u2192 vehicles \u2192 DR \u2192 incentives \u2192 reports; empty lists treated as Pass Pointed live Ops Web at EVLM stg S3 site ; added MOB-1\u2026MOB-9 customer JWT API consistency checks vs Ops data (mobile app UI still N",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39495",
@@ -22960,7 +23232,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-19",
       "body": "Scoped P1 Vehicles as EVLM-only: Total vehicles KPI from the EVLM vehicle table, All-only chips, persist CPMS/Smartcar name on enroll (no live CPMS on list load). Shipped ops roster locally on evlm master (not pushed): GET /evlm/v1/ops/vehicles/metrics , list ( q / make / connector), and :vehicleId detail rail; migration 0011_vehicle_name . Commits: feat(enrollment) 36f40b1 , test(enrollment) c4d7537 , docs(enrollment) 8aac75e . Domain unit suite 631 passing. Filed later work under this parent: ",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39339",
@@ -23150,7 +23422,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-19",
       "body": "Started the later slice against the renamed CPMS telematics surface (former fleet APIs) for EVLM roster KPIs / live status. Confirmed GET-shaped reads; N vehicleId s in the query string will blow URL limits, so do not pass the full enrolled set. Proposed membership handle instead: EVLM upserts an \u201cenrolled\u201d vehicle group on enroll/unenroll, then GET /telematics/overview?vehicleGroupId=\u2026 and list + existing searchKey \u2014 postpone a new batch-id filter if that stays hard.",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39396",
@@ -23160,7 +23432,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-20",
       "body": "Implemented enrolled-scope telematics on CPMS ( enrolledOnly / excludeVehicles ) using Redis SET evlm:enrolled:vehicles:{tenantId} , with tenantId header resolution and scalar vehicleIds support. EVLM: fleet\u2192 /telematics/* client rename, enrolled Redis ensure/rebuild + sandbox sync, ops vehicles metrics/list/detail compose from live CPMS fields (SoH still omitted). Addressed multi-agent review findings (tenant header drop of enrolledOnly , empty sentinel, OpenAPI/docs, caller retargets). Paired ",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39440",
@@ -23170,7 +23442,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-21",
       "body": "Shipped enrolled-roster telematics compose: CPMS Redis SET scope ( enrolledOnly / excludeVehicles + tenantId header) paired with EVLM /telematics/* client retarget and ops vehicles metrics/list/detail composition Fixed Nest build by exporting VehicleOpsStatus from @evlm/contracts ; EVLM MR merged to master Clarified frontend handoff: master-detail UX cut, SoH detail-only (em dash), status filter deferred; committed local doc update on ops-vehicles-roster-api.md MR !1035 (CPMS, open \u2192 aug26-relea",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39609",
@@ -23210,7 +23482,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-18",
       "body": "Implemented fail-closed HTTP tenant isolation: JWT tenant_id , tenant_id on primary tables (derived tables skipped), globally unique tx_id / ams_customer_id / CPMS ids, distinct error codes, existing rows backfilled as CA_ELO Reviewed the working-tree tenancy changes, applied high/medium/low fixes, and opened MR !27 ( feat/tenant-isolation \u2192 master ) Fast-forwarded remediations 3\u20137 onto local master (sandbox IP limiter, admin permission allowlist, outbox lease, DR Kafka-before-execute, abort sna",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39442",
@@ -23220,7 +23492,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-21",
       "body": "Confirmed product decision: tenant-only isolation (all businesses under a tenant visible in EVLM); no business-level data filter Documented as by-design / closed residual review gap; updated tracker close-out for MFA default + tenant-only segregation",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39311",
@@ -24140,7 +24412,7 @@
       "author": "Priyanshu",
       "date": "2026-08-17",
       "body": "Reviewed alfanra prod OCI jeddah security posture and updated the security tightening runbook with detailed service-wise review steps and proposed tightening sequence. No OCI changes were applied; this was documentation and planning only.",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39305",
@@ -24150,7 +24422,7 @@
       "author": "Priyanshu",
       "date": "2026-08-18",
       "body": "Work completed: Enabled VCN flow logs for alfanar-prod-private-subnet. Created capture filter for accepted/rejected private subnet traffic. Confirmed flow logs are ingesting records successfully. Verified initial private subnet traffic records are visible in OCI Logging. Documented flow log OCIDs, retention, and observation plan in the security status report. Reviewed remaining SFTP/FTP exposure and identified that source client IPs must be confirmed before narrowing rules. Flow log details: Reg",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39356",
@@ -24160,7 +24432,7 @@
       "author": "Priyanshu",
       "date": "2026-08-20",
       "body": "Reviewed 24+ hours of VCN flow logs for alfanar-prod-private-subnet. Findings: No 10.104.* or 10.0.* traffic observed. No rejected traffic observed. Kafka 9092 traffic is only from internal 10.102.0.0/16 sources, mainly OKE worker nodes. Public-looking sources in logs appear to be return traffic from outbound connections, not required inbound exposure. Recommendation: Safe to remove the private security-list rule 0.0.0.0/0 -> all marked \u201cKafka broker access\u201d. Keep 10.102.0.0/16 -> all unchanged ",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39404",
@@ -24170,7 +24442,7 @@
       "author": "Priyanshu",
       "date": "2026-08-21",
       "body": "Removed the private security-list ingress rule: 0.0.0.0/0 -> all description: Kafka broker access Validation completed: OCI security list now has 9 ingress rules; the broad Kafka rule is gone. Private API 10.102.36.143:6443 reachable. alfanar-prod nodes all Ready. No pods in non-Running/non-Succeeded state. Kafka namespace pods are Running. Services list is accessible. Public LB 141.147.129.183:80 and :443 reachable. Private Istio LB 10.102.31.166:15021 reachable.",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39209",
@@ -24180,7 +24452,7 @@
       "author": "Priyanshu",
       "date": "2026-08-17",
       "body": "Reviewed Adani prod OCI Mumbai security posture and updated the security tightening runbook with detailed service-wise review steps, AWS connectivity observations from OCI side, and proposed tightening sequence. No OCI changes were applied; this was documentation and planning only.",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39273",
@@ -24190,7 +24462,7 @@
       "author": "Priyanshu",
       "date": "2026-08-17",
       "body": "Completed today\u2019s Adani prod OCI Mumbai zero-downtime security tightening and validation. Work completed: Took before-state backups before each change. Restricted SSH 22 from public access to 10.100.0.0/16. Restricted OKE API 6443 from public access to 10.100.0.0/16. Restricted Kafka 9092 from public access to 10.100.0.0/16. Removed public access to ingress-nginx metrics/status port 10254. Removed public access to Istio status port 15021. Validated Kubernetes access through VPN/private context. ",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39187",
@@ -24860,7 +25132,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-13",
       "body": "Implemented SU reservation for the AMS M2M service account only: XX_XXX tenant, catch-all product XXXX , union of all-product permissions on service_account@elocity.com AMS HTTP APIs fail closed on role SU ( 400 SU_RESERVED_FOR_SERVICE_ACCOUNT ); login/refresh fail-closed except that exact service-account identity; Azure login rejects if any mapped group is SU Edited v18 in place (remap human SU\u2192AD, RIA strip, Azure INNER JOIN, XX_XXX user_role); CSV bulk keeps HTTP 201 with per-row remarks Mult",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39198",
@@ -24870,7 +25142,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-14",
       "body": "Validated and updated evlm/docs/frontend/admin-roles-users-api.md against AMS/EVLM: role create/update uses generic 400s; SU_RESERVED_FOR_SERVICE_ACCOUNT is JSON user-assign only; CSV is AMS-only (201 + per-row remark); POST /users is 201; XXXX / SU login/refresh is fail-closed except the M2M service account Cleared leftover HIEV-7482 worktrees after yesterday\u2019s merge onto the 7471 branches",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39097",
@@ -25080,7 +25352,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-12",
       "body": "Follow-on to product-aware RBAC: SU reserved for service_account in XX_XXX only.",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39103",
@@ -25090,7 +25362,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-12",
       "body": "Designed and implemented product-scoped RBAC across AMS / EVLM / data-migration: product on roles & permissions, unique (product, code, tenantId) , product filter on list APIs, login role selection via product header (default CPMS) Built EVLM admin AMS proxy for roles + users CRUD under Administration, with FE API handoff doc; multi-agent review of working-tree changes against the product RBAC plan Clarified SU reservation for service-account-only use in XX_XXX (related HIEV-7482): no human SU a",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39157",
@@ -25100,7 +25372,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-13",
       "body": "Closed remaining RBAC review items: attached TenantBusinessHeaderInterceptor on AMS roles APIs (same tenant remap as users), bound permission codes to request product, fail-closed downgrade_v18 for EVLM-only users Kept FE admin roles/users handoff consistent with SU as XXXX + all-product permissions (follow-on HIEV-7482) Opened stacked MRs (land data-migration before AMS): data-migration !274 , ams !387 , evlm !26",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39281",
@@ -25110,7 +25382,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-17",
       "body": "Implemented MFA step-up: POST /evlm/v1/auth/mfa/verify ( OpsAuthGuard only), 6-digit code, TTL 300s, rate limits; shared UAT pin with high default limits for staging Wired AMS_CLIENT into the notification handler via shared createAmsClientFromEnv Documented the verify contract and 401/429/503 outcomes; exposed MFA TTL and verify rate-limit knobs on staging helm Committed on evlm master : 9f48c81 feat MFA verify, a54605e docs; helm b511880d on k8s-helm-charts evlm-charts (not pushed)",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39348",
@@ -25120,7 +25392,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-19",
       "body": "Mapped MFA as step-up on privileged ops actions (DR execute/abort, transformer onboard, incentive approve/reject), not login; staging tested with MFA_STAGING_BYPASS=false . Built a Postman Collection Runner: AMS login stores JWT; create+simulate DR in-run; assert MFA_REQUIRED / wrong code / valid verify; stop before execute; cleanup created data. Incentive cases used env entry IDs only. Ran the collection successfully against staging; local collection files were deleted after the run.",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39441",
@@ -25130,7 +25402,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-21",
       "body": "Defaulted MFA_STAGING_BYPASS to false and applied MfaGuard on admin role/user mutates, onboarding finalize, and incentive program publish Updated security/integration/UAT docs and config tests for the new default and guards Local commit on evlm master (not pushed): feat(security,notify): harden MFA defaults and durable multi-channel delivery",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39023",
@@ -25390,7 +25662,7 @@
       "author": "Marish",
       "date": "2026-08-11",
       "body": "Discussed this with Dharshini and recommended adding two types of toast notifications\u2014Success and Error states.",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38966",
@@ -25770,7 +26042,7 @@
       "author": "Srikant",
       "date": "2026-08-10",
       "body": "Infr Doc review of lower-env",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38994",
@@ -25780,7 +26052,7 @@
       "author": "Srikant",
       "date": "2026-08-11",
       "body": "Infra Doc review of lower-env",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38917",
@@ -26020,7 +26292,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-11",
       "body": "Hardened EVLM CPMS client for telematics/EVSE parity ( getIsCharging soft-verify, AMS customer id parse fail-closed) Treated Smartcar Pending as accepted-into-pipeline; success only on terminal Accepted Wired EVSE listing via /evses/v2 DROPDOWN for integration paths Branch: feat/cpms-telematics-evse-api-parity (EVLM); CPMS side on feature/smartcar-webhook-vehicle-state-ingestion",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39104",
@@ -26030,7 +26302,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-12",
       "body": "Set up worktree for feat/cpms-telematics-evse-api-parity and walked through enabling live CPMS for sandbox UI testing (vs faker) Defined Mode A (existing) vs Mode B (live) selection/mapping needs: live transformer, enrolled customer, optional dedicated CPID, real vehicles Identified remaining live inputs for telematics path (AMS customer id, enrollment type, transformer, vehicle status/SOC checks for stop/soft-verify)",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39197",
@@ -26040,7 +26312,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-14",
       "body": "Continued live CPMS sandbox Mode B on feat/cpms-telematics-evse-api-parity : seeded only customer 2786 (vehicle e34b029f-94ad-42ef-aa3c-a99187e982e2 , EVSE EVLM08860485 ) and hid Mode A placeholders from the Mode B participant list Diagnosed set-charging-profile with transactionId: null as sandbox placeholder TxProfile (real CPMS LM always passes the active OCPP transaction id); telematics /fleet/... calls were skipped because placeholder vehicle ids fall through to EVSE Fixed process crash on i",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39286",
@@ -26050,7 +26322,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-17",
       "body": "Fixed DR restore to follow the chosen curtailment pathway at actual execution ( restoreCustomer in Temporal DR activities): EVSE set-charging-profile restores via clear-charging-profile (sandbox is trigger-only, same workflow) Fixed the sandbox Mode B unit job after the allowlist vehicle id change; pushed cd54ae2 on MR !25",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38794",
@@ -26350,7 +26622,7 @@
       "author": "Sudeep",
       "date": "2026-08-31",
       "body": "Went through the implement guide for this task and also studied the data abstraction layer already implemented in cpms repo",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39724",
@@ -26360,7 +26632,7 @@
       "author": "Sudeep",
       "date": "2026-08-31",
       "body": "started the implementation of DAL in payment service first",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38776",
@@ -26900,7 +27172,7 @@
       "author": "Priyanshu",
       "date": "2026-08-10",
       "body": "Alfanar prod: OCI-only inventory updated OCI region: me-jeddah-1 OCI compartment: alfanar Route table, security list, and NSG rule details included Latest report generated and updated",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39048",
@@ -26910,7 +27182,7 @@
       "author": "Priyanshu",
       "date": "2026-08-12",
       "body": "Document Link:-",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39054",
@@ -26920,7 +27192,7 @@
       "author": "Srikant",
       "date": "2026-08-12",
       "body": "Doc review Document Link:-",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39127",
@@ -26930,7 +27202,7 @@
       "author": "Srikant",
       "date": "2026-08-13",
       "body": "doc review completed",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38911",
@@ -26940,7 +27212,7 @@
       "author": "Priyanshu",
       "date": "2026-08-10",
       "body": "Adani prod: Combined AWS + OCI inventory created AWS region: ap-south-1 OCI region: ap-mumbai-1 OCI compartment: adani Route table, security list, NSG, AWS route, and AWS security group rule details included Latest report generated and updated",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39049",
@@ -26950,7 +27222,7 @@
       "author": "Priyanshu",
       "date": "2026-08-12",
       "body": "Document Link:-",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39053",
@@ -26960,7 +27232,7 @@
       "author": "Srikant",
       "date": "2026-08-12",
       "body": "Doc Review of Document Link:-",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39126",
@@ -26970,7 +27242,7 @@
       "author": "Srikant",
       "date": "2026-08-13",
       "body": "doc review done",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38799",
@@ -26980,7 +27252,7 @@
       "author": "Priyanshu",
       "date": "2026-08-06",
       "body": "\u2022 Updated the canada-prod AWS cloud inventory documentation. Changes completed: Created/refreshed canada-prod inventory for AWS ca-central-1. Added structured Confluence-ready sections by service. Covered VPCs, subnets, route tables, internet/NAT gateways, security groups, Elastic IPs, EC2, EBS, load balancers, target groups, RDS, MSK, EKS, Auto Scaling groups, launch templates, SNS, ACM, Route53, and S3. Added OpenSearch coverage and documented the active OpenSearch domain.",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38909",
@@ -26990,7 +27262,7 @@
       "author": "Priyanshu",
       "date": "2026-08-10",
       "body": "Canada prod: AWS-only inventory for ca-central-1 Service Summary links added Plain Markdown links only, no visible HTML anchors Latest report generated and updated",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38912",
@@ -27000,7 +27272,7 @@
       "author": "Priyanshu",
       "date": "2026-08-10",
       "body": "link - https://elocity.atlassian.net/wiki/spaces/DevOps/pages/2175336449/canada-prod+AWS+Cloud+Resource+Inventory",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39052",
@@ -27010,7 +27282,7 @@
       "author": "Srikant",
       "date": "2026-08-12",
       "body": "Document review link -",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39125",
@@ -27020,7 +27292,7 @@
       "author": "Srikant",
       "date": "2026-08-13",
       "body": "Doc Review complete",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38613",
@@ -27030,7 +27302,7 @@
       "author": "Priyanshu",
       "date": "2026-08-05",
       "body": "started working on the detailed documentation of existing infrastructure.",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38630",
@@ -27040,7 +27312,7 @@
       "author": "Priyanshu",
       "date": "2026-08-05",
       "body": "link :- Changes completed: Refreshed lower-env inventory for OCI Toronto region and AWS us-east-1. Added deeper OCI resource coverage including block volumes, boot volumes, object storage buckets, certificates, vaults, and OKE resources. Added AWS coverage for Lambda, ECR, CloudFormation, launch templates, Route53, ACM, S3, and related resources. Added OCI OpenSearch cluster details after validating from OCI console and targeted CLI lookup. OCI OpenSearch clusters added.",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38789",
@@ -28790,7 +29062,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-04",
       "body": "Started with the testing and completed few flows in local testing. Spent most of the time in initial integration setup and integration issues. Local testing is completed and I need to do end to end testing with the mobile app but I was unable to build the app due to build failure.",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38731",
@@ -28800,7 +29072,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-05",
       "body": "Worked on following: 1. Smartcar webhook MR ( !1019 ) \u2014 Simplified feature/smartcar-webhook-vehicle-state-ingestion vs apr26-release , ran multi-agent review, fixed usedFallback correctness, added regression tests 2. Smartcar Connect config \u2014 Env-gated auto webhook subscribe/unsubscribe; fixed 401 subscribe auth (legacy vs API client); consolidated env into JSON configs; then moved config to tenant AWS Secrets Manager + Redis cache ( .env Smartcar values removed) Debugging / clarifications Simul",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38793",
@@ -28810,7 +29082,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-06",
       "body": "Smartcar app build and integration setup Mobile app rebuild/setup for Smartcar Connect ( SMARTCAR_CLIENT_ID is build-time, not Firebase). Local Connect + webhook path exercised; clarified Connect vehicles \u2260 dashboard simulator vehicles (must select the same sim vehicle during Connect). Config moved to tenant AWS Secrets Manager (JSON blobs) with env-gated webhookAutoSubscribe . Battery capacity \u201cincapable\u201d on connect is handled (75 kWh fallback) \u2014 does not block save. Smartcar remaining flows te",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38979",
@@ -28820,7 +29092,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-10",
       "body": "Update \u2014 Smartcar Connect session lifecycle & API contract ( !1019 , 9cb71183e ) Added mobile API contract doc ( docs/Smartcar-Connect-Mobile-API-Contract.md ) Extracted smartcarSessionLifecycle.service ; simplified Smartcar DTOs/controller/client Removed unused fleetJob.service + batch request DTO Hardened vehicle-state ingest/writer paths; added unit tests for Smartcar + session lifecycle",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39031",
@@ -28830,7 +29102,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-11",
       "body": "Aligned fleet start/stop with webhook-owned vehicle state ( isOnline , freshness timestamps, needsReauth / offline preflight) Added GET /fleet/vehicle/:id/status (SOC, online/plugged/charging/connection) Fixed start/stop charge writes to stop relying on old cache/ lastUpdatedAt fields MR: https://gitlab.com/elocity1/backend/cpms/-/merge_requests/1019",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38892",
@@ -30710,7 +30982,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-24",
       "body": "Continued sandbox live-CPMS work on worktree feat/cpms-telematics-evse-api-parity : kept Mode A fixture path unchanged and added Mode B mapping (live transformer, enrolled customer, dedicated chargePointId) Seeded Mode B with live customer 2786 / vehicle e34b029f-\u2026 / EVSE EVLM08860485 and removed other Mode B seed customers Fixed DR create so Mode B enrolls only allowlisted customers (UI was filtering participants but load-management still targeted everyone on the transformer) Traced CPMS dispat",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38898",
@@ -30850,7 +31122,7 @@
       "author": "Sahil Kumar",
       "date": "2026-08-24",
       "body": "Raised EVLM domain unit coverage toward a 75% line floor: injectable deps seams + behavioral tests for grid (transformers/groups), incentives (lifecycle, resolver, publish, payout), and sandbox (cleanup, DR executor, status/scenario) Created 16 local commits on evlm master (not pushed) across those waves, plus c8 --lines=75 and TEST_STRATEGY/CI soft-gate notes ( coverage still allow_failure ) Unblocked Nest/watch tsc after coverage seams: moved @Optional() / @Inject() off constructor overloads (",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38891",
@@ -31960,7 +32232,7 @@
       "author": "Sudeep",
       "date": "2026-08-09",
       "body": "resolved all review comments",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39222",
@@ -31970,7 +32242,7 @@
       "author": "Vinay",
       "date": "2026-08-17",
       "body": "reviewed and ready to merge",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38539",
@@ -31980,7 +32252,7 @@
       "author": "Vinay",
       "date": "2026-08-04",
       "body": "a test is failing, please check and we can approve it",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38563",
@@ -31990,7 +32262,7 @@
       "author": "Shambu",
       "date": "2026-08-04",
       "body": "done",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "38638",
@@ -32000,7 +32272,7 @@
       "author": "Vinay",
       "date": "2026-08-05",
       "body": "review done",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39665",
@@ -32010,7 +32282,7 @@
       "author": "Vinay",
       "date": "2026-08-27",
       "body": "merged",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39325",
@@ -33120,7 +33392,7 @@
       "author": "Sahil Siddiqui",
       "date": "2026-08-27",
       "body": "WebApp FE complete (HIEV-7359) Integration tests finished. MR ready to merge: https://gitlab.evnet.xyz/elocity1/frontend/web/cpms-portal/-/merge_requests/787 Overview Unique Drivers card now uses unique_drivers_v2 with stacked first-time / returning visualization (Utilization pie colors).",
-      "on_sheet": false
+      "on_sheet": true
     },
     {
       "id": "39668",

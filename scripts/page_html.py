@@ -46,15 +46,15 @@ team_util = Σ logged_days ÷ Σ available_days</code>
           </div>
           <div class="formula-card">
             <dt>Sprint planned / mid-sprint mix %</dt>
-            <dd>Share of that person’s (or the team’s) August worklog seconds. Sprint planned = Jira tickets on the sprint plan. Mid-sprint = Jira tickets added after planning, not on the plan.</dd>
+            <dd>Share of that person’s (or the team’s) August worklog seconds. Sprint planned = Jira tickets on the August 26 sheet <strong>and their subtasks</strong>. Mid-sprint = everything else with August time or comments.</dd>
             <code>planned% = 100 × planned_seconds ÷ (planned + mid-sprint)
 mid% = 100 × mid_sprint_seconds ÷ (planned + mid-sprint)</code>
           </div>
           <div class="formula-card">
             <dt>Estimation accuracy</dt>
             <dd>Same-scope only. Missing or NA sprint-plan PD → that Jira ticket is skipped. 1.00 = exact; &gt; 1 over-ran the numbered estimate. Colour: green ≤ 1.10, amber ≤ 1.50, else red. Open/NA plan Jira tickets (e.g. EVLM) stay in sprint-planned mix, not in this ratio. The mix bar beside it is sprint-planned hours vs mid-sprint / ad hoc hours (share of all logged time).</dd>
-            <code>ticket_acc = August_days_on_that_jira_ticket ÷ sprint_plan_PD
-person_acc = August_days_on_jira_tickets_with_numeric_PD ÷ sprint_plan_PD
+            <code>ticket_acc = August_days_on_that_jira_ticket_and_subtasks ÷ sprint_plan_PD
+person_acc = August_days_on_numeric_PD_plan_tickets_and_their_subtasks ÷ sprint_plan_PD
 mean_ticket_acc = average(ticket_acc)
   only Jira tickets with a numeric plan and logged &gt; 0</code>
           </div>
@@ -617,7 +617,7 @@ NOTES_JS = r"""
             ["Sprint planned PD", stats.plan],
             ["Sprint planned time", stats.on_html],
             ["Mid-sprint time", stats.off_html],
-            ["Planned tickets touched", String(stats.sheet)],
+            ["Sprint-planned tickets (sheet assignee)", String(stats.sheet)],
             ["Mid-sprint Jira tickets touched", String(stats.offsheet)]
           ]
         },
@@ -864,7 +864,7 @@ def render_page(
 
       <section class="block" id="sheet">
         <h2>Sprint planned tickets</h2>
-        <p class="note team-only">Tickets that were part of sprint planning (August 26 workbook). Search by feature, assignee, or Jira ticket.</p>
+        <p class="note team-only">Tickets assigned on the August 26 workbook, plus Jira subtasks of those tickets. Person view uses the <strong>sheet assignee</strong> only — not everyone who logged or commented.</p>
         <p class="note person-only" id="sheetPersonNote" hidden></p>
         <div class="controls">
           {assignee_field}
@@ -879,8 +879,8 @@ def render_page(
                 {th("Feature", "Sprint-plan feature")}
                 {th("Assignee", "Sprint-plan assignee")}
                 {th("Plan", "Sprint-plan PD", True)}
-                {th("Logged of assignee avail", "August days on this Jira ticket of assignee available days", True)}
-                {th("Accuracy", "August days on this Jira ticket ÷ sprint-plan PD", True)}
+                {th("Logged of assignee avail", "August days on this ticket and its subtasks of assignee available days", True)}
+                {th("Accuracy", "August days on this ticket and its subtasks ÷ sprint-plan PD", True)}
                 {th("Status", "Jira status")}
               </tr>
             </thead>
@@ -1216,8 +1216,8 @@ def render_page(
       if (onChip) onChip.innerHTML = "Sprint planned " + stats.on_html;
       if (offChip) offChip.innerHTML = "Mid-sprint " + stats.off_html;
       setText("sheetPersonNote", stats.sheet
-        ? (stats.sheet + " sprint-planned ticket" + (stats.sheet === 1 ? "" : "s") + " this person owns or touched (worklog or comment).")
-        : "No sprint-planned tickets for this person.");
+        ? (stats.sheet + " sprint-planned ticket" + (stats.sheet === 1 ? "" : "s") + " assigned to this person on the August 26 sheet (subtasks of those tickets included).")
+        : "No sprint-planned tickets assigned to this person on the sheet.");
       setText("offsheetPersonNote", stats.offsheet
         ? (stats.offsheet + " mid-sprint Jira ticket" + (stats.offsheet === 1 ? "" : "s") + " this person logged time on or commented on.")
         : "No mid-sprint Jira tickets this person logged or commented on.");

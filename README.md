@@ -40,4 +40,5 @@ Writes `data/extracted.json`, `report/index.html`, `report/retrospective.md`.
 - Jira returns at most 20 worklogs per issue in these dumps. **HIEV-6938, HIEV-6940, HIEV-6941** are truncated.
 - QA sheet rows have no Jira tickets.
 - Bugs **worked** in August are credited to people who logged time or commented on that bug, not the assignee at create time. Lavanya is excluded from person lists.
-- Person estimation accuracy uses only time on that person’s **planned sheet tickets**, not all August logs.
+- Person estimation accuracy uses only time on that person’s **planned sheet tickets** (including subtasks of those tickets), not all August logs.
+- Person view of sprint-planned tickets uses the **sheet assignee**, not everyone who logged time or commented.

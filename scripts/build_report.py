@@ -750,7 +750,9 @@ def util_pill(ratio: float | None) -> str:
 def build():
     planned = load_json(PLANNED_PATH)
     planned_rows = planned["rows"]
-    planned_keys = {r["jira"] for r in planned_rows if r.get("jira")}
+    sheet_jira = {r["jira"] for r in planned_rows if r.get("jira")}
+    planned_roots = sheet_jira | {r["parent"] for r in planned_rows if r.get("parent")}
+    planned_keys = set(sheet_jira)
     leave_map = load_leave()
 
     planned_issues = merge_issues([RAW_DIR / RAW_FILES["planned_issues"]])
@@ -759,12 +761,47 @@ def build():
         + [RAW_DIR / RAW_FILES["planned_issues"], RAW_DIR / RAW_FILES["bugs_created"]]
     )
 
+    def issue_parent_key(key: str) -> str:
+        fields = (all_issues.get(key) or {}).get("fields") or {}
+        parent = fields.get("parent") or {}
+        return (parent.get("key") or "") if isinstance(parent, dict) else ""
+
+    def ancestor_keys(key: str) -> list[str]:
+        out: list[str] = []
+        seen: set[str] = set()
+        cur = key
+        while cur and cur not in seen:
+            out.append(cur)
+            seen.add(cur)
+            cur = issue_parent_key(cur)
+        return out
+
+    def is_planned_work_key(key: str) -> bool:
+        return any(k in planned_roots for k in ancestor_keys(key))
+
+    def nearest_sheet_jira(key: str) -> str:
+        for k in ancestor_keys(key):
+            if k in sheet_jira:
+                return k
+        return ""
+
+    def issue_summary(key: str) -> str:
+        fields = (all_issues.get(key) or {}).get("fields") or {}
+        return fields.get("summary") or ""
+
+    def issue_status_name(key: str) -> str:
+        fields = (all_issues.get(key) or planned_issues.get(key) or {}).get("fields") or {}
+        return ((fields.get("status") or {}).get("name")) or ""
+
     worklogs, truncated, worklog_audit = collect_worklogs(all_issues)
     comments = collect_comments(all_issues)
     for log in worklogs:
-        log["on_sheet"] = log["key"] in planned_keys
+        log["on_sheet"] = is_planned_work_key(log["key"])
     for comment in comments:
-        comment["on_sheet"] = comment["key"] in planned_keys
+        comment["on_sheet"] = is_planned_work_key(comment["key"])
+    planned_keys = {
+        log["key"] for log in worklogs if log["on_sheet"]
+    } | {c["key"] for c in comments if c["on_sheet"]} | set(sheet_jira)
 
     people_on_key: dict[str, set[str]] = defaultdict(set)
     for log in worklogs:
@@ -774,44 +811,97 @@ def build():
         if comment["author"] not in EXCLUDE_PEOPLE and comment["author"] != "Unassigned":
             people_on_key[comment["key"]].add(comment["author"])
 
-    # Ticket-level planned vs actual (August worklogs on that key)
     by_ticket_seconds: dict[str, int] = defaultdict(int)
     by_ticket_people: dict[str, set[str]] = defaultdict(set)
+    rolled_seconds: dict[str, int] = defaultdict(int)
+    rolled_people: dict[str, set[str]] = defaultdict(set)
     for log in worklogs:
         by_ticket_seconds[log["key"]] += log["seconds"]
         by_ticket_people[log["key"]].add(log["author"])
+        root = nearest_sheet_jira(log["key"])
+        if root:
+            rolled_seconds[root] += log["seconds"]
+            rolled_people[root].add(log["author"])
+
+    sheet_by_jira = {r["jira"]: r for r in planned_rows if r.get("jira")}
 
     ticket_rows = []
     for row in planned_rows:
         key = row.get("jira") or ""
         est = parse_effort(row.get("effort"))
-        actual_s = by_ticket_seconds.get(key, 0) if key else 0
+        actual_s = rolled_seconds.get(key, 0) if key else 0
         actual_d = days(actual_s)
         ratio = accuracy(actual_d, est)
-        status = ((planned_issues.get(key) or {}).get("fields") or {}).get("status", {})
         if canon_name(row.get("assignee")) in EXCLUDE_PEOPLE:
             continue
+        assignee = canon_name(row.get("assignee"))
         ticket_rows.append(
             {
                 **row,
+                "kind": "sheet",
                 "estimated_days": est,
                 "actual_seconds": actual_s,
                 "actual_hours": hours(actual_s),
                 "actual_days": actual_d,
                 "accuracy": ratio,
                 "accuracy_band": pill(ratio),
-                "jira_status": (status or {}).get("name") or "",
-                "logged_by": sorted(by_ticket_people.get(key, [])),
-                "touched_by": sorted(
-                    people_on_key.get(key, set())
-                    | (
-                        {canon_name(row.get("assignee"))}
-                        if canon_name(row.get("assignee")) not in EXCLUDE_PEOPLE
-                        else set()
-                    )
-                ),
+                "jira_status": issue_status_name(key),
+                "logged_by": sorted(rolled_people.get(key, set())),
+                "touched_by": [assignee] if assignee not in EXCLUDE_PEOPLE else [],
             }
         )
+
+    extra_keys = sorted(
+        (
+            {log["key"] for log in worklogs if log["on_sheet"] and log["key"] not in sheet_jira}
+            | {c["key"] for c in comments if c["on_sheet"] and c["key"] not in sheet_jira}
+        )
+    )
+    subtask_rows_by_parent: dict[str, list[dict]] = defaultdict(list)
+    for key in extra_keys:
+        parent_jira = nearest_sheet_jira(key)
+        ctx = sheet_by_jira.get(parent_jira)
+        if not ctx:
+            for anc in ancestor_keys(key):
+                matches = [r for r in planned_rows if r.get("parent") == anc]
+                if matches:
+                    ctx = matches[0]
+                    parent_jira = ctx.get("jira") or anc
+                    break
+        if not ctx or canon_name(ctx.get("assignee")) in EXCLUDE_PEOPLE:
+            continue
+        assignee = canon_name(ctx.get("assignee"))
+        actual_s = by_ticket_seconds.get(key, 0)
+        summary = issue_summary(key) or key
+        subtask_rows_by_parent[parent_jira].append(
+            {
+                "group": ctx.get("group") or "",
+                "feature": f"Subtask of {parent_jira} · {summary}",
+                "team": ctx.get("team") or "",
+                "assignee": assignee,
+                "owner": ctx.get("owner") or "",
+                "parent": parent_jira,
+                "effort": "",
+                "due": ctx.get("due") or "",
+                "jira": key,
+                "kind": "subtask",
+                "estimated_days": None,
+                "actual_seconds": actual_s,
+                "actual_hours": hours(actual_s),
+                "actual_days": days(actual_s),
+                "accuracy": None,
+                "accuracy_band": "n/a",
+                "jira_status": issue_status_name(key),
+                "logged_by": sorted(by_ticket_people.get(key, set())),
+                "touched_by": [assignee],
+            }
+        )
+
+    interleaved = []
+    for row in ticket_rows:
+        interleaved.append(row)
+        interleaved.extend(sorted(subtask_rows_by_parent.get(row["jira"], []), key=lambda r: r["jira"]))
+    ticket_rows = interleaved
 
     # Person-level
     people = sorted(
@@ -850,12 +940,12 @@ def build():
         planned_s = sum(
             l["seconds"]
             for l in worklogs
-            if l["author"] == person and l["key"] in planned_keys
+            if l["author"] == person and l["on_sheet"]
         )
         estimated_planned_s = sum(
             l["seconds"]
             for l in worklogs
-            if l["author"] == person and l["key"] in keys_with_plan_pd
+            if l["author"] == person and nearest_sheet_jira(l["key"]) in keys_with_plan_pd
         )
         bug_s = sum(
             l["seconds"]
@@ -1054,7 +1144,7 @@ def build():
         "hours_per_day": HOURS_PER_DAY,
         "notes": [
             "Actuals are Jira worklogs started 1–31 Aug 2026 (8h = 1d).",
-            "Estimation accuracy uses only matching scope: ticket = August days on that Jira ticket ÷ sprint-plan PD; person = August days on that person's sprint-planned Jira tickets that have a numeric PD ÷ their sprint-plan PD. Jira tickets on the plan with NA/open estimates (e.g. HIEV-6941) count as sprint-planned time, not as an estimate miss or over-run.",
+            "Estimation accuracy uses only matching scope: ticket = August days on that Jira ticket and its subtasks ÷ sprint-plan PD; person = August days on that person's sprint-planned Jira tickets that have a numeric PD (including subtasks of those tickets) ÷ their sprint-plan PD. Jira tickets on the plan with NA/open estimates (e.g. HIEV-6941) count as sprint-planned time, not as an estimate miss or over-run. Person view of sprint-planned tickets is the August 26 sheet assignee, plus Jira subtasks of those tickets — not everyone who commented.",
             "August hours use worklog `started` when Jira returned the log. For the 9 tickets with more than 20 worklogs, missing logs are filled from issue changelog timespent deltas (date = when the log was submitted). Those fills were checked against issue timespent (HIEV-6785 changelog page misses 0.7h of pre-May history, not August).",
             "Bugs worked = distinct HIEV issuetype Bug Jira tickets with at least one August worklog or August comment. A person is credited for a unique bug Jira ticket if they logged time or commented on it in August — not the ticket assignee at create time.",
             "Fix hours = August worklogs on Bug tickets vs Task/Sub-task tickets (sprint planned and mid-sprint).",
@@ -1430,11 +1520,16 @@ def write_html(data: dict, daily, people, dates) -> None:
         band = t["accuracy_band"]
         avail = expected_by.get(t["assignee"], 0)
         actual_cell = html_vs(t["actual_seconds"], avail) if avail else h(fmt_hd(t["actual_seconds"]))
-        names = people_attr(t["assignee"], t.get("logged_by") or [], t.get("touched_by") or [])
+        names = people_attr(t["assignee"])
+        jira_cell = (
+            f"<a href='https://elocity.atlassian.net/browse/{h(t['jira'])}'>{h(t['jira'])}</a>"
+        )
+        if t.get("kind") == "subtask":
+            jira_cell += " <span class='pill status'>subtask</span>"
         ticket_trs.append(
             "<tr "
             f"data-people='{names}'>"
-            f"<td><a href='https://elocity.atlassian.net/browse/{h(t['jira'])}'>{h(t['jira'])}</a></td>"
+            f"<td>{jira_cell}</td>"
             f"<td>{h(t['group'])}</td>"
             f"<td>{h(t['feature'])}</td>"
             f"<td>{h(t['assignee'])}</td>"
@@ -1744,7 +1839,7 @@ def write_html(data: dict, daily, people, dates) -> None:
             "sheet": sum(
                 1
                 for t in data["tickets"]
-                if t.get("jira") and name in (t.get("touched_by") or [])
+                if t.get("jira") and canon_name(t.get("assignee")) == name
             ),
             "offsheet": sum(
                 1
