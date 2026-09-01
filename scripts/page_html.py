@@ -46,17 +46,17 @@ team_util = Σ logged_days ÷ Σ available_days</code>
           </div>
           <div class="formula-card">
             <dt>Sprint planned / mid-sprint mix %</dt>
-            <dd>Share of that person’s (or the team’s) August worklog seconds. Sprint planned = keys on the sprint plan. Mid-sprint = keys added after planning, not on the plan.</dd>
+            <dd>Share of that person’s (or the team’s) August worklog seconds. Sprint planned = Jira tickets on the sprint plan. Mid-sprint = Jira tickets added after planning, not on the plan.</dd>
             <code>planned% = 100 × planned_seconds ÷ (planned + mid-sprint)
 mid% = 100 × mid_sprint_seconds ÷ (planned + mid-sprint)</code>
           </div>
           <div class="formula-card">
             <dt>Estimation accuracy</dt>
-            <dd>Same-scope only. Missing or NA sprint-plan PD → that key is skipped. 1.00 = exact; &gt; 1 over-ran the numbered estimate. Colour: green ≤ 1.10, amber ≤ 1.50, else red. Open/NA plan keys (e.g. EVLM) stay in sprint-planned mix, not in this ratio. The mix bar beside it is sprint-planned hours vs mid-sprint / ad hoc hours (share of all logged time).</dd>
-            <code>ticket_acc = August_days_on_that_key ÷ sprint_plan_PD
-person_acc = August_days_on_keys_with_numeric_PD ÷ sprint_plan_PD
+            <dd>Same-scope only. Missing or NA sprint-plan PD → that Jira ticket is skipped. 1.00 = exact; &gt; 1 over-ran the numbered estimate. Colour: green ≤ 1.10, amber ≤ 1.50, else red. Open/NA plan Jira tickets (e.g. EVLM) stay in sprint-planned mix, not in this ratio. The mix bar beside it is sprint-planned hours vs mid-sprint / ad hoc hours (share of all logged time).</dd>
+            <code>ticket_acc = August_days_on_that_jira_ticket ÷ sprint_plan_PD
+person_acc = August_days_on_jira_tickets_with_numeric_PD ÷ sprint_plan_PD
 mean_ticket_acc = average(ticket_acc)
-  only keys with a numeric plan and logged &gt; 0</code>
+  only Jira tickets with a numeric plan and logged &gt; 0</code>
           </div>
           <div class="formula-card">
             <dt>Logged-of-available bar fill</dt>
@@ -65,8 +65,8 @@ mean_ticket_acc = average(ticket_acc)
           </div>
           <div class="formula-card">
             <dt>Bug-count bar fill</dt>
-            <dd>Unique Bug keys with an August worklog or comment by that person.</dd>
-            <code>bar% = 100 × person_bug_keys ÷ max(person_bug_keys)</code>
+            <dd>Unique Bug Jira tickets with an August worklog or comment by that person.</dd>
+            <code>bar% = 100 × person_bug_tickets ÷ max(person_bug_tickets)</code>
           </div>
           <div class="formula-card">
             <dt>Scrum attendance %</dt>
@@ -379,7 +379,7 @@ EXPORT_JS = r"""
     }
     function exportBugsCsv(name) {
       const headers = [
-        "key",
+        "jira",
         "summary",
         "status",
         "worked_by",
@@ -460,7 +460,7 @@ EXPORT_JS = r"""
       return toCsv(headers, rows);
     }
     function exportJournalCsv(name) {
-      const headers = ["person", "date", "kind", "key", "hours", "sprint_planned", "comment"];
+      const headers = ["person", "date", "kind", "jira", "hours", "sprint_planned", "comment"];
       const rows = [];
       personRows("#journal .person-day", name).forEach((section) => {
         const person = (section.getAttribute("data-person") || cellText(section.querySelector("h3"))).replace(/\s+\d.*/, "").trim();
@@ -618,7 +618,7 @@ NOTES_JS = r"""
             ["Sprint planned time", stats.on_html],
             ["Mid-sprint time", stats.off_html],
             ["Planned tickets touched", String(stats.sheet)],
-            ["Mid-sprint keys touched", String(stats.offsheet)]
+            ["Mid-sprint Jira tickets touched", String(stats.offsheet)]
           ]
         },
         {
@@ -631,7 +631,9 @@ NOTES_JS = r"""
         }
       ];
       box.innerHTML = groups.map((g) => {
-        const items = g.rows.map((r) => "<div><dt>" + r[0] + "</dt><dd>" + r[1] + "</dd></div>").join("");
+        const items = g.rows.map((r) => (
+          "<div class='notes-kpi'><span class='notes-kpi-label'>" + r[0] + "</span><span class='notes-kpi-value'>" + r[1] + "</span></div>"
+        )).join("");
         return "<section class='notes-metric-group'><h4>" + g.title + "</h4><div class='notes-metric-rows'>" + items + "</div></section>";
       }).join("");
     }
@@ -796,8 +798,8 @@ def render_page(
         <div class="kpi"><strong>{total_plan:.0f} PD</strong><span>Sprint planned estimates<small class="formula">Σ sprint-plan PD (NA excluded)</small></span></div>
         <div class="kpi"><strong>{kpi_logged}</strong><span>Logged of available<small class="formula">Σ logged of Σ available · 8h = 1d</small></span></div>
         <div class="kpi"><strong>{team_util if team_util is not None else "n/a"}</strong><span>Team util<small class="formula">Σ logged days ÷ Σ available days</small></span></div>
-        <div class="kpi"><strong>{avg_acc if avg_acc is not None else "n/a"}</strong><span>Mean ticket accuracy<small class="formula">avg(Aug days on key ÷ sprint-plan PD) for worked keys</small></span></div>
-        <div class="kpi"><strong>{off_count}</strong><span>Mid-sprint keys<small class="formula">{off_hours_label} · not in sprint planning</small></span></div>
+        <div class="kpi"><strong>{avg_acc if avg_acc is not None else "n/a"}</strong><span>Mean ticket accuracy<small class="formula">avg(Aug days on Jira ticket ÷ sprint-plan PD) for worked Jira tickets</small></span></div>
+        <div class="kpi"><strong>{off_count}</strong><span>Mid-sprint Jira tickets<small class="formula">{off_hours_label} · not in sprint planning</small></span></div>
         <div class="kpi"><strong>{kpi_scrum}</strong><span>Scrum attendance<small class="formula">attended expected ÷ expected (leave-adjusted)</small></span></div>
       </div>
       <div class="kpis person-only" id="personKpis" hidden>
@@ -805,7 +807,7 @@ def render_page(
         <div class="kpi"><strong id="pkLeave"></strong><span>Leave<small class="formula">Σ leave fraction in August</small></span></div>
         <div class="kpi"><strong id="pkUtil"></strong><span>Util<small class="formula">logged days ÷ available days</small></span></div>
         <div class="kpi"><strong id="pkPlan"></strong><span>Sprint planned PD<small class="formula">Σ sprint-plan PD for this assignee</small></span></div>
-        <div class="kpi"><strong id="pkBugs"></strong><span>Unique bugs worked<small class="formula">count of Bug keys with Aug log or comment</small></span></div>
+        <div class="kpi"><strong id="pkBugs"></strong><span>Unique bugs worked<small class="formula">count of Bug Jira tickets with Aug log or comment</small></span></div>
         <div class="kpi"><strong id="pkScrum"></strong><span>Scrum attendance<small class="formula">attended expected ÷ expected</small></span></div>
       </div>
       {FORMULAS_HTML}
@@ -850,7 +852,7 @@ def render_page(
                 {th("Mix", "planned% = 100 × sprint-planned seconds ÷ (planned + mid-sprint)")}
                 {th("Sprint planned of avail", "sprint-planned days of available days", True)}
                 {th("Mid-sprint of avail", "mid-sprint days of available days", True)}
-                {th("Accuracy", "August days on keys with a numeric PD ÷ sprint-plan PD", True)}
+                {th("Accuracy", "August days on Jira tickets with a numeric PD ÷ sprint-plan PD", True)}
                 {th("Logs", "count of August worklogs", True)}
                 {th("Comments", "count of August comments", True)}
               </tr>
@@ -862,7 +864,7 @@ def render_page(
 
       <section class="block" id="sheet">
         <h2>Sprint planned tickets</h2>
-        <p class="note team-only">Tickets that were part of sprint planning (August 26 workbook). Search by feature, assignee, or key.</p>
+        <p class="note team-only">Tickets that were part of sprint planning (August 26 workbook). Search by feature, assignee, or Jira ticket.</p>
         <p class="note person-only" id="sheetPersonNote" hidden></p>
         <div class="controls">
           {assignee_field}
@@ -872,13 +874,13 @@ def render_page(
           <table>
             <thead>
               <tr>
-                {th("Jira", "Issue key")}
+                {th("Jira", "Jira ticket")}
                 {th("Section", "Sprint-plan section")}
                 {th("Feature", "Sprint-plan feature")}
                 {th("Assignee", "Sprint-plan assignee")}
                 {th("Plan", "Sprint-plan PD", True)}
-                {th("Logged of assignee avail", "August days on this key of assignee available days", True)}
-                {th("Accuracy", "August days on this key ÷ sprint-plan PD", True)}
+                {th("Logged of assignee avail", "August days on this Jira ticket of assignee available days", True)}
+                {th("Accuracy", "August days on this Jira ticket ÷ sprint-plan PD", True)}
                 {th("Status", "Jira status")}
               </tr>
             </thead>
@@ -890,7 +892,7 @@ def render_page(
 
       <section class="block" id="offsheet">
         <h2>Mid-sprint tickets</h2>
-        <p class="note team-only">{offsheet_count} keys had August worklogs or comments but were <strong>not</strong> in sprint planning — they were added mid-sprint. Included in person totals, heatmap, and the journal (marked <em>mid-sprint</em>).</p>
+        <p class="note team-only">{offsheet_count} Jira tickets had August worklogs or comments but were <strong>not</strong> in sprint planning — they were added mid-sprint. Included in person totals, heatmap, and the journal (marked <em>mid-sprint</em>).</p>
         <p class="note person-only" id="offsheetPersonNote" hidden></p>
         <div class="controls">
           {assignee_field}
@@ -906,11 +908,11 @@ def render_page(
           <table>
             <thead>
               <tr>
-                {th("Jira", "Issue key")}
+                {th("Jira", "Jira ticket")}
                 {th("Type", "Jira issuetype")}
                 {th("Summary", "Jira summary")}
-                {th("Logged by", "People with August worklogs on this key")}
-                {th("Logged of available", "August days on this key of first logger’s available days", True)}
+                {th("Logged by", "People with August worklogs on this Jira ticket")}
+                {th("Logged of available", "August days on this Jira ticket of first logger’s available days", True)}
                 {th("Comments", "August comment count", True)}
                 {th("Status", "Jira status")}
               </tr>
@@ -918,12 +920,12 @@ def render_page(
             <tbody id="offsheetBody">{offsheet_trs}</tbody>
           </table>
         </div>
-        <p class="empty-msg" data-empty-for="offsheetBody" hidden>No mid-sprint keys this person logged or commented on.</p>
+        <p class="empty-msg" data-empty-for="offsheetBody" hidden>No mid-sprint Jira tickets this person logged or commented on.</p>
       </section>
 
       <section class="block" id="accuracy">
         <h2>2. Estimation accuracy</h2>
-        <p class="note team-only">Accuracy uses only sprint-planned keys with a numeric PD. The mix bar is share of <strong>all logged August hours</strong>: sprint planned (including open/NA PD keys) vs mid-sprint / ad hoc. Green ≤1.10, amber ≤1.50, red above.</p>
+        <p class="note team-only">Accuracy uses only sprint-planned Jira tickets with a numeric PD. The mix bar is share of <strong>all logged August hours</strong>: sprint planned (including open/NA PD Jira tickets) vs mid-sprint / ad hoc. Green ≤1.10, amber ≤1.50, red above.</p>
         <div class="legend"><span><i class="swatch sheet"></i>Sprint planned</span><span><i class="swatch other"></i>Mid-sprint / ad hoc</span></div>
         <p class="note person-only" id="accPersonNote" hidden></p>
         <div class="controls">{assignee_field}</div>
@@ -933,10 +935,10 @@ def render_page(
               <tr>
                 {th("Person", "Canonical name")}
                 {th("Plan PD", "Σ sprint-plan PD", True)}
-                {th("Actual on plan", "August days on sprint-planned keys that have a numeric PD", True)}
+                {th("Actual on plan", "August days on sprint-planned Jira tickets that have a numeric PD", True)}
                 {th("Logged of available", "all August days of available days", True)}
                 {th("Sprint vs mid-sprint", "planned% = 100 × sprint-planned seconds ÷ (planned + mid-sprint)")}
-                {th("Accuracy", "August days on keys with a numeric PD ÷ sprint-plan PD", True)}
+                {th("Accuracy", "August days on Jira tickets with a numeric PD ÷ sprint-plan PD", True)}
               </tr>
             </thead>
             <tbody id="accBody">{person_acc_trs}</tbody>
@@ -951,7 +953,7 @@ def render_page(
         <p class="note person-only" id="bugPersonNote" hidden></p>
         <div class="card">
           <h2>Bugs worked in August</h2>
-          <p class="note">Bars are unique bug keys each person logged time on or commented on in August.<small class="formula">fill% = 100 × person bug keys ÷ max person bug keys</small></p>
+          <p class="note">Bars are unique bug Jira tickets each person logged time on or commented on in August.<small class="formula">fill% = 100 × person bug Jira tickets ÷ max person bug Jira tickets</small></p>
           <div class="controls">{assignee_field}</div>
           <div class="bars" id="bugBars">{bug_bars}</div>
           <p class="empty-msg" data-empty-for-bars="bugBars" hidden>No August bug worklogs or comments for this person.</p>
@@ -972,7 +974,7 @@ def render_page(
           <table>
             <thead>
               <tr>
-                {th("Key", "Bug issue key")}
+                {th("Jira", "Bug Jira ticket")}
                 {th("Summary", "Jira summary")}
                 {th("Status", "Jira status")}
                 {th("Who worked it", "People with August worklog or comment")}
@@ -1077,47 +1079,64 @@ def render_page(
           </div>
         </div>
         <div class="card person-only notes-editor" id="notesEditor" hidden>
-          <h2 id="notesEditorTitle">Notes</h2>
-          <h3 class="notes-sub">From this report</h3>
-          <p class="note">Read-only. Pulled from Jira and the sprint plan so you don’t retype numbers.</p>
-          <div class="notes-facts" id="notesFacts"></div>
-          <h3 class="notes-sub">What they said</h3>
-          <label class="notes-field notes-field-lead">On the call
-            <textarea data-note="on_call" rows="5" placeholder="Capture what they said…"></textarea>
-          </label>
-          <h3 class="notes-sub">Retro prompts</h3>
-          <div class="notes-prompts">
-            <label class="notes-field">What went well
-              <textarea data-note="went_well" rows="4"></textarea>
+          <p class="notes-person-name" id="notesEditorTitle">Notes</p>
+          <div class="notes-panel">
+            <div class="notes-panel-head">
+              <h3 class="notes-sub">From this report</h3>
+              <p class="note">Read-only. Pulled from Jira and the sprint plan so you don’t retype numbers.</p>
+            </div>
+            <div class="notes-facts" id="notesFacts"></div>
+          </div>
+          <div class="notes-panel">
+            <h3 class="notes-sub">What they said</h3>
+            <label class="notes-compose">
+              <span>On the call</span>
+              <textarea class="notes-input" data-note="on_call" rows="6" placeholder="Write what they said on the call…"></textarea>
             </label>
-            <label class="notes-field">What was hard or slipped
-              <textarea data-note="hard" rows="4"></textarea>
-            </label>
-            <label class="notes-field">Mid-sprint / ad hoc — why it landed
-              <textarea data-note="mid_sprint" rows="4"></textarea>
-            </label>
-            <label class="notes-field">Plan vs actual / estimation
-              <textarea data-note="estimation" rows="4"></textarea>
-            </label>
-            <label class="notes-field">Bugs / quality
-              <textarea data-note="quality" rows="4"></textarea>
-            </label>
-            <label class="notes-field">Blockers / help needed
-              <textarea data-note="blockers" rows="4"></textarea>
-            </label>
-            <label class="notes-field">Action for next sprint
-              <textarea data-note="next_actions" rows="4"></textarea>
-            </label>
-            <label class="notes-field">Shout-out
-              <textarea data-note="shoutout" rows="4"></textarea>
-            </label>
+          </div>
+          <div class="notes-panel">
+            <h3 class="notes-sub">Retro prompts</h3>
+            <div class="notes-prompts">
+              <label class="notes-compose">
+                <span>What went well</span>
+                <textarea class="notes-input" data-note="went_well" rows="5"></textarea>
+              </label>
+              <label class="notes-compose">
+                <span>What was hard or slipped</span>
+                <textarea class="notes-input" data-note="hard" rows="5"></textarea>
+              </label>
+              <label class="notes-compose">
+                <span>Mid-sprint / ad hoc — why it landed</span>
+                <textarea class="notes-input" data-note="mid_sprint" rows="5"></textarea>
+              </label>
+              <label class="notes-compose">
+                <span>Plan vs actual / estimation</span>
+                <textarea class="notes-input" data-note="estimation" rows="5"></textarea>
+              </label>
+              <label class="notes-compose">
+                <span>Bugs / quality</span>
+                <textarea class="notes-input" data-note="quality" rows="5"></textarea>
+              </label>
+              <label class="notes-compose">
+                <span>Blockers / help needed</span>
+                <textarea class="notes-input" data-note="blockers" rows="5"></textarea>
+              </label>
+              <label class="notes-compose">
+                <span>Action for next sprint</span>
+                <textarea class="notes-input" data-note="next_actions" rows="5"></textarea>
+              </label>
+              <label class="notes-compose">
+                <span>Shout-out</span>
+                <textarea class="notes-input" data-note="shoutout" rows="5"></textarea>
+              </label>
+            </div>
           </div>
         </div>
       </section>
 
       <section class="block" id="journal">
         <h2>Daily worklogs and comments</h2>
-        <p class="note">Expand a day to see ticket keys, time spent, and comments. <em>planned</em> = sprint planned; <em>mid-sprint</em> = added after planning. The assignee filter applies here with the rest of the report.</p>
+        <p class="note">Expand a day to see Jira tickets, time spent, and comments. <em>planned</em> = sprint planned; <em>mid-sprint</em> = added after planning. The assignee filter applies here with the rest of the report.</p>
         <div class="controls">{assignee_field}</div>
         <div id="journal">{journal}</div>
         <p class="empty-msg" id="journalEmpty" hidden>No August worklogs or comments for this person.</p>
@@ -1200,9 +1219,9 @@ def render_page(
         ? (stats.sheet + " sprint-planned ticket" + (stats.sheet === 1 ? "" : "s") + " this person owns or touched (worklog or comment).")
         : "No sprint-planned tickets for this person.");
       setText("offsheetPersonNote", stats.offsheet
-        ? (stats.offsheet + " mid-sprint key" + (stats.offsheet === 1 ? "" : "s") + " this person logged time on or commented on.")
-        : "No mid-sprint keys this person logged or commented on.");
-      setText("accPersonNote", "Same-scope only: August days on this person’s sprint-planned keys that have a numeric PD ÷ their sprint-plan PD. NA/open plan keys and mid-sprint time are not estimate misses.");
+        ? (stats.offsheet + " mid-sprint Jira ticket" + (stats.offsheet === 1 ? "" : "s") + " this person logged time on or commented on.")
+        : "No mid-sprint Jira tickets this person logged or commented on.");
+      setText("accPersonNote", "Same-scope only: August days on this person’s sprint-planned Jira tickets that have a numeric PD ÷ their sprint-plan PD. NA/open plan Jira tickets and mid-sprint time are not estimate misses.");
       setText("bugPersonNote", stats.bugs
         ? (stats.bugs + " unique bug" + (stats.bugs === 1 ? "" : "s") + " this person logged time on or commented on in August.")
         : "No bugs this person worked in August.");

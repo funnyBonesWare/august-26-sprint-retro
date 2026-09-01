@@ -588,81 +588,137 @@ details ul { margin: 0 0 10px 18px; padding: 0; }
 
 .notes-steps {
   max-width: 72ch;
-  margin: 0 0 14px;
-  padding-left: 1.2rem;
+  margin: 0 0 18px;
+  padding-left: 1.25rem;
   color: var(--muted);
   font-size: 14px;
+  line-height: 1.5;
 }
-.notes-steps li { margin: 0 0 6px; }
+.notes-steps li { margin: 0 0 8px; }
 .notes-steps strong { color: var(--ink); }
-.notes-editor .notes-sub {
+#notesEditor.notes-editor {
+  width: 100%;
+  max-width: none;
+  padding: 28px 28px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+#notesEditor.notes-editor[hidden] { display: none !important; }
+.notes-person-name {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 28px;
+  font-weight: 560;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.2;
+}
+.notes-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+.notes-panel-head .note { margin-bottom: 0; }
+#notesEditor .notes-sub {
   font-family: "Fraunces", Georgia, serif;
   font-size: 18px;
   font-weight: 560;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   text-transform: none;
   color: var(--ink);
-  margin: 22px 0 8px;
+  margin: 0;
 }
-.notes-facts {
+#notes .notes-facts {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin: 0 0 8px;
+  gap: 16px;
+  width: 100%;
 }
 .notes-metric-group {
-  background: #faf7f1;
+  background: #f7f3eb;
   border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 12px 14px;
+  border-radius: 12px;
+  padding: 16px 18px 18px;
+  min-width: 0;
 }
 .notes-metric-group h4 {
-  margin: 0 0 8px;
+  margin: 0 0 14px;
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   color: var(--muted);
+  font-weight: 650;
 }
 .notes-metric-rows {
-  display: grid;
-  gap: 8px;
-}
-.notes-metric-rows dt {
-  font-size: 11px;
-  color: var(--muted);
-  font-weight: 650;
-}
-.notes-metric-rows dd { margin: 2px 0 0; font-size: 13px; color: var(--ink); }
-.notes-prompts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px 16px;
-}
-.notes-field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin: 0;
-  font-size: 13px;
+  gap: 14px;
+}
+.notes-kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.notes-kpi-label {
+  font-size: 12px;
   color: var(--muted);
   font-weight: 650;
-  width: 100%;
 }
-.notes-field-lead { margin-bottom: 8px; }
-.notes-field textarea {
-  font: inherit;
-  font-weight: 400;
+.notes-kpi-value {
+  font-size: 15px;
   color: var(--ink);
-  padding: 10px 12px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  width: 100%;
-  min-height: 5.5rem;
-  resize: vertical;
-  background: #fff;
+  line-height: 1.35;
 }
-@media (max-width: 900px) {
-  .notes-facts, .notes-prompts { grid-template-columns: 1fr; }
+.notes-kpi-value .timepair { align-items: flex-start; }
+.notes-compose {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--muted);
+}
+.notes-compose span { display: block; }
+.notes-input,
+#notesEditor textarea.notes-input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-height: 132px;
+  margin: 0;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid #d9d3c8;
+  border-radius: 10px;
+  resize: vertical;
+  box-shadow: inset 0 1px 2px rgba(26, 25, 22, 0.04);
+}
+#notesEditor textarea.notes-input:focus {
+  outline: 2px solid var(--accent-soft);
+  border-color: var(--accent);
+}
+#notes .notes-prompts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 20px;
+  width: 100%;
+}
+@media (max-width: 980px) {
+  #notes .notes-facts,
+  #notes .notes-prompts { grid-template-columns: 1fr; }
+  #notesEditor.notes-editor { padding: 18px 16px 24px; }
 }
 #notesTeamBody tr.has-notes td:first-child { font-weight: 650; }
 

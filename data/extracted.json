@@ -6,11 +6,11 @@
   "hours_per_day": 8.0,
   "notes": [
     "Actuals are Jira worklogs started 1\u201331 Aug 2026 (8h = 1d).",
-    "Estimation accuracy uses only matching scope: ticket = August days on that Jira key \u00f7 sprint-plan PD; person = August days on that person's sprint-planned keys that have a numeric PD \u00f7 their sprint-plan PD. Keys on the plan with NA/open estimates (e.g. HIEV-6941) count as sprint-planned time, not as an estimate miss or over-run.",
+    "Estimation accuracy uses only matching scope: ticket = August days on that Jira ticket \u00f7 sprint-plan PD; person = August days on that person's sprint-planned Jira tickets that have a numeric PD \u00f7 their sprint-plan PD. Jira tickets on the plan with NA/open estimates (e.g. HIEV-6941) count as sprint-planned time, not as an estimate miss or over-run.",
     "August hours use worklog `started` when Jira returned the log. For the 9 tickets with more than 20 worklogs, missing logs are filled from issue changelog timespent deltas (date = when the log was submitted). Those fills were checked against issue timespent (HIEV-6785 changelog page misses 0.7h of pre-May history, not August).",
-    "Bugs worked = distinct HIEV issuetype Bug keys with at least one August worklog or August comment. A person is credited for a unique bug key if they logged time or commented on it in August \u2014 not the ticket assignee at create time.",
+    "Bugs worked = distinct HIEV issuetype Bug Jira tickets with at least one August worklog or August comment. A person is credited for a unique bug Jira ticket if they logged time or commented on it in August \u2014 not the ticket assignee at create time.",
     "Fix hours = August worklogs on Bug tickets vs Task/Sub-task tickets (sprint planned and mid-sprint).",
-    "Mid-sprint work = HIEV keys with August worklogs or comments that were not part of sprint planning and were added during the sprint.",
+    "Mid-sprint work = HIEV Jira tickets with August worklogs or comments that were not part of sprint planning and were added during the sprint.",
     "Expected hours = weekdays in August minus Fri 28 public holiday minus that person's planned/sick leave (8h = 1d; Deepak 12 Aug is 0.5d first-half leave).",
     "Scrum attendance = Teams call Participants sheet. Expected calls = weekdays with a recorded ~09:30 IST scrum minus PH 28 minus leave that covers the call (full-day, or Deepak 12 Aug first-half). Rate = attended expected \u00f7 expected. Joining on leave is recorded but not a miss."
   ],

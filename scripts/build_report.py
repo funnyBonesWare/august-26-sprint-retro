@@ -1054,11 +1054,11 @@ def build():
         "hours_per_day": HOURS_PER_DAY,
         "notes": [
             "Actuals are Jira worklogs started 1–31 Aug 2026 (8h = 1d).",
-            "Estimation accuracy uses only matching scope: ticket = August days on that Jira key ÷ sprint-plan PD; person = August days on that person's sprint-planned keys that have a numeric PD ÷ their sprint-plan PD. Keys on the plan with NA/open estimates (e.g. HIEV-6941) count as sprint-planned time, not as an estimate miss or over-run.",
+            "Estimation accuracy uses only matching scope: ticket = August days on that Jira ticket ÷ sprint-plan PD; person = August days on that person's sprint-planned Jira tickets that have a numeric PD ÷ their sprint-plan PD. Jira tickets on the plan with NA/open estimates (e.g. HIEV-6941) count as sprint-planned time, not as an estimate miss or over-run.",
             "August hours use worklog `started` when Jira returned the log. For the 9 tickets with more than 20 worklogs, missing logs are filled from issue changelog timespent deltas (date = when the log was submitted). Those fills were checked against issue timespent (HIEV-6785 changelog page misses 0.7h of pre-May history, not August).",
-            "Bugs worked = distinct HIEV issuetype Bug keys with at least one August worklog or August comment. A person is credited for a unique bug key if they logged time or commented on it in August — not the ticket assignee at create time.",
+            "Bugs worked = distinct HIEV issuetype Bug Jira tickets with at least one August worklog or August comment. A person is credited for a unique bug Jira ticket if they logged time or commented on it in August — not the ticket assignee at create time.",
             "Fix hours = August worklogs on Bug tickets vs Task/Sub-task tickets (sprint planned and mid-sprint).",
-            "Mid-sprint work = HIEV keys with August worklogs or comments that were not part of sprint planning and were added during the sprint.",
+            "Mid-sprint work = HIEV Jira tickets with August worklogs or comments that were not part of sprint planning and were added during the sprint.",
             "Expected hours = weekdays in August minus Fri 28 public holiday minus that person's planned/sick leave (8h = 1d; Deepak 12 Aug is 0.5d first-half leave).",
             "Scrum attendance = Teams call Participants sheet. Expected calls = weekdays with a recorded ~09:30 IST scrum minus PH 28 minus leave that covers the call (full-day, or Deepak 12 Aug first-half). Rate = attended expected ÷ expected. Joining on leave is recorded but not a miss.",
         ],
@@ -1171,9 +1171,9 @@ def write_markdown(data: dict, daily, people, dates) -> None:
     a("- **Logged of available:** `logged_days of available_days` (hours on the second line). Not a percentage.")
     a("- **Util:** `logged_days ÷ available_days`. Team util = `Σ logged_days ÷ Σ available_days`. Green ≥ 0.90, amber ≥ 0.75, else red.")
     a("- **Mix %:** `planned% = 100 × sprint_planned_seconds ÷ (planned + mid-sprint)`; `mid% = 100 × mid_sprint_seconds ÷ (planned + mid-sprint)`.")
-    a("- **Ticket accuracy:** `August_days_on_that_key ÷ sprint_plan_PD` (skipped if PD is NA). **Person accuracy:** `August_days_on_keys_with_numeric_PD ÷ sprint_plan_PD`. Hours on sprint-planned keys with no PD stay in sprint-planned mix, not in accuracy. Mean KPI averages ticket accuracy only where plan exists and logged > 0. 1.00 = exact. Green ≤ 1.10, amber ≤ 1.50, else red.")
+    a("- **Ticket accuracy:** `August_days_on_that_jira_ticket ÷ sprint_plan_PD` (skipped if PD is NA). **Person accuracy:** `August_days_on_jira_tickets_with_numeric_PD ÷ sprint_plan_PD`. Hours on sprint-planned Jira tickets with no PD stay in sprint-planned mix, not in accuracy. Mean KPI averages ticket accuracy only where plan exists and logged > 0. 1.00 = exact. Green ≤ 1.10, amber ≤ 1.50, else red.")
     a("- **Logged bar fill:** `min(100, 100 × logged_seconds ÷ available_seconds)`.")
-    a("- **Bug bar fill:** `100 × person_bug_keys ÷ max(person_bug_keys)`.")
+    a("- **Bug bar fill:** `100 × person_bug_tickets ÷ max(person_bug_tickets)`.")
     a("- **Scrum attendance %:** `100 × attended_expected ÷ expected`. Expected = recorded ~09:30 weekday calls minus PH minus leave covering the call. Missed = `expected − attended`. Avg duration = mean join time on calls joined.")
     a("- **Heatmap bands (hours that day):** (0, 2), [2, 4), [4, 6), [6, 8), ≥ 8.")
     a("")
@@ -1211,7 +1211,7 @@ def write_markdown(data: dict, daily, people, dates) -> None:
     off = data.get("offsheet_tickets") or []
     a("### Tasks and bugs added mid-sprint")
     a("")
-    a(f"{len(off)} HIEV keys with August worklogs or comments that were not part of sprint planning (added mid-sprint). Time and comments here are included in person totals, daily hours, and the journal.")
+    a(f"{len(off)} HIEV Jira tickets with August worklogs or comments that were not part of sprint planning (added mid-sprint). Time and comments here are included in person totals, daily hours, and the journal.")
     a("")
     a("| Jira | Type | Summary | Logged by | Logged of available | Comments | Status |")
     a("|---|---|---|---|---:|---:|---|")
@@ -1228,9 +1228,9 @@ def write_markdown(data: dict, daily, people, dates) -> None:
     a("")
     a("## 2. Estimation accuracy")
     a("")
-    a("Same-scope only: **ticket** = August days on that key ÷ sprint-plan PD. **Person** = August days on *sprint-planned keys that have a numeric PD* ÷ their sprint-plan PD. Time on plan keys with NA/open estimates, and mid-sprint time, is not estimation error. Values above 1.0 mean over estimate. NA / missing estimates are excluded.")
+    a("Same-scope only: **ticket** = August days on that Jira ticket ÷ sprint-plan PD. **Person** = August days on *sprint-planned Jira tickets that have a numeric PD* ÷ their sprint-plan PD. Time on plan Jira tickets with NA/open estimates, and mid-sprint time, is not estimation error. Values above 1.0 mean over estimate. NA / missing estimates are excluded.")
     a("")
-    a("| Person | Plan (PD) | Actual on planned keys | Logged of available | Accuracy |")
+    a("| Person | Plan (PD) | Actual on planned Jira tickets | Logged of available | Accuracy |")
     a("|---|---:|---:|---:|---:|")
     for p in data["people"]:
         if p["planned_days"] is None:
@@ -1247,7 +1247,7 @@ def write_markdown(data: dict, daily, people, dates) -> None:
         f"Total: **{len(data['bugs'])}** distinct HIEV bugs with August worklogs or comments "
         f"({meta.get('resolved', 0)} Done/Ready for Testing, {meta.get('open', 0)} still open). "
         f"{meta.get('under_hiev_7334', 0)} of these sit under HIEV-7334. "
-        "Counts are unique keys per person who logged time or commented — not assignee at create time."
+        "Counts are unique Jira tickets per person who logged time or commented — not assignee at create time."
     )
     a("")
     a("| Person | Unique bugs worked |")
@@ -1720,7 +1720,7 @@ def write_html(data: dict, daily, people, dates) -> None:
     meta = data.get("bugs_meta") or {}
     bug_note = (
         f"{len(data['bugs'])} distinct HIEV bugs with August worklogs or comments "
-        f"(unique keys per person who logged or commented — not assignee at create). "
+        f"(unique Jira tickets per person who logged or commented — not assignee at create). "
         f"{meta.get('resolved', 0)} ended August in Done or Ready for Testing; "
         f"{meta.get('open', 0)} still open."
     )
