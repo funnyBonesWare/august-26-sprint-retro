@@ -11,14 +11,14 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 - **Logged of available:** `logged_days of available_days` (hours on the second line). Not a percentage.
 - **Util:** `logged_days ÷ available_days`. Team util = `Σ logged_days ÷ Σ available_days`. Green ≥ 0.90, amber ≥ 0.75, else red.
 - **Mix %:** `planned% = 100 × sprint_planned_seconds ÷ (planned + mid-sprint)`; `mid% = 100 × mid_sprint_seconds ÷ (planned + mid-sprint)`.
-- **Ticket accuracy:** `August_days_on_that_key ÷ sprint_plan_PD`. **Person accuracy:** `August_days_on_planned_keys ÷ sprint_plan_PD`. Mean KPI averages ticket accuracy only where plan exists and logged > 0. 1.00 = exact. Green ≤ 1.10, amber ≤ 1.50, else red. Accuracy bar fill = `min(100%, accuracy × 50%)`.
+- **Ticket accuracy:** `August_days_on_that_key ÷ sprint_plan_PD` (skipped if PD is NA). **Person accuracy:** `August_days_on_keys_with_numeric_PD ÷ sprint_plan_PD`. Hours on sprint-planned keys with no PD stay in sprint-planned mix, not in accuracy. Mean KPI averages ticket accuracy only where plan exists and logged > 0. 1.00 = exact. Green ≤ 1.10, amber ≤ 1.50, else red.
 - **Logged bar fill:** `min(100, 100 × logged_seconds ÷ available_seconds)`.
 - **Bug bar fill:** `100 × person_bug_keys ÷ max(person_bug_keys)`.
 - **Scrum attendance %:** `100 × attended_expected ÷ expected`. Expected = recorded ~09:30 weekday calls minus PH minus leave covering the call. Missed = `expected − attended`. Avg duration = mean join time on calls joined.
 - **Heatmap bands (hours that day):** (0, 2), [2, 4), [4, 6), [6, 8), ≥ 8.
 
 - Actuals are Jira worklogs started 1–31 Aug 2026 (8h = 1d).
-- Estimation accuracy uses only matching scope: ticket = August days on that Jira key ÷ sprint-plan PD; person = August days on that person's sprint-planned keys ÷ their sprint-plan PD. Mid-sprint time is not counted as estimation error.
+- Estimation accuracy uses only matching scope: ticket = August days on that Jira key ÷ sprint-plan PD; person = August days on that person's sprint-planned keys that have a numeric PD ÷ their sprint-plan PD. Keys on the plan with NA/open estimates (e.g. HIEV-6941) count as sprint-planned time, not as an estimate miss or over-run.
 - August hours use worklog `started` when Jira returned the log. For the 9 tickets with more than 20 worklogs, missing logs are filled from issue changelog timespent deltas (date = when the log was submitted). Those fills were checked against issue timespent (HIEV-6785 changelog page misses 0.7h of pre-May history, not August).
 - Bugs worked = distinct HIEV issuetype Bug keys with at least one August worklog or August comment. A person is credited for a unique bug key if they logged time or commented on it in August — not the ticket assignee at create time.
 - Fix hours = August worklogs on Bug tickets vs Task/Sub-task tickets (sprint planned and mid-sprint).
@@ -30,24 +30,24 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 
 | Person | Planned (PD) | Leave (d) | Logged of available | Util | Sprint planned of avail | Mid-sprint of avail | Est. accuracy |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Deepak | 15.0 | 0.5 | 20.8 of 19.5d (166h of 156h) | 1.06 | 8.0 of 19.5d (64h of 156h) | 12.8 of 19.5d (102h of 156h) | 0.53 |
+| Deepak | 15.0 | 0.5 | 20.8 of 19.5d (166h of 156h) | 1.06 | 8.0 of 19.5d (64h of 156h) | 12.8 of 19.5d (102h of 156h) | 0.02 |
 | Priyanshu | 20.0 | 0.0 | 20.1 of 20.0d (161h of 160h) | 1.01 | 3.8 of 20.0d (30h of 160h) | 16.4 of 20.0d (131h of 160h) | 0.19 |
 | Sahil Kumar | — | 0.0 | 20.0 of 20.0d (160h of 160h) | 1.00 | 1.4 of 20.0d (12h of 160h) | 18.6 of 20.0d (149h of 160h) | — |
-| Dhanush | 7.0 | 2.0 | 18.1 of 18.0d (145h of 144h) | 1.01 | 6.0 of 18.0d (48h of 144h) | 12.1 of 18.0d (97h of 144h) | 0.86 |
+| Dhanush | 7.0 | 2.0 | 18.1 of 18.0d (145h of 144h) | 1.01 | 6.0 of 18.0d (48h of 144h) | 12.1 of 18.0d (97h of 144h) | 0.43 |
 | Marish | 3.0 | 1.0 | 17.9 of 19.0d (144h of 152h) | 0.94 | 2.6 of 19.0d (20h of 152h) | 15.4 of 19.0d (123h of 152h) | 0.85 |
 | Tarun | 7.0 | 0.0 | 17.2 of 20.0d (138h of 160h) | 0.86 | 11.6 of 20.0d (93h of 160h) | 5.6 of 20.0d (45h of 160h) | 1.66 |
 | Sudeep | 30.0 | 1.0 | 17.1 of 19.0d (137h of 152h) | 0.90 | 0.0 of 19.0d (0h of 152h) | 17.1 of 19.0d (137h of 152h) | 0.00 |
 | Nagaraju | — | 1.0 | 16.8 of 19.0d (134h of 152h) | 0.88 | 0.0 of 19.0d (0h of 152h) | 16.8 of 19.0d (134h of 152h) | — |
-| Sahil Siddiqui | 4.0 | 4.0 | 15.1 of 16.0d (121h of 128h) | 0.94 | 9.4 of 16.0d (75h of 128h) | 5.7 of 16.0d (45h of 128h) | 2.36 |
+| Sahil Siddiqui | 4.0 | 4.0 | 15.1 of 16.0d (121h of 128h) | 0.94 | 9.4 of 16.0d (75h of 128h) | 5.7 of 16.0d (45h of 128h) | 0.38 |
 | Dharshini | 13.0 | 2.0 | 13.5 of 18.0d (108h of 144h) | 0.75 | 7.1 of 18.0d (56h of 144h) | 6.5 of 18.0d (52h of 144h) | 0.54 |
 | Twisha | 12.0 | 2.0 | 13.3 of 18.0d (107h of 144h) | 0.74 | 6.6 of 18.0d (53h of 144h) | 6.7 of 18.0d (54h of 144h) | 0.55 |
 | Shambu | 15.0 | 1.0 | 13.1 of 19.0d (105h of 152h) | 0.69 | 4.4 of 19.0d (35h of 152h) | 8.7 of 19.0d (70h of 152h) | 0.29 |
-| Srikant | 19.0 | 3.0 | 11.9 of 17.0d (95h of 136h) | 0.70 | 2.2 of 17.0d (18h of 136h) | 9.6 of 17.0d (77h of 136h) | 0.12 |
+| Srikant | 19.0 | 3.0 | 11.9 of 17.0d (95h of 136h) | 0.70 | 2.2 of 17.0d (18h of 136h) | 9.6 of 17.0d (77h of 136h) | 0.11 |
 | Surya | 14.0 | 0.0 | 11.4 of 20.0d (92h of 160h) | 0.57 | 7.8 of 20.0d (62h of 160h) | 3.6 of 20.0d (29h of 160h) | 0.56 |
-| Manjunath | 4.0 | 4.0 | 11.1 of 16.0d (88h of 128h) | 0.69 | 10.4 of 16.0d (83h of 128h) | 0.7 of 16.0d (5h of 128h) | 2.60 |
+| Manjunath | 4.0 | 4.0 | 11.1 of 16.0d (88h of 128h) | 0.69 | 10.4 of 16.0d (83h of 128h) | 0.7 of 16.0d (5h of 128h) | 0.03 |
 | Rashmi | — | 5.0 | 9.2 of 15.0d (74h of 120h) | 0.61 | 0.0 of 15.0d (0h of 120h) | 9.2 of 15.0d (74h of 120h) | — |
 | Rushika | 5.0 | 0.0 | 8.8 of 20.0d (70h of 160h) | 0.44 | 5.0 of 20.0d (40h of 160h) | 3.8 of 20.0d (30h of 160h) | 1.00 |
-| Vinay | 5.0 | 1.0 | 6.0 of 19.0d (48h of 152h) | 0.31 | 3.5 of 19.0d (28h of 152h) | 2.5 of 19.0d (20h of 152h) | 0.70 |
+| Vinay | 5.0 | 1.0 | 6.0 of 19.0d (48h of 152h) | 0.31 | 3.5 of 19.0d (28h of 152h) | 2.5 of 19.0d (20h of 152h) | 0.00 |
 
 ### Ticket-level
 
@@ -443,25 +443,25 @@ Assumptions: **8h = 1 person-day**. Actuals = worklogs with `started` in August 
 
 ## 2. Estimation accuracy
 
-Same-scope only: **ticket** = August days on that key ÷ sprint-plan PD. **Person** = August days on *their sprint-planned keys* ÷ their sprint-plan PD. Mid-sprint time is utilization, not estimation error. Values above 1.0 mean over estimate. NA / missing estimates are excluded.
+Same-scope only: **ticket** = August days on that key ÷ sprint-plan PD. **Person** = August days on *sprint-planned keys that have a numeric PD* ÷ their sprint-plan PD. Time on plan keys with NA/open estimates, and mid-sprint time, is not estimation error. Values above 1.0 mean over estimate. NA / missing estimates are excluded.
 
 | Person | Plan (PD) | Actual on planned keys | Logged of available | Accuracy |
 |---|---:|---:|---:|---:|
-| Deepak | 15.0 | 8.0d (64h) | 20.8 of 19.5d (166h of 156h) | 0.53 |
+| Deepak | 15.0 | 0.2d (2h) | 20.8 of 19.5d (166h of 156h) | 0.02 |
 | Priyanshu | 20.0 | 3.8d (30h) | 20.1 of 20.0d (161h of 160h) | 0.19 |
-| Dhanush | 7.0 | 6.0d (48h) | 18.1 of 18.0d (145h of 144h) | 0.86 |
+| Dhanush | 7.0 | 3.0d (24h) | 18.1 of 18.0d (145h of 144h) | 0.43 |
 | Marish | 3.0 | 2.6d (20h) | 17.9 of 19.0d (144h of 152h) | 0.85 |
 | Tarun | 7.0 | 11.6d (93h) | 17.2 of 20.0d (138h of 160h) | 1.66 |
 | Sudeep | 30.0 | 0.0d (0h) | 17.1 of 19.0d (137h of 152h) | 0.00 |
-| Sahil Siddiqui | 4.0 | 9.4d (75h) | 15.1 of 16.0d (121h of 128h) | 2.36 |
+| Sahil Siddiqui | 4.0 | 1.5d (12h) | 15.1 of 16.0d (121h of 128h) | 0.38 |
 | Dharshini | 13.0 | 7.1d (56h) | 13.5 of 18.0d (108h of 144h) | 0.54 |
 | Twisha | 12.0 | 6.6d (53h) | 13.3 of 18.0d (107h of 144h) | 0.55 |
 | Shambu | 15.0 | 4.4d (35h) | 13.1 of 19.0d (105h of 152h) | 0.29 |
-| Srikant | 19.0 | 2.2d (18h) | 11.9 of 17.0d (95h of 136h) | 0.12 |
+| Srikant | 19.0 | 2.1d (17h) | 11.9 of 17.0d (95h of 136h) | 0.11 |
 | Surya | 14.0 | 7.8d (62h) | 11.4 of 20.0d (92h of 160h) | 0.56 |
-| Manjunath | 4.0 | 10.4d (83h) | 11.1 of 16.0d (88h of 128h) | 2.60 |
+| Manjunath | 4.0 | 0.1d (1h) | 11.1 of 16.0d (88h of 128h) | 0.03 |
 | Rushika | 5.0 | 5.0d (40h) | 8.8 of 20.0d (70h of 160h) | 1.00 |
-| Vinay | 5.0 | 3.5d (28h) | 6.0 of 19.0d (48h of 152h) | 0.70 |
+| Vinay | 5.0 | 0.0d (0h) | 6.0 of 19.0d (48h of 152h) | 0.00 |
 
 ## 3. Bugs worked in August
 

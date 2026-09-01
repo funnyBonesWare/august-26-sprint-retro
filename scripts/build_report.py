@@ -6,6 +6,7 @@ from __future__ import annotations
 import html
 import json
 import re
+import shutil
 from collections import defaultdict
 from datetime import date, datetime
 from pathlib import Path
@@ -15,6 +16,7 @@ from page_html import render_page
 ROOT = Path(__file__).resolve().parents[1]
 PLANNED_PATH = ROOT / "data" / "planned.json"
 LEAVE_PATH = ROOT / "data" / "leave.json"
+NOTES_PATH = ROOT / "data" / "person-notes.json"
 SCRUM_PATH = ROOT / "data" / "scrum-attendance.json"
 RAW_DIR = Path(__file__).resolve().parents[1] / "data" / "raw"
 HOURS_PER_DAY = 8.0
@@ -826,6 +828,12 @@ def build():
         if name not in EXCLUDE_PEOPLE
     )
 
+    keys_with_plan_pd = {
+        r["jira"]
+        for r in planned_rows
+        if r.get("jira") and parse_effort(r.get("effort")) is not None
+    }
+
     person_rows = []
     for person in people:
         planned_days = sum(
@@ -843,6 +851,11 @@ def build():
             l["seconds"]
             for l in worklogs
             if l["author"] == person and l["key"] in planned_keys
+        )
+        estimated_planned_s = sum(
+            l["seconds"]
+            for l in worklogs
+            if l["author"] == person and l["key"] in keys_with_plan_pd
         )
         bug_s = sum(
             l["seconds"]
@@ -871,11 +884,12 @@ def build():
                 "utilization": util,
                 "actual_all_seconds": all_s,
                 "actual_planned_seconds": planned_s,
+                "actual_estimated_planned_seconds": estimated_planned_s,
                 "actual_offsheet_seconds": off_s,
                 "bug_fix_seconds": bug_s,
                 "task_seconds": task_s,
                 "accuracy_all": accuracy(days(all_s), est),
-                "accuracy_planned_tickets": accuracy(days(planned_s), est),
+                "accuracy_planned_tickets": accuracy(days(estimated_planned_s), est),
                 "comment_count": sum(1 for c in comments if c["author"] == person),
                 "worklog_count": sum(1 for l in worklogs if l["author"] == person),
                 "offsheet_worklog_count": sum(
@@ -1040,7 +1054,7 @@ def build():
         "hours_per_day": HOURS_PER_DAY,
         "notes": [
             "Actuals are Jira worklogs started 1–31 Aug 2026 (8h = 1d).",
-            "Estimation accuracy uses only matching scope: ticket = August days on that Jira key ÷ sprint-plan PD; person = August days on that person's sprint-planned keys ÷ their sprint-plan PD. Mid-sprint time is not counted as estimation error.",
+            "Estimation accuracy uses only matching scope: ticket = August days on that Jira key ÷ sprint-plan PD; person = August days on that person's sprint-planned keys that have a numeric PD ÷ their sprint-plan PD. Keys on the plan with NA/open estimates (e.g. HIEV-6941) count as sprint-planned time, not as an estimate miss or over-run.",
             "August hours use worklog `started` when Jira returned the log. For the 9 tickets with more than 20 worklogs, missing logs are filled from issue changelog timespent deltas (date = when the log was submitted). Those fills were checked against issue timespent (HIEV-6785 changelog page misses 0.7h of pre-May history, not August).",
             "Bugs worked = distinct HIEV issuetype Bug keys with at least one August worklog or August comment. A person is credited for a unique bug key if they logged time or commented on it in August — not the ticket assignee at create time.",
             "Fix hours = August worklogs on Bug tickets vs Task/Sub-task tickets (sprint planned and mid-sprint).",
@@ -1122,6 +1136,24 @@ def build():
         )
 
 
+def load_person_notes() -> dict:
+    if not NOTES_PATH.exists():
+        return {"sprint": "August 2026", "updated": "", "people": {}}
+    data = json.loads(NOTES_PATH.read_text())
+    if not isinstance(data.get("people"), dict):
+        data["people"] = {}
+    return data
+
+
+def publish_notes_files(notes: dict) -> str:
+    payload = json.dumps(notes, indent=2) + "\n"
+    NOTES_PATH.write_text(payload)
+    for dest in (ROOT / "report" / "person-notes.json", ROOT / "docs" / "person-notes.json"):
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(payload)
+    return json.dumps(notes, ensure_ascii=True).replace("<", "\\u003c")
+
+
 def write_markdown(data: dict, daily, people, dates) -> None:
     lines = []
     a = lines.append
@@ -1139,7 +1171,7 @@ def write_markdown(data: dict, daily, people, dates) -> None:
     a("- **Logged of available:** `logged_days of available_days` (hours on the second line). Not a percentage.")
     a("- **Util:** `logged_days ÷ available_days`. Team util = `Σ logged_days ÷ Σ available_days`. Green ≥ 0.90, amber ≥ 0.75, else red.")
     a("- **Mix %:** `planned% = 100 × sprint_planned_seconds ÷ (planned + mid-sprint)`; `mid% = 100 × mid_sprint_seconds ÷ (planned + mid-sprint)`.")
-    a("- **Ticket accuracy:** `August_days_on_that_key ÷ sprint_plan_PD`. **Person accuracy:** `August_days_on_planned_keys ÷ sprint_plan_PD`. Mean KPI averages ticket accuracy only where plan exists and logged > 0. 1.00 = exact. Green ≤ 1.10, amber ≤ 1.50, else red. Accuracy bar fill = `min(100%, accuracy × 50%)`.")
+    a("- **Ticket accuracy:** `August_days_on_that_key ÷ sprint_plan_PD` (skipped if PD is NA). **Person accuracy:** `August_days_on_keys_with_numeric_PD ÷ sprint_plan_PD`. Hours on sprint-planned keys with no PD stay in sprint-planned mix, not in accuracy. Mean KPI averages ticket accuracy only where plan exists and logged > 0. 1.00 = exact. Green ≤ 1.10, amber ≤ 1.50, else red.")
     a("- **Logged bar fill:** `min(100, 100 × logged_seconds ÷ available_seconds)`.")
     a("- **Bug bar fill:** `100 × person_bug_keys ÷ max(person_bug_keys)`.")
     a("- **Scrum attendance %:** `100 × attended_expected ÷ expected`. Expected = recorded ~09:30 weekday calls minus PH minus leave covering the call. Missed = `expected − attended`. Avg duration = mean join time on calls joined.")
@@ -1196,7 +1228,7 @@ def write_markdown(data: dict, daily, people, dates) -> None:
     a("")
     a("## 2. Estimation accuracy")
     a("")
-    a("Same-scope only: **ticket** = August days on that key ÷ sprint-plan PD. **Person** = August days on *their sprint-planned keys* ÷ their sprint-plan PD. Mid-sprint time is utilization, not estimation error. Values above 1.0 mean over estimate. NA / missing estimates are excluded.")
+    a("Same-scope only: **ticket** = August days on that key ÷ sprint-plan PD. **Person** = August days on *sprint-planned keys that have a numeric PD* ÷ their sprint-plan PD. Time on plan keys with NA/open estimates, and mid-sprint time, is not estimation error. Values above 1.0 mean over estimate. NA / missing estimates are excluded.")
     a("")
     a("| Person | Plan (PD) | Actual on planned keys | Logged of available | Accuracy |")
     a("|---|---:|---:|---:|---:|")
@@ -1205,7 +1237,7 @@ def write_markdown(data: dict, daily, people, dates) -> None:
             continue
         acc = "—" if p["accuracy_planned_tickets"] is None else f"{p['accuracy_planned_tickets']:.2f}"
         a(
-            f"| {p['person']} | {p['planned_days']:.1f} | {fmt_hd(p['actual_planned_seconds'])} | {fmt_vs(p['actual_all_seconds'], p.get('expected_seconds') or 0)} | {acc} |"
+            f"| {p['person']} | {p['planned_days']:.1f} | {fmt_hd(p.get('actual_estimated_planned_seconds') or 0)} | {fmt_vs(p['actual_all_seconds'], p.get('expected_seconds') or 0)} | {acc} |"
         )
     a("")
     a("## 3. Bugs worked in August")
@@ -1372,14 +1404,17 @@ def write_html(data: dict, daily, people, dates) -> None:
     for p in person_acc_rows:
         ratio = p["accuracy_planned_tickets"]
         band = pill(ratio)
+        on_s = p["actual_planned_seconds"]
+        off_s = p.get("actual_offsheet_seconds") or 0
+        on_w, off_w = mix_widths(on_s, off_s)
         person_acc_trs.append(
             "<tr "
             f"data-people='{people_attr(p['person'])}'>"
             f"<td><button type='button' class='name-link' data-open-person='{h(p['person'])}'>{h(p['person'])}</button></td>"
             f"<td class='num'>{p['planned_days']:.1f}</td>"
-            f"<td class='num'>{html.escape(fmt_hd(p['actual_planned_seconds']))}</td>"
+            f"<td class='num'>{html.escape(fmt_hd(p.get('actual_estimated_planned_seconds') or 0))}</td>"
             f"<td class='num'>{html_vs(p['actual_all_seconds'], p.get('expected_seconds') or 0)}</td>"
-            f"<td><div class='acc-bar {html.escape(band)}'><i style='width:{min(100, round((ratio or 0) * 50, 1))}%'></i></div></td>"
+            f"<td><div class='mix' title='Sprint planned {on_w}% · Mid-sprint {off_w}%'><span class='on' style='width:{on_w}%'></span><span class='off' style='width:{off_w}%'></span></div></td>"
             f"<td class='num'><span class='pill {html.escape(band)}'>{ratio:.2f}</span></td>"
             "</tr>"
         )
@@ -1766,9 +1801,14 @@ def write_html(data: dict, daily, people, dates) -> None:
         scrum_tick_body="".join(scrum_tick_body),
         person_opts=person_opts,
         person_stats_json=json.dumps(person_stats),
+        person_notes_json=publish_notes_files(load_person_notes()),
         journal="".join(journal),
     )
     (ROOT / "report" / "index.html").write_text(page)
+    docs = ROOT / "docs"
+    docs.mkdir(parents=True, exist_ok=True)
+    shutil.copy(ROOT / "report" / "index.html", docs / "index.html")
+    shutil.copy(ROOT / "report" / "styles.css", docs / "styles.css")
 
 
 if __name__ == "__main__":

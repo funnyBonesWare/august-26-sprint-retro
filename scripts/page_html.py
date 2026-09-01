@@ -52,9 +52,9 @@ mid% = 100 × mid_sprint_seconds ÷ (planned + mid-sprint)</code>
           </div>
           <div class="formula-card">
             <dt>Estimation accuracy</dt>
-            <dd>Same-scope only. Missing or NA sprint-plan PD → not computed. 1.00 = exact; &gt; 1 over-ran the estimate. Colour: green ≤ 1.10, amber ≤ 1.50, else red. Bar fill = min(100%, accuracy × 50%) so 2.0 fills the track.</dd>
+            <dd>Same-scope only. Missing or NA sprint-plan PD → that key is skipped. 1.00 = exact; &gt; 1 over-ran the numbered estimate. Colour: green ≤ 1.10, amber ≤ 1.50, else red. Open/NA plan keys (e.g. EVLM) stay in sprint-planned mix, not in this ratio. The mix bar beside it is sprint-planned hours vs mid-sprint / ad hoc hours (share of all logged time).</dd>
             <code>ticket_acc = August_days_on_that_key ÷ sprint_plan_PD
-person_acc = August_days_on_their_planned_keys ÷ their_sprint_plan_PD
+person_acc = August_days_on_keys_with_numeric_PD ÷ sprint_plan_PD
 mean_ticket_acc = average(ticket_acc)
   only keys with a numeric plan and logged &gt; 0</code>
           </div>
@@ -514,7 +514,8 @@ EXPORT_JS = r"""
           { name: prefix + "-heatmap.csv", content: exportHeatmapCsv(name) },
           { name: prefix + "-scrum.csv", content: exportScrumCsv(name) },
           { name: prefix + "-scrum-days.csv", content: exportScrumDaysCsv(name) },
-          { name: prefix + "-journal.csv", content: exportJournalCsv(name) }
+          { name: prefix + "-journal.csv", content: exportJournalCsv(name) },
+          { name: prefix + "-call-notes.csv", content: (typeof exportNotesCsv === "function" ? exportNotesCsv(name) : "") }
         ];
         const zipName = prefix + "-august-2026-csvs.zip";
         const bytes = zipStore(files);
@@ -525,6 +526,169 @@ EXPORT_JS = r"""
     }
     const exportBtn = document.getElementById("exportCsvZip");
     if (exportBtn) exportBtn.addEventListener("click", () => { exportCsvZip(); });
+"""
+
+NOTES_JS = r"""
+    const NOTE_FIELDS = ["on_call", "went_well", "hard", "mid_sprint", "estimation", "quality", "blockers", "next_actions", "shoutout"];
+    const NOTES_STORE = "august26-person-notes";
+    function emptyPersonNotes() {
+      const o = {};
+      NOTE_FIELDS.forEach((k) => { o[k] = ""; });
+      return o;
+    }
+    function parseNotesPayload(text) {
+      try {
+        const data = JSON.parse(text || "{}");
+        if (!data.people || typeof data.people !== "object") data.people = {};
+        return data;
+      } catch (e) {
+        return { sprint: "August 2026", updated: "", people: {} };
+      }
+    }
+    const PUBLISHED_NOTES = parseNotesPayload((document.getElementById("personNotesPublished") || {}).textContent || "{}");
+    let notesState = parseNotesPayload(localStorage.getItem(NOTES_STORE) || "null");
+    if (!Object.keys(notesState.people || {}).length) {
+      notesState = JSON.parse(JSON.stringify(PUBLISHED_NOTES));
+    } else {
+      const merged = JSON.parse(JSON.stringify(PUBLISHED_NOTES));
+      merged.people = Object.assign({}, PUBLISHED_NOTES.people || {}, notesState.people || {});
+      if (notesState.updated) merged.updated = notesState.updated;
+      notesState = merged;
+    }
+    function notesFingerprint(data) {
+      return JSON.stringify((data && data.people) || {});
+    }
+    function notesHasText(entry) {
+      return NOTE_FIELDS.some((k) => String((entry || {})[k] || "").trim());
+    }
+    function snippet(text) {
+      const t = String(text || "").replace(/\s+/g, " ").trim();
+      if (!t) return "—";
+      const cut = t.length > 80 ? t.slice(0, 77) + "…" : t;
+      return cut.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    }
+    function persistNotesDraft() {
+      notesState.updated = new Date().toISOString();
+      localStorage.setItem(NOTES_STORE, JSON.stringify(notesState));
+      updateNotesStatus();
+      renderNotesTeam();
+    }
+    function updateNotesStatus() {
+      const el = document.getElementById("notesStatus");
+      if (!el) return;
+      const dirty = notesFingerprint(notesState) !== notesFingerprint(PUBLISHED_NOTES);
+      el.textContent = dirty
+        ? "Draft in this browser only. Download JSON, put it in data/person-notes.json and docs/person-notes.json, commit and push so others see it."
+        : "Showing published notes (everyone who opens this page sees the same file).";
+    }
+    function renderNotesTeam() {
+      const body = document.getElementById("notesTeamBody");
+      if (!body) return;
+      const names = Object.keys(PERSON_STATS || {}).sort();
+      body.innerHTML = names.map((name) => {
+        const entry = (notesState.people || {})[name] || {};
+        const mark = notesHasText(entry) ? " has-notes" : "";
+        const safe = name.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+        return "<tr class='" + mark.trim() + "'><td><button type='button' class='name-link' data-open-person=\"" + safe.replace(/"/g, "&quot;") + "\">" + safe + "</button></td>"
+          + "<td>" + snippet(entry.on_call) + "</td>"
+          + "<td>" + snippet(entry.went_well) + "</td>"
+          + "<td>" + snippet(entry.hard) + "</td>"
+          + "<td>" + snippet(entry.next_actions) + "</td></tr>";
+      }).join("");
+    }
+    function fillNotesFacts(name) {
+      const box = document.getElementById("notesFacts");
+      const stats = PERSON_STATS[name];
+      if (!box) return;
+      if (!stats) { box.innerHTML = ""; return; }
+      const rows = [
+        ["Logged of available", stats.logged_html],
+        ["Util", stats.util],
+        ["Leave", stats.leave],
+        ["Sprint planned PD", stats.plan],
+        ["Sprint planned time", stats.on_html],
+        ["Mid-sprint time", stats.off_html],
+        ["Sprint-planned tickets touched", String(stats.sheet)],
+        ["Mid-sprint keys touched", String(stats.offsheet)],
+        ["Bugs worked", String(stats.bugs)],
+        ["Bug time", stats.bug_hours_html],
+        ["Task time", stats.task_hours_html],
+        ["Scrum", stats.scrum_html || "—"]
+      ];
+      box.innerHTML = rows.map((r) => "<div><dt>" + r[0] + "</dt><dd>" + r[1] + "</dd></div>").join("");
+    }
+    function refreshCallNotes(name) {
+      const title = document.getElementById("notesEditorTitle");
+      if (title) title.textContent = name ? ("Call notes · " + name) : "Call notes";
+      fillNotesFacts(name);
+      const entry = name ? ((notesState.people || {})[name] || emptyPersonNotes()) : emptyPersonNotes();
+      document.querySelectorAll("#notesEditor [data-note]").forEach((el) => {
+        el.value = name ? (entry[el.getAttribute("data-note")] || "") : "";
+        el.disabled = !name;
+      });
+      renderNotesTeam();
+      updateNotesStatus();
+    }
+    document.querySelectorAll("#notesEditor [data-note]").forEach((el) => {
+      el.addEventListener("input", () => {
+        const name = currentPerson();
+        if (!name) return;
+        if (!notesState.people) notesState.people = {};
+        if (!notesState.people[name]) notesState.people[name] = emptyPersonNotes();
+        notesState.people[name][el.getAttribute("data-note")] = el.value;
+        persistNotesDraft();
+      });
+    });
+    const notesDl = document.getElementById("notesDownload");
+    if (notesDl) notesDl.addEventListener("click", () => {
+      const payload = {
+        sprint: "August 2026",
+        updated: new Date().toISOString(),
+        people: notesState.people || {}
+      };
+      downloadBlob("person-notes.json", new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" }));
+    });
+    const notesImp = document.getElementById("notesImport");
+    if (notesImp) notesImp.addEventListener("change", () => {
+      const file = notesImp.files && notesImp.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const incoming = parseNotesPayload(String(reader.result || "{}"));
+        notesState.people = Object.assign({}, notesState.people || {}, incoming.people || {});
+        persistNotesDraft();
+        refreshCallNotes(currentPerson());
+      };
+      reader.readAsText(file);
+      notesImp.value = "";
+    });
+    fetch("person-notes.json", { cache: "no-store" }).then((res) => {
+      if (!res.ok) return null;
+      return res.json();
+    }).then((remote) => {
+      if (!remote || !remote.people) return;
+      const remoteFp = notesFingerprint(remote);
+      const pubFp = notesFingerprint(PUBLISHED_NOTES);
+      const draftFp = notesFingerprint(notesState);
+      Object.assign(PUBLISHED_NOTES, remote);
+      if (!PUBLISHED_NOTES.people) PUBLISHED_NOTES.people = {};
+      if (draftFp === pubFp || draftFp === notesFingerprint({ people: {} })) {
+        notesState = JSON.parse(JSON.stringify(PUBLISHED_NOTES));
+        localStorage.setItem(NOTES_STORE, JSON.stringify(notesState));
+      } else if (remoteFp !== pubFp && draftFp === pubFp) {
+        notesState = JSON.parse(JSON.stringify(PUBLISHED_NOTES));
+      }
+      refreshCallNotes(currentPerson());
+    }).catch(() => {});
+    function exportNotesCsv(name) {
+      const headers = ["person"].concat(NOTE_FIELDS);
+      const names = name ? [name] : Object.keys(PERSON_STATS || {}).sort();
+      const rows = names.map((p) => {
+        const entry = (notesState.people || {})[p] || {};
+        return [p].concat(NOTE_FIELDS.map((k) => entry[k] || ""));
+      });
+      return toCsv(headers, rows);
+    }
 """
 
 
@@ -566,6 +730,7 @@ def render_page(
     scrum_tick_body,
     person_opts,
     person_stats_json,
+    person_notes_json,
     journal,
 ) -> str:
     assignee_field = (
@@ -606,6 +771,7 @@ def render_page(
       <a href="#quality">Bugs &amp; fix hours</a>
       <a href="#daily">Daily time</a>
       <a href="#scrum">Scrum attendance</a>
+      <a href="#notes">Call notes</a>
       <a href="#journal">Work log</a>
     </nav>
     <div class="content">
@@ -689,7 +855,7 @@ def render_page(
                 {th("Mix", "planned% = 100 × sprint-planned seconds ÷ (planned + mid-sprint)")}
                 {th("Sprint planned of avail", "sprint-planned days of available days", True)}
                 {th("Mid-sprint of avail", "mid-sprint days of available days", True)}
-                {th("Accuracy", "August days on sprint-planned keys ÷ sprint-plan PD", True)}
+                {th("Accuracy", "August days on keys with a numeric PD ÷ sprint-plan PD", True)}
                 {th("Logs", "count of August worklogs", True)}
                 {th("Comments", "count of August comments", True)}
               </tr>
@@ -762,7 +928,8 @@ def render_page(
 
       <section class="block" id="accuracy">
         <h2>2. Estimation accuracy</h2>
-        <p class="note team-only">Same-scope only. Mid-sprint time is utilisation, not an estimate miss. Bar fill = min(100%, accuracy × 50%) so 2.0 fills the track. Green ≤1.10, amber ≤1.50, red above.</p>
+        <p class="note team-only">Accuracy uses only sprint-planned keys with a numeric PD. The mix bar is share of <strong>all logged August hours</strong>: sprint planned (including open/NA PD keys) vs mid-sprint / ad hoc. Green ≤1.10, amber ≤1.50, red above.</p>
+        <div class="legend"><span><i class="swatch sheet"></i>Sprint planned</span><span><i class="swatch other"></i>Mid-sprint / ad hoc</span></div>
         <p class="note person-only" id="accPersonNote" hidden></p>
         <div class="controls">{assignee_field}</div>
         <div class="wrap">
@@ -771,10 +938,10 @@ def render_page(
               <tr>
                 {th("Person", "Canonical name")}
                 {th("Plan PD", "Σ sprint-plan PD", True)}
-                {th("Actual on plan", "August days on planned keys", True)}
+                {th("Actual on plan", "August days on sprint-planned keys that have a numeric PD", True)}
                 {th("Logged of available", "all August days of available days", True)}
-                {th("Ratio", "bar% = min(100, accuracy × 50)")}
-                {th("Accuracy", "August days on sprint-planned keys ÷ sprint-plan PD", True)}
+                {th("Sprint vs mid-sprint", "planned% = 100 × sprint-planned seconds ÷ (planned + mid-sprint)")}
+                {th("Accuracy", "August days on keys with a numeric PD ÷ sprint-plan PD", True)}
               </tr>
             </thead>
             <tbody id="accBody">{person_acc_trs}</tbody>
@@ -888,6 +1055,65 @@ def render_page(
         <p class="empty-msg" data-empty-for="scrumTickBody" hidden>No scrum call-day row for this person.</p>
       </section>
 
+      <section class="block" id="notes">
+        <h2>Call notes</h2>
+        <p class="note">One person types during the retro. Numbers below are pulled from this report. Comments are drafts in <em>this browser</em> until you download JSON and commit <code>data/person-notes.json</code> plus <code>docs/person-notes.json</code> — then everyone who opens the published page sees them.</p>
+        <div class="notes-toolbar">
+          <button type="button" class="export-btn" id="notesDownload">Download notes JSON</button>
+          <label class="field">Import JSON <input type="file" id="notesImport" accept="application/json,.json" /></label>
+          <span class="export-hint" id="notesStatus"></span>
+        </div>
+        <div class="card team-only" id="notesTeam">
+          <h2>Who has notes</h2>
+          <p class="note">Pick an assignee to edit. This table is what the team sees at a glance after notes are published.</p>
+          <div class="wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Person</th>
+                  <th>On-call</th>
+                  <th>Went well</th>
+                  <th>Hard / slipped</th>
+                  <th>Next sprint</th>
+                </tr>
+              </thead>
+              <tbody id="notesTeamBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card person-only" id="notesEditor" hidden>
+          <h2 id="notesEditorTitle">Notes</h2>
+          <dl class="notes-facts" id="notesFacts"></dl>
+          <label class="notes-field">What they said on the call
+            <textarea data-note="on_call" rows="4" placeholder="Capture what they said…"></textarea>
+          </label>
+          <label class="notes-field">What went well
+            <textarea data-note="went_well" rows="3"></textarea>
+          </label>
+          <label class="notes-field">What was hard or slipped
+            <textarea data-note="hard" rows="3"></textarea>
+          </label>
+          <label class="notes-field">Mid-sprint work (why it landed after planning)
+            <textarea data-note="mid_sprint" rows="3"></textarea>
+          </label>
+          <label class="notes-field">Plan vs actual / estimation
+            <textarea data-note="estimation" rows="3"></textarea>
+          </label>
+          <label class="notes-field">Bugs / quality
+            <textarea data-note="quality" rows="3"></textarea>
+          </label>
+          <label class="notes-field">Blockers / help needed
+            <textarea data-note="blockers" rows="3"></textarea>
+          </label>
+          <label class="notes-field">Action for next sprint
+            <textarea data-note="next_actions" rows="3"></textarea>
+          </label>
+          <label class="notes-field">Shout-out
+            <textarea data-note="shoutout" rows="2"></textarea>
+          </label>
+        </div>
+      </section>
+
       <section class="block" id="journal">
         <h2>Daily worklogs and comments</h2>
         <p class="note">Expand a day to see ticket keys, time spent, and comments. <em>planned</em> = sprint planned; <em>mid-sprint</em> = added after planning. The assignee filter applies here with the rest of the report.</p>
@@ -900,6 +1126,7 @@ def render_page(
     </div>
   </div>
   <script type="application/json" id="personStats">{person_stats_json}</script>
+  <script type="application/json" id="personNotesPublished">{person_notes_json}</script>
   <script>
     const TITLE_TEAM = "August 2026 sprint retrospective";
     const LEAD_TEAM = document.getElementById("heroLead") ? document.getElementById("heroLead").innerHTML : "";
@@ -974,7 +1201,7 @@ def render_page(
       setText("offsheetPersonNote", stats.offsheet
         ? (stats.offsheet + " mid-sprint key" + (stats.offsheet === 1 ? "" : "s") + " this person logged time on or commented on.")
         : "No mid-sprint keys this person logged or commented on.");
-      setText("accPersonNote", "Same-scope only: this person’s August days on their sprint-planned keys ÷ their sprint-plan PD. Mid-sprint time is not an estimate miss.");
+      setText("accPersonNote", "Same-scope only: August days on this person’s sprint-planned keys that have a numeric PD ÷ their sprint-plan PD. NA/open plan keys and mid-sprint time are not estimate misses.");
       setText("bugPersonNote", stats.bugs
         ? (stats.bugs + " unique bug" + (stats.bugs === 1 ? "" : "s") + " this person logged time on or commented on in August.")
         : "No bugs this person worked in August.");
@@ -1013,6 +1240,7 @@ def render_page(
         }}
       }});
       fillPersonCopy(name);
+      if (typeof refreshCallNotes === "function") refreshCallNotes(name);
       syncAssigneeFilters(name);
       const url = new URL(location.href);
       if (name) url.searchParams.set("person", name);
@@ -1060,6 +1288,7 @@ def render_page(
       applyPersonView(btn.getAttribute("data-open-person"), {{ scroll: true }});
     }});
     window.addEventListener("popstate", () => applyPersonView(personFromUrl()));
+""" + NOTES_JS + """
     applyPersonView(personFromUrl());
 """ + EXPORT_JS + """
   </script>
